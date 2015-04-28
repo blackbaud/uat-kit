@@ -23,6 +23,10 @@ body.full-height-width {
 .welcome h2 {
   color: #hhh;
 }
+.welcome-header-link{
+    color:darkblue;
+    font-weight: bold;
+}
 
 .codeSnippetContainerTabs {
   height: 23px;

@@ -311,7 +311,7 @@ public void ThenAnAddressExists(Table addressTable)
 </code>
 </pre>
 
-BUT WAIT THERE'S MORE!!!!!  
+**BUT WAIT THERE'S MORE!!!!!**  
 
 With this format, we now also have the ability to add multiple addresses and validate multiple addresses simply by adding rows to the table. No additional code required.
 
