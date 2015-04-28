@@ -1,0 +1,56 @@
+body.full-height-width {
+  background: none;
+  background-size: auto;
+}
+
+.status {
+  background: rgba(0, 0, 0, .1);
+  margin: 10px;
+  padding: 5px;
+}
+
+.status-github-btn {
+  margin-right: 0 10px;
+}
+
+.welcome {
+  background: url(../img/desert-resized-medium.jpg) 0 0 repeat;
+  background-size: cover;
+  max-height: 800px;
+}
+
+.welcome h1,
+.welcome h2 {
+  color: #hhh;
+}
+
+.codeSnippetContainerTabs {
+  height: 23px;
+  vertical-align: middle;
+  position: relative;
+  z-index: 1;
+  padding: 9px 0px 0px 0px;
+}
+
+.codeSnippetContainerTabSingle {
+  background: #f8f8f8;
+  padding: 2px 15px 0px 15px;
+  width: auto;
+  height: 20px;
+  color: #000000;
+  font-family: "Segoe UI" , "Lucida Grande" , Verdana, Arial, Helvetica, sans-serif !important;
+  font-size: 12px;
+  font-weight: bold;
+  font-style: normal !important;
+  vertical-align: baseline;
+  border-top-color: #939393;
+  border-right-color: #939393;
+  border-left-color: #939393;
+  border-top-width: 1px;
+  border-right-width: 1px;
+  border-left-width: 1px;
+  border-top-style: solid;
+  border-right-style: solid;
+  border-left-style: solid;
+  float: left;
+}

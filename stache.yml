@@ -1,0 +1,42 @@
+# =============================================
+# PRODUCT
+# =============================================
+product_name_long: Automation UAT SDK (Project Blue) Walkthrough Docs
+product_name_short: Project Blue
+title: <%= stache.config.product_name_short %> Documentation
+
+omnibar_title: <%= stache.config.product_name_short %>
+
+# omnibar_search: true
+
+files:
+  css:
+    - /assets/css/prism.css
+    - /assets/css/custom.css
+
+  js:
+    - /assets/js/prism.js
+    #- /assets/js/custom.js
+
+stache_docs: http://blackbaud-stache.azurewebsites.net/
+stache_docs_docs: <%= stache.config.stache_docs %>docs/
+stache_docs_navpatterns: <%= stache.config.stache_docs %>patterns/
+stache_docs_tutorials: <%= stache.config.stache_docs %>tutorials/
+stache_docs_resources: <%= stache.config.stache_docs %>resources/
+stache_docs_resources_faq: <%= stache.config.stache_docs %>resources/faq
+stache_docs_resources_videos: <%= stache.config.stache_docs %>resources/videos/
+
+yaml_pattern: <%= stache.config.base %>yaml-pattern/
+showcase_pattern: <%= stache.config.base %>showcase-pattern/
+sidebar_pattern: <%= stache.config.base %>sidebar-pattern/
+
+blue_home: http://localhost:4000/
+blue_api: <%= stache.config.blue_home %>API/
+blue_glossary: <%= stache.config.blue_home %>glossary/
+blue_overview: <%= stache.config.blue_home %>overview/
+blue_walkthroughs: <%= stache.config.blue_home %>walkthroughs/
+blue_walkthroughs_101: <%= stache.config.blue_walkthroughs %>101/
+blue_walkthroughs_201: <%= stache.config.blue_walkthroughs %>201/
+blue_walkthroughs_201_selenium: <%= stache.config.blue_walkthroughs_201 %>selenium/
+blue_walkthroughs_201_xpaths: <%= stache.config.blue_walkthroughs_201 %>xpaths/
+blue_walkthroughs_201_specflow: <%= stache.config.blue_walkthroughs_201 %>specflow/

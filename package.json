@@ -1,0 +1,13 @@
+{
+  "author": {
+    "name": "Blackbaud"
+  },
+  "name": "blackbaud-docs-",
+  "version": "0.0.4",
+  "description": "Blackbaud Documentation",
+  "private": true,
+  "dependencies": {
+    "blackbaud-stache": "latest",
+    "grunt": "^0.4.5"
+  }
+}
