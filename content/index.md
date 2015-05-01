@@ -36,7 +36,7 @@ documentation_items:
     <div class="row">
       <div class="col-sm-12 text-center">
         <h2>What is {{ stache.config.product_name_short }}?</h2>
-        <p class="lead">Get an overview of what Project Blueshirt is and how the SDK works.</p>
+        <p class="lead">Get an overview of what Project Blue is and how the SDK works.</p>
         <p><a href="{{stache.config.blue_overview}}" class="btn btn-lg btn-primary">Overview</a></p>
       </div>  <!-- .col-sm-12 -->
     </div>  <!-- .row -->

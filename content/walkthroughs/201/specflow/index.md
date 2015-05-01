@@ -1,7 +1,7 @@
 ---
 layout: layout-sidebar
 name: SpecFlow's Table and TableRow Guidelines
-description: In this walkthrough you will get experience with handling SpecFlow's Table and TableRow objects with the UAT SDK (Blueshirt) API.
+description: In this walkthrough you will get experience with handling SpecFlow's Table and TableRow objects with the UAT SDK (Project Blue) API.
 order: 30
 ---
 
@@ -9,13 +9,13 @@ order: 30
 
 <p class="alert alert-warning">Warning: This is preliminary documentation and is subject to change</p>
 
-In this walkthrough you will get experience with handling SpecFlow's Table and TableRow objects with the UAT SDK (Blueshirt) API.
+In this walkthrough you will get experience with handling SpecFlow's Table and TableRow objects with the UAT SDK (Project Blue) API.
 
 ## Prerequisites
 
 * You have completed the [Using the Selenium WebDriver]({{stache.config.blue_walkthroughs_201_selenium}}) walkthrough and have access to an Enterprise CRM application.
 * You are comfortable adding tests and step implementations to existing feature and step files.
-* You are comfortable accessing the existing UAT SDK (Blueshirt) Core API.
+* You are comfortable accessing the existing UAT SDK (Project Blue) Core API.
 * You are comfortable modifying the app.config to change which application the tests run against.
 * You are comfortable identifying the unique attribute values for the XPath constructors in the Core API and have completed the [XPath Guidelines]({{stache.config.blue_walkthroughs_201_xpaths}}) walkthrough.
 
@@ -130,7 +130,7 @@ public void ThenAnAddressExists(Table addressFields)
 </code>
 </pre>
 
-AddressDialog is not a class in the UAT SDK (Blueshirt). At this point your build should be failing. Let's create an AddressDialog class and implement the SetAddressFields() method.
+AddressDialog is not a class in the UAT SDK (Project Blue). At this point your build should be failing. Let's create an AddressDialog class and implement the SetAddressFields() method.
 
 <div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">For each TableRow in Table</div></div><pre><code class="language-csharp">
 using System;
@@ -371,7 +371,7 @@ Scenario: Edit an address on a constituent
 
 Here are implementations for the new step methods. Because of our table format, we can use TableRows to find and select our desired address row before clicking Edit.
 
-<div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">New step methods for editing and address.</div></div><pre><code class="language-csharp">
+<div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">New step methods for editing an address.</div></div><pre><code class="language-csharp">
 [Given(@"I add an address to the current constiteunt")]
 public void GivenIAddAnAddressToTheCurrentConstiteunt(Table addressTable)
 {

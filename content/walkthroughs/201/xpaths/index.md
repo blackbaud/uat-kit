@@ -19,7 +19,7 @@ In this walkthrough you'll gain experience creating XPaths to find elements cons
 
 ## Introduction to XPaths
 
-Selenium's WebDriver is what the UAT SDK (Blueshirt) uses interact with the web browser, and XPath is the selection methology for finding elements in the browser.
+Selenium's WebDriver is what the UAT SDK (Project Blue) uses interact with the web browser, and XPath is the selection methology for finding elements in the browser.
 
 <div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">WebDriver search using an XPath selector condition.</div></div><pre><code class="language-csharp">
 IWebElement someElement = driver.FindElement(By.XPath(String.Format("//button[contains(@class,'linkbutton')]/div[text()='Constituent search']")));
@@ -42,7 +42,7 @@ Entering the XPath "//button[contains(@class,'linkbutton')]/div[text()='Constitu
 
 ![XPathMultipleResults](/assets/img/XPaths/XPathMultipleResults.PNG)
 
-The above XPath returned multiple matching elements based on the XPath selector condition. The existing API methods of the UAT SDK (Blueshirt) accepting an XPath parameter assume the provided XPaths will return a single element. If you provide a custom or static XPath returning multiple results, it is advised to modify the XPath until a single element is consistently returned. Common Enterprise CRM XPath selector patterns to aide in finding a single element are discussed in the next section of this walkthrough.
+The above XPath returned multiple matching elements based on the XPath selector condition. The existing API methods of the UAT SDK (Project Blue) accepting an XPath parameter assume the provided XPaths will return a single element. If you provide a custom or static XPath returning multiple results, it is advised to modify the XPath until a single element is consistently returned. Common Enterprise CRM XPath selector patterns to aide in finding a single element are discussed in the next section of this walkthrough.
 
 By modifying the XPath selector to "//div[contains(@id,'contentpanel')]/div[contains(@id,'contentpanel') and not(contains(@class, 'hide-display'))]//button[contains(@class,'task-link')]/div[text()='Constituent search']", we can reduce our matching results to a single element.
 
@@ -113,7 +113,7 @@ Then we can add additional search criteria to the XPath to find a button with th
 
 ![DialogFinalXPath](/assets/img/XPaths/DialogFinalXPath.PNG)  
 
-The API of the UAT SDK (Blueshirt) provides many XPath constructors for various application components like Panels and Dialogs. Refer to our API documentation to see exactly what existing XPath constructors are available, what parameters they require, and what type of elements they try and uniquely locate.
+The API of the UAT SDK (Project Blue) provides many XPath constructors for various application components like Panels and Dialogs. Refer to our API documentation to see exactly what existing XPath constructors are available, what parameters they require, and what type of elements they try and uniquely locate.
 
 ## See Also
 

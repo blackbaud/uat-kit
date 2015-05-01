@@ -11,14 +11,14 @@ order: 40
 
 <p class="alert alert-warning">Examples follow customizations that you likely will not have on your application. Either follow along against your own customizations and modify steps accordingly, or follow the screenshots below.</p>
 
-In this walkthrough you'll gain experience setting a custom field on a dialog and overriding a default implementations.
+In this walkthrough you'll gain experience setting a custom field on a dialog and overriding default implementations.
 
 ## Prerequisites
 
 * You have completed the [Using the Selenium WebDriver]({{stache.config.blue_walkthroughs_201_selenium}}) walkthrough and have access to an Enterprise CRM application.
 * You have completed the [SpecFlow's Table and TableRow Guidelines]({{stache.config.blue_walkthroughs_201_specflow}}) walkthrough.
 * You are comfortable adding tests and step implementations to existing feature and step files.
-* You are comfortable accessing the existing UAT SDK (Blueshirt) Core API.
+* You are comfortable accessing the existing UAT SDK (Project Blue) Core API.
 * You are comfortable modifying the app.config to change which application the tests run against.
 * You are comfortable identifying the unique attribute values for the XPath constructors in the Core API and have completed the [XPath Guidelines]({{stache.config.blue_walkthroughs_201_xpaths}}) walkthrough.
 
@@ -246,7 +246,7 @@ The test passes now!
 
 ![TODO](/assets/img/CustomFields/2ndPassingTest.PNG)
 
-<p class="alert alert-info">There are many ways to use the UAT SDK (Blueshirt) API in order to achieve the same result. Above are two potential implementations to handle a dialog with a custom field, but these are not the only approaches. The methods and their underlying logic are totally defined by the user. You are free to create whatever helper methods you see fit. Look into the API documentation and see if you can come up with a different solution.</p>
+<p class="alert alert-info">There are many ways to use the UAT SDK (Project Blue) API in order to achieve the same result. Above are two potential implementations to handle a dialog with a custom field, but these are not the only approaches. The methods and their underlying logic are totally defined by the user. You are free to create whatever helper methods you see fit. Look into the API documentation and see if you can come up with a different solution.</p>
 
 ## Overloading An Implementation
 
