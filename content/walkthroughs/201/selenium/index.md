@@ -43,19 +43,19 @@ namespace Delving_Deeper
     [Binding]
     public class SampleTestsSteps : BaseSteps
     {
-        [Given(@"I have logged into BBCRM and navigated to functional area ""(.*)""")]
+        [Given(@"I have logged into BBCRM and navigated to functional area ""(.&#42;)""")]
         public void GivenIHaveLoggedIntoBbcrmAndNavigatedToFunctionalArea(string functionalArea)
         {
             ScenarioContext.Current.Pending();
         }
 
-        [When(@"I navigate to functional area ""(.*)""")]
+        [When(@"I navigate to functional area ""(.&#42;)""")]
         public void WhenINavigateToFunctionalArea(string functionalArea)
         {
             ScenarioContext.Current.Pending();
         }
 
-        [Then(@"the panel header caption is ""(.*)""")]
+        [Then(@"the panel header caption is ""(.&#42;)""")]
         public void ThenThePanelHeaderCaptionIs(string headerCaption)
         {
             ScenarioContext.Current.Pending();
@@ -66,7 +66,7 @@ namespace Delving_Deeper
 </pre>
 
 <div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Unimplemented class and method.  Build should fail at this point.</div></div><pre><code class="language-csharp">
-[Given(@"I have logged into BBCRM and navigated to functional area ""(.*)""")]
+[Given(@"I have logged into BBCRM and navigated to functional area ""(.&#42;)""")]
 public void GivenIHaveLoggedIntoBbcrmAndNavigatedToFunctionalArea(string functionalArea)
 {
     BBCRMHomePage.Logon();
@@ -135,20 +135,20 @@ IWebElement functionalAreaElement = driver.FindElement(By.XPath(String.Format("/
 #### Finish Implementing Step Methods
 
 <div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Fully implemented step methods.</div></div><pre><code class="language-csharp">
-[Given(@"I have logged into BBCRM and navigated to functional area ""(.)""")]
+[Given(@"I have logged into BBCRM and navigated to functional area ""(.&#42;)""")]
 public void GivenIHaveLoggedIntoBbcrmAndNavigatedToFunctionalArea(string functionalArea)
 {
     BBCRMHomePage.Logon();
     MyCustomBBCrmHomePage.NavigateToFunctionalArea(functionalArea);
 }
 
-[When(@"I navigate to functional area ""(.)""")]
+[When(@"I navigate to functional area ""(.&#42;)""")]
 public void WhenINavigateToFunctionalArea(string functionalArea)
 {
     MyCustomBBCrmHomePage.NavigateToFunctionalArea(functionalArea);
 }
 
-[Then(@"the panel header caption is ""(.*)""")]
+[Then(@"the panel header caption is ""(.&#42;)""")]
 public void ThenThePanelHeaderCaptionIs(string headerCaption)
 {
     if (!BaseComponent.Exists(Panel.getXPanelHeaderByText(headerCaption))) 

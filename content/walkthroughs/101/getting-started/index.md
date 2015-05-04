@@ -105,14 +105,14 @@ namespace Blue_101
             ConstituentsFunctionalArea.OpenConstituentSearchDialog();
         }
 
-        [When(@"I search for ""(.*)""")]
+        [When(@"I search for ""(.&#42;)""")]
         public void WhenISearchFor(string name)
         {
             SearchDialog.SetLastNameToSearch(name);
             SearchDialog.Search();
         }
 
-        [Then(@"The results should contain ""(.*)""")]
+        [Then(@"The results should contain ""(.&#42;)""")]
         public void ThenTheResultsShouldContain(string result)
         {
             SearchDialog.CheckConstituentSearchResultsContain(result);
@@ -125,6 +125,10 @@ namespace Blue_101
 #### Ensure ChromeDriver is on your path.
 
 <p class="alert alert-info">Adding it to your project and setting its **Copy to Output Directory** property to **Copy always** is one way to ensure this.</p>
+
+<p class="alert alert-danger">At the moment you will need to manually download the latest [ChromeDriver](https://sites.google.com/a/chromium.org/chromedriver/downloads), copy it to your project's directory, and add it as an existing item to your project.  Future versions of Specflow.Blue intend to have ChromeDriver included in the NuGet package.</p>
+
+<p class="alert alert-danger">If you are getting a Dictionary Key error for the Driver, then you may need to delete your WebDriver project reference.  You will then need to create a new WebDriver reference by browsing to "packages\Blackbaud.SpecFlow.Selenium.Blue\[version here\]\lib\net40\WebDriver.dll" and adding this reference.  This additional step should be resolved with future versions of ChromeDriver.</p>
 
 #### Build and Run your tests.
 

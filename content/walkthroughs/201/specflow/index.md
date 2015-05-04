@@ -65,7 +65,7 @@ namespace Delving_Deeper
             BBCRMHomePage.Logon();
         }
 
-        [Given(@"a constituent exists with last name ""(.*)""")]
+        [Given(@"a constituent exists with last name ""(.&#42;)""")]
         public void GivenAConstituentExistsWithLastName(string p0)
         {
             ScenarioContext.Current.Pending();
@@ -96,7 +96,7 @@ public void GivenIHaveLoggedIntoBBCRM()
     BBCRMHomePage.Logon();
 }
 
-[Given(@"a constituent exists with last name ""(.*)""")]
+[Given(@"a constituent exists with last name ""(.&#42;)""")]
 public void GivenAConstituentExistsWithLastName(string constituent)
 {
     constituent += uniqueStamp;

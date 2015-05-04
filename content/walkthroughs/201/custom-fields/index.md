@@ -228,7 +228,7 @@ public void WhenIStartToAddAConstituent(Table constituents)
     }
 }
 
-[When(@"I set the custom constituent field ""(.*)"" to ""(.*)""")]
+[When(@"I set the custom constituent field ""(.&#42;)"" to ""(.&#42;)""")]
 public void WhenISetTheCustomConstituentFieldTo(string fieldCaption, string value)
 {
     CustomIndividualDialog.SetCustomField(fieldCaption, value);
@@ -272,13 +272,13 @@ public void WhenIOpenTheConstituentSearchDialog()
     FunctionalArea.OpenLink("Constituents", "Constituent search");
 }
 
-[When(@"set the Last/Org/Group name field value to ""(.*)""")]
+[When(@"set the Last/Org/Group name field value to ""(.&#42;)""")]
 public void WhenSetTheLastOrgGroupNameFieldValueTo(string fieldValue)
 {
     SearchDialog.SetTextField(Dialog.getXInput("ConstituentSearchbyNameorLookupID", "KEYNAME"), fieldValue);
 }
 
-[Then(@"the Last/Org/Group name field is ""(.*)""")]
+[Then(@"the Last/Org/Group name field is ""(.&#42;)""")]
 public void ThenTheLastOrgGroupNameFieldIs(string expectedValue)
 {
     SearchDialog.ElementValueIsSet(Dialog.getXInput("ConstituentSearchbyNameorLookupID", "KEYNAME"), expectedValue);
@@ -343,13 +343,13 @@ Inspecting the unique dialog ids, we can see that they are different. The suppor
 Update the step code so the XPath constructors use the custom dialog id.
 
 <div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Edited steps for custom dialog id</div></div><pre><code class="language-csharp">
-[When(@"set the Last/Org/Group name field value to ""(.*)""")]
+[When(@"set the Last/Org/Group name field value to ""(.&#42;)""")]
 public void WhenSetTheLastOrgGroupNameFieldValueTo(string fieldValue)
 {
     SearchDialog.SetTextField(Dialog.getXInput("UniversityofOxfordConstituentSearch", "KEYNAME"), fieldValue);
 }
 
-[Then(@"the Last/Org/Group name field is ""(.*)""")]
+[Then(@"the Last/Org/Group name field is ""(.&#42;)""")]
 public void ThenTheLastOrgGroupNameFieldIs(string expectedValue)
 {
     SearchDialog.ElementValueIsSet(Dialog.getXInput("UniversityofOxfordConstituentSearch", "KEYNAME"), expectedValue);
