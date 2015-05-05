@@ -1,7 +1,7 @@
 ---
 layout: layout-sidebar
 name: Setting Custom Fields
-description: In this walkthrough you'll gain experience setting a custom field on a dialog and overriding a default implementations.
+description: In this walkthrough you'll gain experience setting a custom field on a dialog and overriding default implementations.
 order: 40
 ---
 
@@ -322,7 +322,7 @@ Running the test now we get a new error.
 
 ![TODO](/assets/img/CustomFields/DefaultOnCustomSearchDialogFieldError.PNG)
 
-Another must customization exist. The error stack trace indicates that the XPath constructor for the "Last/Org/Group name" field is not compatible with this application. NoSuchElementExceptions are thrown when Selenium's WebDriver times out looking for a web element using the XPath.
+Another customization must exist. The error stack trace indicates that the XPath constructor for the "Last/Org/Group name" field is not compatible with this application. NoSuchElementExceptions are thrown when Selenium's WebDriver times out looking for a web element using the XPath.
 
 ![TODO](/assets/img/CustomFields/CustomConstituentSearchDialog.PNG)
 
@@ -495,7 +495,7 @@ public new static void SetHouseholdFields(TableRow fields)
 </code>
 </pre>
 
-The resuling dialog from clicking the add button on the 'Related individual' field.
+This is the resulting dialog from clicking the add button on the 'Related individual' field.
 
 ![TODO](/assets/img/CustomFields/OverrideProcedure/TriggerDialog.PNG)
 

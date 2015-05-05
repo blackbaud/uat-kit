@@ -19,7 +19,7 @@ In this walkthrough you'll gain experience creating XPaths to find elements cons
 
 ## Introduction to XPaths
 
-Selenium's WebDriver is what the UAT SDK (Project Blue) uses interact with the web browser, and XPath is the selection methology for finding elements in the browser.
+Selenium's WebDriver is what the UAT SDK (Project Blue) uses to interact with the web browser, and XPath is the selection methology for finding elements in the browser.
 
 <div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">WebDriver search using an XPath selector condition.</div></div><pre><code class="language-csharp">
 IWebElement someElement = driver.FindElement(By.XPath(String.Format("//button[contains(@class,'linkbutton')]/div[text()='Constituent search']")));
@@ -64,14 +64,14 @@ When navigating between different areas in the application, CRM stores previous 
 
 ![CRMContentPanelHiddenPanels](/assets/img/XPaths/CRMContentPanelHiddenPanels.PNG)
 
-If we add the second component of the modified XPath to our search so that it reads as "//div[contains(@id,'contentpanel')]/div[contains(@id,'contentpanel') and not(contains(@class, 'hide-display'))]", we only get one result. Note the single '/' between the first and second componentes of our XPath selector. This specifies an immediate child instead of any descendant. Also note how can wan add as much selection criteria as want to to any given element search criteria.
+If we add the second component of the modified XPath to our search so that it reads as "//div[contains(@id,'contentpanel')]/div[contains(@id,'contentpanel') and not(contains(@class, 'hide-display'))]", we only get one result. Note the single '/' between the first and second components of our XPath selector. This specifies an immediate child instead of any descendant. Also note how can add as much selection criteria as want to to any given element search criteria.
 ![CRMRootPlusOneXPath](/assets/img/XPaths/CRMRootPlusOneXPath.PNG)  
 
 Whenever you are trying to find an element within the panel window of the application, it is best practice to add a search criteria at the beginning of your XPath that narrows the search to the visible 'contentpanel'. From the visible panel, you can search through descendants to find elements such as a button.
 
 ## Enterprise CRM Patterns - Dialogs
 
-The DOM is a quicksand of every-changing components, but even complicated navigations with multiple dialogs open can be broken down with proper XPath syntax and selection criteria. Let's look at a bit more seemingly complex of a situation. In your application start to add a pledge. If you cannot do so in your application, follow along with the screenshots below.
+The DOM is a quicksand of ever-changing components, but even complicated navigations with multiple dialogs open can be broken down with proper XPath syntax and selection criteria. Let's look at a bit more seemingly complex of a situation. In your application start to add a pledge. If you cannot do so in your application, follow along with the screenshots below.
 
 In this initial dialog, we can create a simple enough XPath "//button[text()='Save']" to find the Save button.
 
@@ -87,6 +87,8 @@ In the search dialog, click the button to add a new individual.
 
 If you use the same XPath "//button[text()='Save']" to search for the save button on the individual add dialog, then two results should now be returned.
 ![DialogFirstSave](/assets/img/XPaths/DialogFirstSave.PNG)  
+
+-------------
 
 ![DialogSecondSave](/assets/img/XPaths/DialogSecondSave.PNG)  
 

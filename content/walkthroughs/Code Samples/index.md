@@ -7,13 +7,14 @@ description: A listing of code samples for the 101 and 202 walkthroughs.
 published: true
 code:
   - title: Project Blue 101 Code Sample
-    description: This is the application code that goes with our Web API tutoroial.  It includes an example of using the Authorization Code flow.
+    description: In the following walkthroughs you'll learn to quickly create a Blackbaud CRM GUI test suite using the Blackbaud UAT SDK.
     repo: stache/
-    tutorial: <%= stache.config.base %>
+    tutorial: <%= stache.config.blue_walkthroughs %>101/
 
   - title: Project Blue 201 Code Sample
-    description: A more specific example of the constituent api where we search based on different criteria.
+    description: In the following walkthroughs you'll learn how to use the UAT SDK's (Project Blue) underlying third-party tools to create custom logic and interactions with the browser.
     repo: stache-cli/
+    tutorial: <%= stache.config.blue_walkthroughs %>201/
 ---
 
 
