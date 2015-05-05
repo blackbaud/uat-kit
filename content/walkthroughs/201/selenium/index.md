@@ -95,7 +95,7 @@ namespace Delving_Deeper
 </pre>
 
 #### Implement the custom method. The common pattern employed in the UAT SDK is to wait until a certain condition has been met before proceeding with the next action. The Selenium Webdriver is what allows us to interact with the browser in order to determine whether or not our desired condition has been met.
-<div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Be sure to add the 'OpenQA.Selenium' and 'OpenQA.Selenium.Support.UI' references.</div></div><pre><code class="language-csharp">
+<div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Be sure to add the 'OpenQA.Selenium' and 'OpenQA.Selenium.Support.UI' namespace references at the top of your file.</div></div><pre><code class="language-csharp">
 public static void NavigateToFunctionalArea(string caption)
 {
     WebDriverWait navigateWaiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(TimeoutSecs));
