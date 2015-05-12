@@ -21,14 +21,14 @@ Learn to quickly create a Blackbaud CRM GUI test suite using the Blackbaud UAT S
 
 ## Creating a Blue Test Project.
 
-#### Create a new Unit Test Project.
+#### 1. Create a new Unit Test Project.
 
 **File | New | Project | Unit Test Project**
 
 New Project Wizard  
 ![New Project wizard](/assets/img/FirstProject/NewBSProject.PNG)
 
-#### Add the *Blue SpecFlow Plugin* and *Blue Core Classes* packages to your project.
+#### 2. Add the *Blue SpecFlow Plugin* and *Blue Core Classes* packages to your project.
 
 Right-click on your solution in the solution explorer and choose **Manage NuGet Packages for solution**
 
@@ -37,7 +37,7 @@ Package manager wizard
 
 <p class="alert alert-info">The Blue packages will normally be available from the public nuget package repository. If you have stand alone nupkg files you can add their location as a package source in the nuget settings.</p>
 
-#### Add target Environment Urls to your "_app.config_".
+#### 3. Add target Environment Urls to your "_app.config_".
 
 <div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Example appSettings section</div></div><pre><code class="language-csharp">
 &lt;appSettings&gt;
@@ -52,12 +52,12 @@ Package manager wizard
 </code>
 </pre>
 
-#### Add a new feature file.
+#### 4. Add a new feature file.
 
 New Item wizard  
 ![New Item wizard](/assets/img/FirstProject/AddAFeatureFile.PNG)
 
-#### Populate your feature file.
+#### 5. Populate your feature file.
 
 <div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Example Feature File</div></div><pre><code class="language-gherkin">
 Feature: Constituent Search
@@ -73,14 +73,14 @@ Scenario: Quick Constituent Search
 </code>
 </pre>
 
-#### Generate a step file.
+#### 6. Generate a step file.
 
 Right-Click on the feature file and choose **Generate Step Definitions**
 
 Step File wizard  
 ![Step File wizard](/assets/img/FirstProject/GenerateSteps.PNG)
 
-#### Populate the Steps.
+#### 7. Populate the Steps.
 
 <div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Example Steps File</div></div><pre><code class="language-csharp">
 using System;
@@ -122,7 +122,7 @@ namespace Blue_101
 </code>
 </pre>
 
-#### Ensure ChromeDriver is on your path.
+#### 8. Ensure ChromeDriver is on your path.
 
 <p class="alert alert-info">Adding it to your project and setting its **Copy to Output Directory** property to **Copy always** is one way to ensure this.</p>
 
@@ -130,7 +130,7 @@ namespace Blue_101
 
 <p class="alert alert-danger">If you are getting a Dictionary Key error for the Driver, then you may need to delete your WebDriver project reference.  You will then need to create a new WebDriver reference by browsing to "packages\Blackbaud.SpecFlow.Selenium.Blue\[version here\]\lib\net40\WebDriver.dll" and adding this reference.  This additional step should be resolved with future versions of ChromeDriver.</p>
 
-#### Build and Run your tests.
+#### 9. Build and Run your tests.
 
 For example using the Visual Studio Test Explorer  
 ![For example using the Visual Studio Test Explorer](/assets/img/FirstProject/ConstituentSearchResults.PNG)

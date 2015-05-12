@@ -24,7 +24,7 @@ In this walkthrough you'll gain experience setting a custom field on a dialog an
 
 ## Adding Support For Custom Fields - Overload Approach
 
-#### Identify Need for Custom Support
+#### 1. Identify Need for Custom Support
 
 This is the Enterprise CRM standard "Add an individual" dialog.
 
@@ -96,7 +96,7 @@ namespace Delving_Deeper
 
 ![TODO](/assets/img/CustomFields/NotImplemetedFieldAddIndividual.PNG)
 
-#### Create Class Inheriting Core Class
+#### 2. Create Class Inheriting Core Class
 
 To resolve this failure, we need to add support for the additional custom fields. Create a new class in your project.
 
@@ -113,7 +113,7 @@ namespace Delving_Deeper
 </code>
 </pre>
 
-#### Create Custom Supported Fields Mapping
+#### 3. Create Custom Supported Fields Mapping
 
 We need to map the custom field captions to their relevant XPath and Field Setter values.
 
@@ -138,7 +138,7 @@ namespace Delving_Deeper
 
 <p class="alert alert-warning">You should be comfortable understanding how the unique id attributes for the fields were gathered from the UI. These values are used for the XPath constructors that locate and interact with the fields. Review the [XPath Guidelines]({{stache.config.blue_walkthroughs_201_xpaths}}) if you do not follow where the values "_ATTRIBUTECATEGORYVALUE0_value" and "_ATTRIBUTECATEGORYVALUE1_value" come from.</p>
 
-#### Pass Custom Supported Fields To Base.
+#### 4. Pass Custom Supported Fields To Base.
 
 The custom class uses its inherited IndividualDialog values to pass the required values to the Dialog's SetFields() method. SetFields has an overload that takes in a second IDictionary mapping of field captions to CrmFields. We can pass our dictionary of custom fields to add additional support for custom fields.
 
@@ -152,7 +152,7 @@ public new static void SetIndividualFields(TableRow fields)
 
 <p class="alert alert-info">If a mapping exists in our CustomSupportedFields where the string key is an already existing key for SupportedFields, the mapped values for CustomSupportedFields is used.</p>
 
-#### Modify Your Step Implementation.
+#### 5. Modify Your Step Implementation.
 
 Modify your step definition to use the new CustomIndividualDIalog's SetIndividualFields() method.
 
@@ -180,7 +180,7 @@ The test passes now!
 
 ## Adding Support For Custom Fields - Custom Method Approach
 
-#### Alternative Gherkin Syntax
+#### 1. Alternative Gherkin Syntax
 
 An alternative Gherkin approach that drives a need for an entirely custom method.
 
@@ -198,7 +198,7 @@ Scenario: Add an individual on a dialog containing a custom field using a custom
 </code>
 </pre>
 
-#### Add Method to Custom Class
+#### 2. Add Method to Custom Class
 
 In this approach we describe setting a single field's value for a step. Add the following method to your CustomIndividualDialog class.
 
@@ -213,7 +213,7 @@ public static void SetCustomField(string fieldCaption, string value)
 
 <p class="alert alert-info">Notice how the custom method did not need the "new" attribute in the method declaration. "new" is only needed when overriding an inherited method.</p>
 
-#### Implement The New Step Methods
+#### 3. Implement The New Step Methods
 
 <div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Implemetation of new steps.</div></div><pre><code class="language-csharp">
 [When(@"I start to add a constituent")]
@@ -250,7 +250,7 @@ The test passes now!
 
 ## Overloading An Implementation
 
-#### Identify Need To Overload Implementation
+#### 1. Identify Need To Overload Implementation
 
 Let's start with the following test case.
 
@@ -326,7 +326,7 @@ Another customization must exist. The error stack trace indicates that the XPath
 
 ![TODO](/assets/img/CustomFields/CustomConstituentSearchDialog.PNG)
 
-#### Identify The Customization
+#### 2. Identify The Customization
 
 Let's take a look at the search dialogs between the default and custom applications. Comparing the dialogs, clearly the dialog on the right has been customized. Inspecting the "Last/Org/Group name" field between the two applications, we can see they share the same unique field id.
 
@@ -338,7 +338,7 @@ Inspecting the unique dialog ids, we can see that they are different. The suppor
 
 ![TODO](/assets/img/CustomFields/ComparingDialogIdsSearchDialog.PNG)
 
-#### Edit Steps
+#### 3. Edit Steps
 
 Update the step code so the XPath constructors use the custom dialog id.
 
@@ -363,7 +363,7 @@ The test passes now on the custom application.
 
 ## Overriding An Implementation
 
-#### Identify Need For Overriding Implementation
+#### 1. Identify Need For Overriding Implementation
 
 Let's start with the following test case that works against the standard CRM application.
 
@@ -458,7 +458,7 @@ What if we wanted to set the field through the add button? This would require us
 
 ![TODO](/assets/img/CustomFields/OverrideProcedure/AddIcon.PNG)
 
-#### Create A Custom Method
+#### 2. Create A Custom Method
 
 If you do not have a CustomIndividualDialog class created yet, add a new class to your project and implement it as follows.  First we make sure to select the 'Household' tab.
 
@@ -481,7 +481,7 @@ namespace Delving_Deeper
 </code>
 </pre>
 
-Next we do specify custom logic if a value for the 'Related individual' field has been provided. If a value has been provided for this field, we click the button that brings up the add dialog. Be sure to read the API documentation for the XPath constructors.
+Next we specify custom logic if a value for the 'Related individual' field has been provided. If a value has been provided for this field, we click the button that brings up the add dialog. Be sure to read the API documentation for the XPath constructors.
 
 <div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Click the add button for the field</div></div><pre><code class="language-csharp">
 public new static void SetHouseholdFields(TableRow fields)
@@ -517,7 +517,7 @@ public new static void SetHouseholdFields(TableRow fields)
 
 Before we call the base implementation to handle setting the rest of the fields, we set fields["Related individual"] to equal null. We do this because we want the base SetHouseholdFields to skip it's handling of the 'Related individual' field.
 
-<div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Set 'Related individual' to null and çall the base method.</div></div><pre><code class="language-csharp">
+<div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Set 'Related individual' to null and call the base method.</div></div><pre><code class="language-csharp">
 using Blueshirt.Core.Crm;
 using TechTalk.SpecFlow;
 
@@ -549,7 +549,7 @@ fields.Keys.Remove("Related individual");
 </code>
 </pre>
 
-#### Update The Steps
+#### 3. Update The Steps
 
 Change the step setting the household tab fields.
 

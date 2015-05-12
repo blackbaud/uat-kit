@@ -23,7 +23,7 @@ In this walkthrough you'll learn how to use Selenium's WebDriver and Wait patter
 
 ## Create a Custom Interaction Using the WebDriver.
 
-#### Create the Gherkin test and Step method.
+#### 1. Create the Gherkin test and Step method.
 
 <div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Create an unimplemented feature test requiring navigation between functional areas.  </div></div><pre><code class="language-gherkin">
 @DelvingDeeper
@@ -75,7 +75,7 @@ public void GivenIHaveLoggedIntoBbcrmAndNavigatedToFunctionalArea(string functio
 </code>
 </pre>
     
-#### Create custom class inheriting BBCRMHomePage.
+#### 2. Create custom class inheriting BBCRMHomePage.
 
 <div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Create the new custom class and method. Have the new method throw a NotImplementedException. The build should succeed now.</div></div><pre><code class="language-csharp">
 using System;
@@ -132,7 +132,7 @@ IWebElement functionalAreaElement = driver.FindElement(By.XPath(String.Format("/
 </code>
 </pre>
 
-#### Finish Implementing Step Methods
+#### 3. Finish Implementing Step Methods
 
 <div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Fully implemented step methods.</div></div><pre><code class="language-csharp">
 [Given(@"I have logged into BBCRM and navigated to functional area ""(.&#42;)""")]
@@ -162,6 +162,8 @@ Make sure your app.config is set to run on your accessible application, build th
 
 The test should pass!  
 ![](/assets/img/Selenium/SelectedTestsPass.PNG)
+
+<p class="alert alert-info">The UAT SDK (Project Blue) API provides lots browser interactions that encapsulate different WebDriver logic. Before creating new WebDriver logic, first look into the API to see what functionality is already provided. Hopefully the desired WebDriver logic and XPath constructor are already available from the API.</p>
     
 ## See Also
 

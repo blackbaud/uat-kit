@@ -38,13 +38,13 @@ This will show you the HTML element type, attribute values, and location in the 
 
 XPaths specify a selector condition that parses the entire DOM returning all matching elements. While in the Elements Panel of Chrome's Developer Tools, you can bring up a search (Ctrl+F) input to enter an XPath and see the results of an XPath selector.
 
-Entering the XPath "//button[contains(@class,'linkbutton')]/div[text()='Constituent search']" looks for all [div] elements with the text 'Constituent search' that are direct descendants of a [button] element with a class attribute containing 'linkbutton'.
+Entering the XPath <code>"//button[contains(@class,'linkbutton')]/div[text()='Constituent search']"</code> looks for all [div] elements with the text 'Constituent search' that are direct descendants of a [button] element with a class attribute containing 'linkbutton'.
 
 ![XPathMultipleResults](/assets/img/XPaths/XPathMultipleResults.PNG)
 
 The above XPath returned multiple matching elements based on the XPath selector condition. The existing API methods of the UAT SDK (Project Blue) accepting an XPath parameter assume the provided XPaths will return a single element. If you provide a custom or static XPath returning multiple results, it is advised to modify the XPath until a single element is consistently returned. Common Enterprise CRM XPath selector patterns to aide in finding a single element are discussed in the next section of this walkthrough.
 
-By modifying the XPath selector to "//div[contains(@id,'contentpanel')]/div[contains(@id,'contentpanel') and not(contains(@class, 'hide-display'))]//button[contains(@class,'task-link')]/div[text()='Constituent search']", we can reduce our matching results to a single element.
+By modifying the XPath selector to <code>"//div[contains(@id,'contentpanel')]/div[contains(@id,'contentpanel') and not(contains(@class, 'hide-display'))]//button[contains(@class,'task-link')]/div[text()='Constituent search']"</code>, we can reduce our matching results to a single element.
 
 ![XPathSingleResult](/assets/img/XPaths/XPathSingleResult.PNG)
 
@@ -52,7 +52,7 @@ By modifying the XPath selector to "//div[contains(@id,'contentpanel')]/div[cont
 
 In the above section we used an original and modified XPath to change our matching results. Let's look at how the modified XPath narrowed our search criteria and understand the differences between the original and modified XPaths.
 
-To see how the modified XPath narrows its selection critieria, let's start with the first component of the XPath "//div[contains(@id,'contentpanel')]" and enter that into the search input. This XPath returns any [div] whose id attribute contains the text 'contentpanel'. In the image below, we can see that 4 matches are found with the first match highlighted.
+To see how the modified XPath narrows its selection critieria, let's start with the first component of the XPath <code>"//div[contains(@id,'contentpanel')]"</code> and enter that into the search input. This XPath returns any [div] whose id attribute contains the text 'contentpanel'. In the image below, we can see that 4 matches are found with the first match highlighted.
 
 ![CRMRootXPath](/assets/img/XPaths/CRMRootXPath.PNG)  
 
@@ -64,7 +64,7 @@ When navigating between different areas in the application, CRM stores previous 
 
 ![CRMContentPanelHiddenPanels](/assets/img/XPaths/CRMContentPanelHiddenPanels.PNG)
 
-If we add the second component of the modified XPath to our search so that it reads as "//div[contains(@id,'contentpanel')]/div[contains(@id,'contentpanel') and not(contains(@class, 'hide-display'))]", we only get one result. Note the single '/' between the first and second components of our XPath selector. This specifies an immediate child instead of any descendant. Also note how can add as much selection criteria as want to to any given element search criteria.
+If we add the second component of the modified XPath to our search so that it reads as <code>"//div[contains(@id,'contentpanel')]/div[contains(@id,'contentpanel') and not(contains(@class, 'hide-display'))]"</code>, we only get one result. Note the single '/' between the first and second components of our XPath selector. This specifies an immediate child instead of any descendant. Also note how can add as much selection criteria as want to to any given element search criteria.
 ![CRMRootPlusOneXPath](/assets/img/XPaths/CRMRootPlusOneXPath.PNG)  
 
 Whenever you are trying to find an element within the panel window of the application, it is best practice to add a search criteria at the beginning of your XPath that narrows the search to the visible 'contentpanel'. From the visible panel, you can search through descendants to find elements such as a button.
@@ -73,7 +73,7 @@ Whenever you are trying to find an element within the panel window of the applic
 
 The DOM is a quicksand of ever-changing components, but even complicated navigations with multiple dialogs open can be broken down with proper XPath syntax and selection criteria. Let's look at a bit more seemingly complex of a situation. In your application start to add a pledge. If you cannot do so in your application, follow along with the screenshots below.
 
-In this initial dialog, we can create a simple enough XPath "//button[text()='Save']" to find the Save button.
+In this initial dialog, we can create a simple enough XPath <code>"//button[text()='Save']"</code> to find the Save button.
 
 ![DialogPledgeSave](/assets/img/XPaths/DialogPledgeSave.PNG)  
 
@@ -85,7 +85,7 @@ In the search dialog, click the button to add a new individual.
 
 ![DialogSearchAddIndividual](/assets/img/XPaths/DialogSearchAddIndividual.PNG)  
 
-If you use the same XPath "//button[text()='Save']" to search for the save button on the individual add dialog, then two results should now be returned.
+If you use the same XPath <code>"//button[text()='Save']"</code> to search for the save button on the individual add dialog, then two results should now be returned.
 ![DialogFirstSave](/assets/img/XPaths/DialogFirstSave.PNG)  
 
 -------------
@@ -108,10 +108,10 @@ Digging into the [div] containing the dialog input fields, we come across a [div
 
 ![DialogUniqueId](/assets/img/XPaths/DialogUniqueId.PNG)  
 
-Using this unique id, we can construct an XPath "//div[contains(@class,'bbui-dialog') and contains(@style,'visible')]//div[contains(@id,'individualRecordAddDataForm')]" to find the div with this id.
+Using this unique id, we can construct an XPath <code>"//div[contains(@class,'bbui-dialog') and contains(@style,'visible')]//div[contains(@id,'individualRecordAddDataForm')]"</code> to find the div with this id.
 ![DialogXPathDialogUniqueId]/assets/img/XPaths/(DialogXPathDialogUniqueId)  
 
-Then we can add additional search criteria to the XPath to find a button with the text "Save" relative to the [div] with the unique id. Search using the XPath "//div[contains(@class,'bbui-dialog') and contains(@style,'visible')]//div[contains(@id,'individualRecordAddDataForm')] /../../../../../../../..//*[text()="Save"]" Only 1 match is found!
+Then we can add additional search criteria to the XPath to find a button with the text "Save" relative to the [div] with the unique id. Search using the XPath <code>"//div[contains(@class,'bbui-dialog') and contains(@style,'visible')]//div[contains(@id,'individualRecordAddDataForm')] /../../../../../../../..//*[text()="Save"]"</code> Only 1 match is found!
 
 ![DialogFinalXPath](/assets/img/XPaths/DialogFinalXPath.PNG)  
 

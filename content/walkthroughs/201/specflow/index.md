@@ -132,6 +132,26 @@ public void ThenAnAddressExists(Table addressFields)
 
 AddressDialog is not a class in the UAT SDK (Project Blue). At this point your build should be failing. Let's create an AddressDialog class and implement the SetAddressFields() method.
 
+<div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">AddressDialog Class with empty method.</div></div><pre><code class="language-csharp">
+using System;
+using Blueshirt.Core.Crm;
+using TechTalk.SpecFlow;
+
+namespace Delving_Deeper
+{
+    public class AddressDialog : Dialog
+    {
+        public static void SetAddressFields(Table addressFields)
+        {
+            throw new NotImplementedException();
+        }
+    }
+}
+</code>
+</pre>
+
+First we ensure that we are on the 'Address' tab. Then we parse through every row in the Table.
+
 <div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">For each TableRow in Table</div></div><pre><code class="language-csharp">
 using System;
 using Blueshirt.Core.Crm;

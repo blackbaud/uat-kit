@@ -13,7 +13,7 @@ code:
 
   - title: Project Blue 201 Code Sample
     description: In the following walkthroughs you'll learn how to use the UAT SDK's (Project Blue) underlying third-party tools to create custom logic and interactions with the browser.
-    repo: stache-cli/
+    repo: https://github.com/blackbaud/blue-docs/tree/master/static/assets/code-samples/201
     tutorial: <%= stache.config.blue_walkthroughs %>201/
 ---
 
