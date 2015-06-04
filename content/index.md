@@ -25,7 +25,7 @@ documentation_items:
     <h2>An Automation SDK for <a class="welcome-header-link" href="https://www.blackbaud.com/fundraising-crm/blackbaud-nonprofit-crm">Blackbaud CRM</a>.</h2>
     <ul class="list-inline">
       <li>
-        <a href="#about" class="btn btn-lg btn-primary smooth-scroll">Learn More</a>
+        <a href="{{stache.config.blue_walkthroughs_101}}" class="btn btn-lg btn-primary">Get Started</a>
       </li>
     </ul>
   </div>
