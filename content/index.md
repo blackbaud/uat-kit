@@ -84,6 +84,7 @@ documentation_items:
   </div>  <!-- .container -->
 </section>  <!-- .learn -->
 
+<!--
 <section id="start" class="start section-padding">
   <div class="container">
     <div class="row">
@@ -91,7 +92,8 @@ documentation_items:
         <h2>Get Help</h2>
         <p>Got questions?  We want to help! 
           Check out <a href="{{ stache.config.stache_docs_resources_faq }}">frequently asked questions</a>.</p>
-      </div>  <!-- .col-sm-12 -->
-    </div>  <!-- .row -->
-  </div>  <!-- .container -->
+      </div>  
+    </div>  
+  </div>  
 </section>
+-->
