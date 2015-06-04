@@ -30,7 +30,7 @@ yaml_pattern: <%= stache.config.base %>yaml-pattern/
 showcase_pattern: <%= stache.config.base %>showcase-pattern/
 sidebar_pattern: <%= stache.config.base %>sidebar-pattern/
 
-blue_home: http://localhost:4000/
+blue_home: <%= stache.config.base %>
 blue_api: <%= stache.config.blue_home %>API/
 blue_glossary: <%= stache.config.blue_home %>glossary/
 blue_overview: <%= stache.config.blue_home %>overview/
