@@ -91,7 +91,7 @@ documentation_items:
       <div class="col-sm-12">
         <h2>Get Help</h2>
         <p>Got questions?  We want to help! 
-          Check out <a href="{{ stache.config.stache_docs_resources_faq }}">frequently asked questions</a>.</p>
+          Check out <a href="{{ stache.config.stache_docs_resources_faq }}">frequently asked questions</a></p>
       </div>  
     </div>  
   </div>  
