@@ -6,19 +6,19 @@ name: Code Projects
 description: A listing of code samples for the 101 and 202 walkthroughs.
 published: true
 code:
-  - title: Project Blue 101 Code Sample
-    description: In the following walkthroughs you'll learn to quickly create a Blackbaud CRM GUI test suite using the Blackbaud UAT SDK.
+  - title: UAT Automation Kit 101 Code Sample
+    description: In the following walkthroughs, you'll learn to create a Blackbaud CRM GUI test suite using the Blackbaud UAT Automation Kit.
     repo: stache/
     tutorial: <%= stache.config.blue_walkthroughs %>101/
 
-  - title: Project Blue 201 Code Sample
-    description: In the following walkthroughs you'll learn how to use the UAT SDK's (Project Blue) underlying third-party tools to create custom logic and interactions with the browser.
+  - title: UAT Automation Kit 201 Code Sample
+    description: In the following walkthroughs, you'll learn how to use the UAT Automation Kit's underlying third-party tools to create custom logic and interactions with the browser.
     repo: https://github.com/blackbaud/blue-docs/tree/master/static/assets/code-samples/201
     tutorial: <%= stache.config.blue_walkthroughs %>201/
 ---
 
 
-# Project Blue: 101 & 201 Code Samples
+# UAT Automation Kit Code Samples
 
 <div class="code">
 

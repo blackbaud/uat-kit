@@ -1,21 +1,20 @@
 ---
 layout: layout-sidebar
 name: SpecFlow's Table and TableRow Guidelines
-description: In this walkthrough you will get experience with handling SpecFlow's Table and TableRow objects with the UAT SDK (Project Blue) API.
+description: In this walkthrough, you will get experience with handling SpecFlow's Table and TableRow objects with the UAT Automation Kit API.
 order: 30
 ---
 
+<p class="alert alert-warning"><strong><em>Warning:</em></strong> This is preliminary documentation and is subject to change.</p>
+
 # SpecFlow's Table and TableRow Guidelines
-
-<p class="alert alert-warning">Warning: This is preliminary documentation and is subject to change</p>
-
-In this walkthrough you will get experience with handling SpecFlow's Table and TableRow objects with the UAT SDK (Project Blue) API.
+In this walkthrough, you will get experience with handling SpecFlow's Table and TableRow objects with the {{ stache.config.product_name_short }} API.
 
 ## Prerequisites
 
-* You have completed the [Using the Selenium WebDriver]({{stache.config.blue_walkthroughs_201_selenium}}) walkthrough and have access to an Enterprise CRM application.
+* Complete the [Using the Selenium WebDriver]({{stache.config.blue_walkthroughs_201_selenium}}) walkthrough get access to a ***Blackbaud CRM*** instance.
 * You are comfortable adding tests and step implementations to existing feature and step files.
-* You are comfortable accessing the existing UAT SDK (Project Blue) Core API.
+* You are comfortable accessing the existing {{ stache.config.product_name_short }} Core API.
 * You are comfortable modifying the app.config to change which application the tests run against.
 * You are comfortable identifying the unique attribute values for the XPath constructors in the Core API and have completed the [XPath Guidelines]({{stache.config.blue_walkthroughs_201_xpaths}}) walkthrough.
 
@@ -130,7 +129,7 @@ public void ThenAnAddressExists(Table addressFields)
 </code>
 </pre>
 
-AddressDialog is not a class in the UAT SDK (Project Blue). At this point your build should be failing. Let's create an AddressDialog class and implement the SetAddressFields() method.
+AddressDialog is not a class in the {{ stache.config.product_name_short }}. At this point your build should be failing. Let's create an AddressDialog class and implement the SetAddressFields() method.
 
 <div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">AddressDialog Class with empty method.</div></div><pre><code class="language-csharp">
 using System;
@@ -233,9 +232,9 @@ This approach will handle the desired logic and UI interactions, but the code it
 
 ## Table Guidelines
 
-####["Table headers are no longer required to be 'Field' and 'Value'"](https://github.com/techtalk/SpecFlow/wiki/SpecFlow-Assist-Helpers)
+["Table headers are no longer required to be 'Field' and 'Value'"](https://github.com/techtalk/SpecFlow/wiki/SpecFlow-Assist-Helpers)
 
-By changing the format of our feature file tables and how we pass variables to a step method, we can take advantage of more functionality in the UAT SDK.
+By changing the format of our feature file tables and how we pass variables to a step method, we can take advantage of more functionality in the {{ stache.config.product_name_short }}.
 
 <div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">The same test from the previous section with a different format for the Tables</div></div><pre>.<code class="language-gherkin">
 @DelvingDeeper

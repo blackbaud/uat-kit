@@ -1,8 +1,8 @@
 # =============================================
 # PRODUCT
 # =============================================
-product_name_long: Automation UAT SDK (Project Blue) Walkthrough Docs
-product_name_short: Project Blue
+product_name_long: UAT Automation Kit
+product_name_short: UAT Automation Kit
 title: <%= stache.config.product_name_short %> Documentation
 
 omnibar_title: <%= stache.config.product_name_short %>

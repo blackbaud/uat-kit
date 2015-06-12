@@ -1,12 +1,11 @@
 ---
 layout: layout-sidebar
-name: Project Blue 101
-description: In the following walkthroughs you'll learn to quickly create a Blackbaud CRM GUI test suite using the Blackbaud UAT SDK.
+name: UAT Automation Kit 101
+description: In the following walkthrough, you'll learn to quickly create a Blackbaud CRM GUI test suite using the UAT Automation Kit.
 order: 10
 ---
 
-# Project Blue 101
+<p class="alert alert-warning"><strong><em>Warning:</em></strong> This is preliminary documentation and is subject to change.</p>
 
-<p class="alert alert-warning">Warning: This is preliminary documentation and is subject to change</p>
-
-In the following walkthroughs you'll learn to quickly create a Blackbaud CRM GUI test suite using the Blackbaud UAT SDK.
+# {{ stache.config.product_name_short }} 101
+In the following walkthrough, you'll learn to create a ***Blackbaud CRM*** GUI test suite with the {{ stache.config.product_name_short }}.

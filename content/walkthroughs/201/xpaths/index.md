@@ -1,34 +1,34 @@
 ---
 layout: layout-sidebar
 name: XPath Guidelines
-description: Walkthrough of how to create XPaths to find elements within the Enterprise CRM application.
+description: Walkthrough of how to create XPaths to find elements within the Blackbaud CRM application.
 order: 20
 ---
 
+<p class="alert alert-warning"><strong><em>Warning:</em></strong> This is preliminary documentation and is subject to change.</p>
+
 # XPath Guidelines
-
-<p class="alert alert-warning">Warning: This is preliminary documentation and is subject to change</p>
-
-In this walkthrough you'll gain experience creating XPaths to find elements consistently and uniquely within the Enterprise CRM application.
+In this walkthrough, you'll gain experience creating XPaths to find elements consistently and uniquely within the ***Blackbaud CRM*** application.
 
 ## Prerequisites
 
-* You have completed the [Using the Selenium WebDriver]({{stache.config.blue_walkthroughs_201_selenium}}) walkthrough and have access to an Enterprise CRM application.
+* You have completed the [Using the Selenium WebDriver]({{stache.config.blue_walkthroughs_201_selenium}}) walkthrough and have access to a ***Blackbaud CRM*** instance.
 * You understand XML syntax.
 * You have read through and familiarized yourself with the concepts at [Choosing Effective XPaths](http://www.toolsqa.com/selenium-webdriver/choosing-effective-xpath/)
 
 ## Introduction to XPaths
 
-Selenium's WebDriver is what the UAT SDK (Project Blue) uses to interact with the web browser, and XPath is the selection methology for finding elements in the browser.
+Selenium's WebDriver is what the {{ stache.config.product_name_short }} uses to interact with the web browser, and XPath is the selection methology for finding elements in the browser.
 
-<div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">WebDriver search using an XPath selector condition.</div></div><pre><code class="language-csharp">
+<div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">WebDriver search using an XPath selector condition.</div></div>
+<pre><code class="language-csharp">
 IWebElement someElement = driver.FindElement(By.XPath(String.Format("//button[contains(@class,'linkbutton')]/div[text()='Constituent search']")));
 </code>
 </pre>
 
 Web browsers such as Google Chrome provide an ability to view the HTML elements and their heirarchy.
 
-In Chrome right-clicking on a button, link, image, etc. will bring up an options menu with the option to "Inspect element".
+In Chrome right-clicking on a button, link, image, etc. will bring up an options menu with the option to "Inspect element."
 
 ![InspectElement](/assets/img/XPaths/InspectElement.PNG)  
 
@@ -42,7 +42,7 @@ Entering the XPath <code>"//button[contains(@class,'linkbutton')]/div[text()='Co
 
 ![XPathMultipleResults](/assets/img/XPaths/XPathMultipleResults.PNG)
 
-The above XPath returned multiple matching elements based on the XPath selector condition. The existing API methods of the UAT SDK (Project Blue) accepting an XPath parameter assume the provided XPaths will return a single element. If you provide a custom or static XPath returning multiple results, it is advised to modify the XPath until a single element is consistently returned. Common Enterprise CRM XPath selector patterns to aide in finding a single element are discussed in the next section of this walkthrough.
+The above XPath returned multiple matching elements based on the XPath selector condition. The existing API methods of the {{ stache.config.product_name_short }} accepting an XPath parameter assume the provided XPaths will return a single element. If you provide a custom or static XPath returning multiple results, it is advised to modify the XPath until a single element is consistently returned. Common Enterprise CRM XPath selector patterns to aide in finding a single element are discussed in the next section of this walkthrough.
 
 By modifying the XPath selector to <code>"//div[contains(@id,'contentpanel')]/div[contains(@id,'contentpanel') and not(contains(@class, 'hide-display'))]//button[contains(@class,'task-link')]/div[text()='Constituent search']"</code>, we can reduce our matching results to a single element.
 
@@ -56,11 +56,11 @@ To see how the modified XPath narrows its selection critieria, let's start with 
 
 ![CRMRootXPath](/assets/img/XPaths/CRMRootXPath.PNG)  
 
-Look through the matching elements or at the below image. We can see a single parent div with the id containing 'contentpanel'. We can also see several immediate children elements also containing 'contentpanel' in the id. Hover your mouse over each matching element to what gets highlighted in the browser.
+Look through the matching elements or at the below image. We can see a single parent div with the ID containing "contentpanel." We can also see several immediate children elements also containing 'contentpanel' in the ID. Hover your mouse over each matching element to what gets highlighted in the browser.
 
 ![CRMContentPanel](/assets/img/XPaths/CRMContentPanel.PNG)  
 
-When navigating between different areas in the application, CRM stores previous pages in the HTML but marks them as hidden. If the user tries to navigate back to a previously visited panel, the load will be much faster because the panel's components are already stored in the browser. Notice how only one child 'contentpanel' results in the browser highlighting an element. The contentpanels not resulting a browser highlight have the 'x-hide-display' test in their class attribute and are not displayed in the browser.
+When navigating between different areas in the application, ***Blackbaud CRM*** stores previous pages in the HTML but marks them as hidden. If the user tries to navigate back to a previously visited panel, the load will be much faster because the panel's components are already stored in the browser. Notice how only one child "contentpanel" results in the browser highlighting an element. The contentpanels not resulting a browser highlight have the "x-hide-display" test in their class attribute and are not displayed in the browser.
 
 ![CRMContentPanelHiddenPanels](/assets/img/XPaths/CRMContentPanelHiddenPanels.PNG)
 
@@ -111,11 +111,13 @@ Digging into the [div] containing the dialog input fields, we come across a [div
 Using this unique id, we can construct an XPath <code>"//div[contains(@class,'bbui-dialog') and contains(@style,'visible')]//div[contains(@id,'individualRecordAddDataForm')]"</code> to find the div with this id.
 ![DialogXPathDialogUniqueId]/assets/img/XPaths/(DialogXPathDialogUniqueId)  
 
+****Missing Image here from original docs****
+
 Then we can add additional search criteria to the XPath to find a button with the text "Save" relative to the [div] with the unique id. Search using the XPath <code>"//div[contains(@class,'bbui-dialog') and contains(@style,'visible')]//div[contains(@id,'individualRecordAddDataForm')] /../../../../../../../..//*[text()="Save"]"</code> Only 1 match is found!
 
 ![DialogFinalXPath](/assets/img/XPaths/DialogFinalXPath.PNG)  
 
-The API of the UAT SDK (Project Blue) provides many XPath constructors for various application components like Panels and Dialogs. Refer to our API documentation to see exactly what existing XPath constructors are available, what parameters they require, and what type of elements they try and uniquely locate.
+The API of the {{ stache.config.product_name_short }} provides many XPath constructors for various application components like Panels and Dialogs. Refer to our API documentation to see exactly what existing XPath constructors are available, what parameters they require, and what type of elements they try and uniquely locate.
 
 ## See Also
 
