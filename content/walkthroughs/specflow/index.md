@@ -1,8 +1,8 @@
 ---
 layout: layout-sidebar
-name: SpecFlow's Table and TableRow Guidelines
+name: SpecFlow Table and TableRow Guidelines
 description: In this walkthrough, you will get experience with handling SpecFlow's Table and TableRow objects with the UAT Automation Kit API.
-order: 30
+order: 40
 ---
 
 <p class="alert alert-warning"><strong><em>Warning:</em></strong> This is preliminary documentation and is subject to change.</p>

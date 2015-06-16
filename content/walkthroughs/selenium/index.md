@@ -1,8 +1,8 @@
 ---
 layout: layout-sidebar
-name: Using the Selenium WebDriver
+name: Use the Selenium WebDriver
 description: Walkthrough of how the UAT Automation Kit uses Selenium to interact with the UI.
-order: 10
+order: 20
 ---
 
 <p class="alert alert-warning"><strong><em>Warning:</em></strong> This is preliminary documentation and is subject to change.</p>

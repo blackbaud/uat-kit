@@ -2,7 +2,7 @@
 layout: layout-sidebar
 name: XPath Guidelines
 description: Walkthrough of how to create XPaths to find elements within the Blackbaud CRM application.
-order: 20
+order: 30
 ---
 
 <p class="alert alert-warning"><strong><em>Warning:</em></strong> This is preliminary documentation and is subject to change.</p>

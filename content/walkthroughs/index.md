@@ -1,13 +1,12 @@
 ---
-layout: layout-showcase
+layout: layout-sidebar
 name: Walkthroughs
-order: 20
+order: 10
 ---
 
 <p class="alert alert-warning"><strong><em>Warning:</em></strong> This is preliminary documentation and is subject to change.</p>
 
 # Walkthroughs
-The walkthroughs are broken down into 2 tutorials.
+The walkthroughs in this section of the website are broken down into a series of tutorials and guidelines.
 
-* Use the 101 tutorial to get started with the {{ stache.config.product_name_short }}.
-* Use the 201 tutorial to delve deeper into the SDK and its tools.
+Use the walkthroughs to learn how to create a ***Blackbaud CRM*** GUI test suite with the {{ stache.config.product_name_short }} and how to use the underlying third-party tools to create custom logic and interactions with the browser.

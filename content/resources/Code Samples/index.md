@@ -1,13 +1,13 @@
 ---
 layout: layout-container
 showHeadings: false
-order: 70
-name: Code Projects
-description: A listing of code samples for the 101 and 202 walkthroughs.
+order: 60
+name: Code Samples
+description: A listing of code samples for the UAT Automation Kit walkthroughs.
 published: true
 code:
-  - title: UAT Automation Kit 101 Code Sample
-    description: In the following walkthroughs, you'll learn to create a Blackbaud CRM GUI test suite using the Blackbaud UAT Automation Kit.
+  - title: Get Started with the UAT Automation Kit
+    description: In this sample, you'll learn how to create a test project to get you started on the path to creating a ***Blackbaud CRM*** GUI test suite with the UAT Automation Kit.
     repo: stache/
     tutorial: <%= stache.config.blue_walkthroughs %>101/
 

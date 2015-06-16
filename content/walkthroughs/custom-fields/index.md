@@ -1,8 +1,8 @@
 ---
 layout: layout-sidebar
-name: Setting Custom Fields
+name: Set Custom Fields
 description: In this walkthrough you'll gain experience setting a custom field on a dialog and overriding default implementations.
-order: 40
+order: 50
 ---
 
 <p class="alert alert-warning"><strong><em>Warning:</em></strong> This is preliminary documentation and is subject to change.</p>

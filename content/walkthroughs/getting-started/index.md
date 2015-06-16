@@ -1,6 +1,6 @@
 ---
 layout: layout-sidebar
-name: Quick Start
+name: Get Started
 description: Learn how to create a Blackbaud CRM GUI test suite using the UAT Automation Kit.
 order: 10
 ---
