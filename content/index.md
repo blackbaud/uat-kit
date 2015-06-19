@@ -36,7 +36,7 @@ documentation_items:
     <div class="row">
       <div class="col-sm-12 text-center">
         <h2>What is the {{ stache.config.product_name_long }}?</h2>
-        <p class="lead">Get an overview of the automation tool for how to use it to create a suite of automated tests.</p>
+        <p class="lead">Get an overview of the automation tool and how to use it to create a suite of automated tests.</p>
         <p><a href="{{stache.config.blue_overview}}" class="btn btn-lg btn-primary">Overview</a></p>
       </div>  <!-- .col-sm-12 -->
     </div>  <!-- .row -->
@@ -51,7 +51,7 @@ documentation_items:
       <div class="col-lg-10 col-lg-offset-1">
         
         <h2>{{ stache.config.product_name_short }} Resources</h2>
-         <p class="lead">Our walkthroughs get you up and running and guide you through using the {{ stache.config.product_name_short }}:</p>
+         <p class="lead">Our walkthroughs get you up and running and guide you through using the {{ stache.config.product_name_short }}.</p>
          
         {{# eachWithMod documentation_items mod=3 }}
 

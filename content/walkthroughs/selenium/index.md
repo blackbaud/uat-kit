@@ -1,7 +1,7 @@
 ---
 layout: layout-sidebar
 name: Use the Selenium WebDriver
-description: Walkthrough of how the UAT Automation Kit uses Selenium to interact with the UI.
+description: Walkthrough of how the UAT Automation Kit uses Selenium to interact with the Blackbaud CRM user interface.
 order: 20
 ---
 
@@ -12,11 +12,11 @@ In this walkthrough, you'll learn how to use Selenium's WebDriver and Wait patte
 
 ## Prerequisites
 
-1. A unit test project that was installed with the {{ stache.config.product_name_short }} NuGet package.
+1. A unit test project with the {{ stache.config.product_name_short }} NuGet packages installed.
 2. Access to a ***Blackbaud CRM*** application to run tests against.
-3. Familiarity with
- * Using the {{ stache.config.product_name_short }} Custom SpecFlow Plugin for ***Visual Studio***.
- * Creating new feature files.
+3. Familiarity with:
+ * The {{ stache.config.product_name_short }} Custom SpecFlow Plugin for ***Visual Studio***.
+ * Creating feature files.
  * Generating step classes bound to feature files.
  * Accessing the {{ stache.config.product_name_short }} Core API.
 
@@ -24,8 +24,13 @@ In this walkthrough, you'll learn how to use Selenium's WebDriver and Wait patte
 
 <ol>
 <li>
-<p>Create the Gherkin test and Step method.</p>
-<div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Create an unimplemented feature test that requires navigation between functional areas.</div></div>
+<p>In your unit test project in ***Visual Studio***, create a Gherkin test and step method.</p>
+
+<ol>
+<li>
+<p>Create an unimplemented feature test that requires navigation between functional areas. Right-click the project in Solution Explorer, select <strong>Add</strong>, <strong>New item</strong>, and then select the SpecFlow Feature File template and click <strong>Add</strong>.</p>
+<p>Update the behavior-driven development test as necessary. For example, you can create a test to confirm that you can navigate to the <strong><em>Revenue</em></strong> functional area.</p>
+<div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Unimplemented feature test.</div></div>
 <pre><code class="language-gherkin">
 @DelvingDeeper
 Scenario: Log into BBCRM, load a functional area, and change functional area.
@@ -34,8 +39,13 @@ Scenario: Log into BBCRM, load a functional area, and change functional area.
 	Then the panel header caption is "Revenue"
 </code>
 </pre>
+</li>
 
-<div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Generate the failing step class methods.</div></div>
+<li>
+<p>Generate the failing step class methods.</p>
+<p>Right-click within the feature file and select <strong>Generate Step Definitions</strong>, click <strong>Generate</strong>, and then make sure the path points to your test project and click <strong>Save</strong>. The step file appears in Solution Explorer.</p>
+<p>At the beginning of the file, insert <code>using Blueshirt.Core.Base</code> to import the <strong><em>Blackbaud CRM</em></strong> types defined by that namespace.</p>
+<div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Failing step class methods</div></div>
 <pre><code class="language-csharp">
 using Blueshirt.Core.Base;
 using TechTalk.SpecFlow;
@@ -66,8 +76,13 @@ namespace Delving_Deeper
 }
 </code>
 </pre>
+</li>
 
-<div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Unimplemented class and method. Build should fail at this point.</div></div>
+<li>
+<p>Within the class, update the placeholder within the first set of brackets to specify an unimplemented class and method.</p>
+<p>Replace <code>ScenarioContext.Current.Pending();</code> with <code>BBCRMHomePage.Logon();</code> and then <code>MyCustomBBCrmHomePage.NavigateToFunctionalArea(functionalArea);</code> to specify logging in to <strong><em>Blackbuad CRM</em></strong> and navigating to the <strong><em>Constituents</em></strong> functional area.</p>
+<p>If you attempt to build at this point with the project with the unimplemented class and method in place, the build should fail.</p>
+<div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Unimplemented class and method</div></div>
 <pre><code class="language-csharp">
 [Given(@"I have logged into BBCRM and navigated to functional area ""(.&#42;)""")]
 public void GivenIHaveLoggedIntoBbcrmAndNavigatedToFunctionalArea(string functionalArea)
@@ -78,10 +93,14 @@ public void GivenIHaveLoggedIntoBbcrmAndNavigatedToFunctionalArea(string functio
 </code>
 </pre>
 </li>
+</ol>
+</li>
 
 <li>
 <p>Create a custom class that inherits <code>BBCRMHomePage</code>.</p>
-<div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Create the new custom class and method. Have the new method throw a NotImplementedException. The build should succeed now.</div></div>
+
+<p>Create the new custom class and method. Have the new method throw a NotImplementedException. The build should succeed now.</p>
+<div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Custom class and method</div></div>
 <pre><code class="language-csharp">
 using System;
 using Blueshirt.Core.Crm;
@@ -101,7 +120,9 @@ namespace Delving_Deeper
 </li>
 <li>
 <p>Implement the custom method. The common pattern employed in the {{ stache.config.product_name_short }} is to wait until a certain condition is met before proceeding with the next action. The Selenium Webdriver is what allows us to interact with the browser to determine whether our desired condition is met.</p>
-<div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Add the "OpenQA.Selenium" and "OpenQA.Selenium.Support.UI" namespace references at the top of your file.</div></div>
+
+<p>Add the "OpenQA.Selenium" and "OpenQA.Selenium.Support.UI" namespace references at the top of your file.</p>
+<div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Namespace references</div></div>
 <pre><code class="language-csharp">
 public static void NavigateToFunctionalArea(string caption)
 {
@@ -324,7 +345,7 @@ The test should pass!
 <p class="alert alert-info">The {{ stache.config.product_name_short }} API provides lots browser interactions that encapsulate different WebDriver logic. Before creating new WebDriver logic, first look into the API to see what functionality is already provided. Hopefully the desired WebDriver logic and XPath constructor are already available from the API.</p>
 -->
 
-## See Also
+### See Also
 
-[XPath Guidelines]({{stache.config.blue_walkthroughs_201_xpaths}})
+[XPath Guidelines]({{stache.config.blue_walkthroughs_xpaths}})
 

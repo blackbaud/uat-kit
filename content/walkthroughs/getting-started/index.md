@@ -23,17 +23,9 @@ Before you create your first test project and install the NuGet packages for the
 ## Create a Test Project
 <ol>
 <li>
-<p>Create a unit test project.</p>
+<p>In ***Visual Studio***, select <strong>File</strong>, <strong>New</strong>, <strong>Project</strong>, and then select the <strong>Test</strong> category and the <strong>Unit Test Project</strong> template. Edit the project name, location, and solution name as necessary.</p>
 <p>![New Project wizard](/assets/img/FirstProject/NewBSProject.PNG)</p>
-<ol>
-<li>
-<p>In ***Visual Studio***, select <strong>File</strong>, <strong>New</strong>, <strong>Project</strong>, and then select the <strong>Test</strong> category and the <strong>Unit Test Project</strong> template on the New Project Wizard screen.</p>
 <p class="alert alert-info">The {{ stache.config.product_name_short }} takes advantage of the <strong>Unit Test Project</strong> template to create a test project, but it is a system test, not a unit test.</p>
-</li>
-<li>
-<p>Edit the project name, location, and solution name as necessary, and click <strong>OK</strong>. <strong><em>Visual Studio</em></strong> creates the test project.</p>
-</li>
-</ol>
 </li>
 
 <li>
@@ -138,7 +130,7 @@ Scenario: Quick Constituent Search
 
 <ol>
 <li>
-<p>Right-click the feature file and select <strong>Generate Step Definitions</strong>. The Generate Step Definition Skeleton screen appears.</p>
+<p>Right-click within the feature file and select <strong>Generate Step Definitions</strong>. The Generate Step Definition Skeleton screen appears.</p>
 </li>
 <li>
 <p>Click <strong>Generate</strong>, and then on the Select target step definition class file screen, make sure the path points to your test project and click <strong>Save</strong>. The step file appears in <strong>Solution Explorer</strong>.</p>
@@ -354,7 +346,7 @@ For example, use the Visual Studio Test Explorer.
 ![For example using the Visual Studio Test Explorer](/assets/img/FirstProject/ConstituentSearchResults.PNG)
 -->
 
-## See Also
+### See Also
 
 [NuGet](https://www.nuget.org/)  
 [SpecFlow](http://www.specflow.org/)

@@ -12,4 +12,4 @@ Use the following links to learn more about the underlying third-party tools tha
 * [NuGet](https://www.nuget.org/)  
 * [SpecFlow](http://www.specflow.org/)  
 * [Selenium WebDriver](www.seleniumhq.org/)  
-* [Introduction to XPaths]()
+* [Introduction to XPaths](http://www.w3schools.com/xpath/)
