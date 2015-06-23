@@ -14,14 +14,14 @@ In this walkthrough, you will get experience with handling SpecFlow's Table and 
 
 * Completion of the [Using the Selenium WebDriver]({{stache.config.blue_walkthroughs_selenium}}) walkthrough.
 * Access to a ***Blackbaud CRM*** instance to test against.
-* You are comfortable adding tests and step implementations to existing feature and step files.
-* You are comfortable accessing the existing {{ stache.config.product_name_short }} Core API.
-* You are comfortable modifying the App.config to change which application the tests run against.
-* You are comfortable identifying the unique attribute values for the XPath constructors in the Core API and have completed the [XPath Guidelines]({{stache.config.blue_walkthroughs_xpaths}}) walkthrough.
+* Familiarity with adding tests and step implementations to existing feature and step files.
+* Familiarity with accessing the {{ stache.config.product_name_short }} Core API.
+* Familiarity with modifying the App.config to change which application the tests run against.
+* Familiarity with identifying the unique attribute values for the XPath constructors in the Core API and completion of the [XPath Guidelines]({{stache.config.blue_walkthroughs_xpaths}}) walkthrough.
 
 ## From Feature File to Step File - The Old Approach to Tables
 
-SpecFlow feature files support tables for passing variables to the .NET step methods.
+SpecFlow feature files allow you to use tables to pass variables to .NET step methods.
 <div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Test example to add address to constituent</div></div><pre><code class="language-gherkin">
 @DelvingDeeper
 Scenario: Add an address to a constituent
@@ -43,11 +43,11 @@ Scenario: Add an address to a constituent
 </code>
 </pre>
 
-At some point, the test attemps to set the fields on the Add an address dialog.
+At some point, the test example attempts to set the fields on the Add an address dialog.
 
 ![Add an address dialog][AddAddressDialog]
 
-Specflow creates bindings between the test cases and the step methods. The field variables for the Add an address dialog are passed through the <code>Table</code> parameter.
+Specflow creates bindings between test cases and step methods. Field variables for the Add an address dialog are passed through the <code>Table</code> parameter.
 
 <div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Step method with Table parameter</div></div><pre><code class="language-csharp">
 using System;
@@ -131,7 +131,7 @@ public void ThenAnAddressExists(Table addressFields)
 </code>
 </pre>
 
-<code>AddressDialog</code> is not a class in the {{ stache.config.product_name_short }}. At this point, your build should fail. Let's create an <code>AddressDialog</code> class and implement the <code>SetAddressFields()</code> method.
+<code>AddressDialog</code> is not a class in the {{ stache.config.product_name_short }}, so your build should fail at this point. We need to create the <code>AddressDialog</code> class and implement a <code>SetAddressFields()</code> method.
 
 <div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">AddressDialog Class with empty method</div></div><pre><code class="language-csharp">
 using System;
@@ -151,7 +151,7 @@ namespace Delving_Deeper
 </code>
 </pre>
 
-First we ensure that we are on the Address tab. Then we parse through every row in the Table.
+We ensure that we are on the Address tab, and then we parse every row in the table.
 
 <div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">For each TableRow in Table</div></div><pre><code class="language-csharp">
 using System;
@@ -175,7 +175,7 @@ namespace Delving_Deeper
 </code>
 </pre>
 
-Each iteration through the loop gives us a new row from the <code>Table</code>. We need to use the <code>TableRow</code> object to find a field with an XPath selector and set the field's value. The specific field represented as the <code>TableRow</code> object determines how we construct the XPath, what variables we pass to the XPath constructor, and what type of field setter we use. This logic must be defined for each possible value of row["Field"].  
+Each iteration through the loop gives us a new row from the table. We need to use the <code>TableRow</code> object to find a field with an XPath selector and set the field's value. The specific field represented as the <code>TableRow</code> object determines how to construct the XPath, what variables to pass to the XPath constructor, and what type of field setter to use. This logic must be defined for each possible value of <code>row["Field"]</code>.  
 
 To handle this, we create a switch on the caption value. The caption dictates the type of field to set and how to set its value.
 
@@ -228,13 +228,13 @@ namespace Delving_Deeper
 </code>
 </pre>
 
-<p class="alert alert-info">If you do not understand where the variables for the XPath constructors come from, please review the [XPath Guidelines]({{stache.config.blue_walkthroughs_xpaths}}) walkthrough.</p>
+<p class="alert alert-info">For information about where the variables for the XPath constructors come from, see the [XPath Guidelines]({{stache.config.blue_walkthroughs_xpaths}}) walkthrough.</p>
 
 This approach handles the desired logic and UI interactions, but the code itself is bulky and unpleasant. The next section shows how to manipulate the format of your table to get cleaner, more adaptable code.
 
 ## Table Guidelines
 
-["Table headers are no longer required to be 'Field' and 'Value'"](https://github.com/techtalk/SpecFlow/wiki/SpecFlow-Assist-Helpers)
+[Table headers are no longer required to be "Field" and "Value."](https://github.com/techtalk/SpecFlow/wiki/SpecFlow-Assist-Helpers)
 
 By changing the format of our feature file tables and how we pass variables to a step method, we can take advantage of more functionality in the {{ stache.config.product_name_short }}.
 
