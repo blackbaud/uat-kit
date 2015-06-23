@@ -13,7 +13,7 @@ In this walkthrough, you'll learn how to use Selenium's WebDriver and Wait patte
 ## Prerequisites
 
 1. A unit test project with the {{ stache.config.product_name_short }} NuGet packages installed.
-2. Access to a ***Blackbaud CRM*** application to run tests against.
+2. Access to a ***Blackbaud CRM*** instance to test against.
 3. Familiarity with:
  * The {{ stache.config.product_name_short }} Custom SpecFlow Plugin for ***Visual Studio***.
  * Creating feature files.
@@ -28,8 +28,8 @@ In this walkthrough, you'll learn how to use Selenium's WebDriver and Wait patte
 
 <ol>
 <li>
-<p>Create an unimplemented feature test that requires navigation between functional areas. Right-click the project in Solution Explorer, select <strong>Add</strong>, <strong>New item</strong>, and then select the SpecFlow Feature File template and click <strong>Add</strong>.</p>
-<p>Update the behavior-driven development test as necessary. For example, you can create a test to confirm that you can navigate to the <strong><em>Revenue</em></strong> functional area.</p>
+<p>Create an unimplemented feature test that requires navigation between functional areas.</p>
+<p>Right-click the project in Solution Explorer, select <strong>Add</strong>, <strong>New item</strong>, and then select the SpecFlow Feature File template and click <strong>Add</strong>. Then update the behavior-driven development test to confirm that you can navigate from the <strong><em>Constituents</em></strong> functional area to the <strong><em>Revenue</em></strong> functional area.</p>
 <div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Unimplemented feature test.</div></div>
 <pre><code class="language-gherkin">
 @DelvingDeeper
@@ -79,9 +79,9 @@ namespace Delving_Deeper
 </li>
 
 <li>
-<p>Within the class, update the placeholder within the first set of brackets to specify an unimplemented class and method.</p>
-<p>Replace <code>ScenarioContext.Current.Pending();</code> with <code>BBCRMHomePage.Logon();</code> and then <code>MyCustomBBCrmHomePage.NavigateToFunctionalArea(functionalArea);</code> to specify logging in to <strong><em>Blackbuad CRM</em></strong> and navigating to the <strong><em>Constituents</em></strong> functional area.</p>
-<p>If you attempt to build at this point with the project with the unimplemented class and method in place, the build should fail.</p>
+<p>Update the placeholder in the first set of brackets to specify an unimplemented class and method.</p>
+<p>Replace the <code>ScenarioContext.Current.Pending();</code> placeholder with <code>BBCRMHomePage.Logon(); MyCustomBBCrmHomePage.NavigateToFunctionalArea(functionalArea);</code> to specify logging in to <strong><em>Blackbuad CRM</em></strong> and navigating to the <strong><em>Constituents</em></strong> functional area.</p>
+<p>If you attempt to build the project at this point with the unimplemented class and method in place, the build should fail.</p>
 <div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Unimplemented class and method</div></div>
 <pre><code class="language-csharp">
 [Given(@"I have logged into BBCRM and navigated to functional area ""(.&#42;)""")]
@@ -99,7 +99,12 @@ public void GivenIHaveLoggedIntoBbcrmAndNavigatedToFunctionalArea(string functio
 <li>
 <p>Create a custom class that inherits <code>BBCRMHomePage</code>.</p>
 
-<p>Create the new custom class and method. Have the new method throw a NotImplementedException. The build should succeed now.</p>
+<p>Right-click the project in Solution Explorer, select <strong>Add</strong>, <strong>New item</strong>, and then select the Class template on the Add New Item screen. For this example, name the file "MyCustomBBCrmHomePage.cs" and click <strong>Add</strong>.</p>
+
+<p>At the beginning of the new class file, insert <code>using Blueshirt.Core.Crm</code> to import the <strong><em>Blackbaud CRM</em></strong> types defined by that namespace, and then rename the class as <code>MyCustomBBCrmHomePage</code> and specify that it inherits <code>BBCRMHomePage</code>.</p>
+
+<p>Next, rename the custom class's method as <code>NavigateToFunctionalArea</code> and specify that the new method throws a <code>NotImplementedException</code>. If you attempt to build the project at this point with the exception specified for the method, the build should now succeed.</p>
+
 <div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Custom class and method</div></div>
 <pre><code class="language-csharp">
 using System;
@@ -119,10 +124,15 @@ namespace Delving_Deeper
 </pre>
 </li>
 <li>
-<p>Implement the custom method. The common pattern employed in the {{ stache.config.product_name_short }} is to wait until a certain condition is met before proceeding with the next action. The Selenium Webdriver is what allows us to interact with the browser to determine whether our desired condition is met.</p>
+<p>Implement the custom method.</p>
 
-<p>Add the "OpenQA.Selenium" and "OpenQA.Selenium.Support.UI" namespace references at the top of your file.</p>
-<div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Namespace references</div></div>
+<p class="alert alert-info">The common pattern that the {{ stache.config.product_name_short }} employs is to wait until a condition is met before proceeding with the next action. It uses the Selenium Webdriver to interact with the browser and determine whether the desired condition is met.</p>
+
+<p>At the beginning of the new class file, insert insert references to the "OpenQA.Selenium" and "OpenQA.Selenium.Support.UI" namespaces to import the types defined by the namespaces.</p>
+
+<p>Next, update the method to create a while loop that waits for "True" to be returned before exiting the loop. When "False" is returned, the loop starts over. We can specify an amount of time that should expire in the loop until a WebDriverTimeoutException is thrown. Finally we can specify exception types to ignore in the loop. If exceptions of the specified types are thrown, the resulting action is the equivalent of "False" being returned at that moment.</p>
+
+<div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Loop</div></div>
 <pre><code class="language-csharp">
 public static void NavigateToFunctionalArea(string caption)
 {
@@ -136,7 +146,7 @@ public static void NavigateToFunctionalArea(string caption)
 </code>
 </pre>
 
-<p>In the above code, we essentially create a while loop that waits for "True" to be returned before exiting the loop. Any time "False" is returned, the loop starts over. We can specify an amount of time that should expire in the loop until a WebDriverTimeoutException is thrown. Finally we can specify Exception types to ignore in the loop. If exceptions of the specified types are thrown, the resulting action is the equivalent of "False" being returned at that moment.</p>
+<p>Next, update the method to replace its <code>NotImplementedException</code>. We use the WebDriver (referenced as <code>driver</code> in our lambda method) to find an element on our application and check a condition on the element. In this instance, we want to check if the element is <code>Displayed</code> before proceeding. If we find the element but it is not visible yet, we can immediately return "False" because our desired condition is not met. This causes the loop to start over, and the WebDriver attempts to get a refreshed version of the element. When the element is visible, we use the WebDriver to send a "Click" action on the element and return "True" to exit the loop so that the next step method call can begin.</p>
 
 <div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Example of using the WebDriver to find a web element, check a condition on it, and execute a step if the condition has been met.</div></div>
 <pre><code class="language-csharp">
@@ -152,9 +162,9 @@ navigateWaiter.Until(driver =>
 </code>
 </pre>
 
-<p>Above we used the WebDriver (referenced as "driver" in our lambda method) to find an element on our application and checked a condition on the element. In this instance, we want to check if the element is "Displayed" before proceeding. If we found the element but it is not visible yet, we can immediately return "False" because our desired condition has not been met. This will cause the loop to start over, and the web driver will attempt to get a refreshed version of the element. If the element is visible, then we use the WebDriver to send a "Click" action on it and return true to exit the loop so that the next step method call can begin.</p>
+<p>An immediate question might be "How did the WebDriver find the element we wanted?" The WebDriver has an API with different selection methods to find elements in your browser application. The {{ stache.config.product_name_short }} relies on XPaths to parse the HTML elements and find the desired element. More details about XPaths and best practices can be found in the reference links at the end of this article. Suggested Enterprise CRM XPath patterns and examples will be discussed in a later walkthrough.</p>
 
-<p>An immediate question might be "How did the WebDriver find the element we wanted?" The WebDriver has an API with different selection methods in order to find elements in your browser application. The {{ stache.config.product_name_short }} relies on XPaths to parse the HTML elements and find the desired element. More details about XPaths and best practices can be found in the reference links at the end of this article. Suggested Enterprise CRM XPath patterns and examples will be discussed in a later walkthrough. For the moment, update the code driver.FindElement line to the following:</p>
+<p>For now, update the code driver <code>.FindElement</code> line to the following:</p>
 
 <div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">WebDriver FindElement using an XPath for the selector.</div></div><pre><code class="language-csharp">
 IWebElement functionalAreaElement = driver.FindElement(By.XPath(String.Format("//button[text()='{0}']", caption)));
@@ -190,13 +200,13 @@ public void ThenThePanelHeaderCaptionIs(string headerCaption)
 </li>
 
 <li>
-<p>Make sure your app.config is set to run on your accessible application, build the solution, and run the test.</p>
+<p>Make sure your App.config is set to run on your accessible application, build the solution, and run the test.</p>
 <p>![](/assets/img/Selenium/RunSelectedTests.PNG)</p>
 
 <p>The test should pass!</p>
 <p>![](/assets/img/Selenium/SelectedTestsPass.PNG)</p>
 
-<p class="alert alert-info">The {{ stache.config.product_name_short }} API provides lots browser interactions that encapsulate different WebDriver logic. Before creating new WebDriver logic, first look into the API to see what functionality is already provided. Hopefully the desired WebDriver logic and XPath constructor are already available from the API.</p>
+<p class="alert alert-info">The {{ stache.config.product_name_short }} API provides lots browser interactions that encapsulate different WebDriver logic. Before you create new WebDriver logic, check the API to see what functionality is already provided. Hopefully the desired WebDriver logic and XPath constructor are already available from the API.</p>
 </li>
 </ol>
 
@@ -348,4 +358,3 @@ The test should pass!
 ### See Also
 
 [XPath Guidelines]({{stache.config.blue_walkthroughs_xpaths}})
-

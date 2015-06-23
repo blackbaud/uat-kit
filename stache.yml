@@ -35,8 +35,22 @@ blue_api: <%= stache.config.blue_home %>API/
 blue_glossary: <%= stache.config.blue_home %>glossary/
 blue_overview: <%= stache.config.blue_home %>overview/
 blue_walkthroughs: <%= stache.config.blue_home %>walkthroughs/
-blue_walkthroughs_101: <%= stache.config.blue_walkthroughs %>101/getting-started
+blue_walkthroughs_getting-started: <%= stache.config.blue_walkthroughs %>getting-started/
 blue_walkthroughs_201: <%= stache.config.blue_walkthroughs %>201/
-blue_walkthroughs_201_selenium: <%= stache.config.blue_walkthroughs_201 %>selenium/
-blue_walkthroughs_201_xpaths: <%= stache.config.blue_walkthroughs_201 %>xpaths/
-blue_walkthroughs_201_specflow: <%= stache.config.blue_walkthroughs_201 %>specflow/
+blue_walkthroughs_selenium: <%= stache.config.blue_walkthroughs %>selenium/
+blue_walkthroughs_xpaths: <%= stache.config.blue_walkthroughs %>xpaths/
+blue_walkthroughs_specflow: <%= stache.config.blue_walkthroughs %>specflow/
+
+
+overview: <$= stache.config.base %>overview/
+walkthroughs: <$= stache.config.base %>walkthroughs/
+walkthroughs_getting-started: <$= stache.config.walkthroughs %>getting-started/
+walkthroughs_selenium: <$= stache.config.walkthroughs %>selenium/
+walkthroughs_xpaths: <$= stache.config.walkthroughs %>xpaths/
+walkthroughs_specflow: <$= stache.config.walkthroughs %>specflow/
+walkthroughs_custom-fields: <$= stache.config.walkthroughs %>custom-fields/
+api: <$= stache.config.base %>API/
+resources: <$= stache.config.base %>resources/
+resources_Code Samples: <$= stache.config.base %>Code Samples/
+resources_suggested-reading: <$= stache.config.base %>suggested-reading/
+

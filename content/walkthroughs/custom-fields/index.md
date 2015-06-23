@@ -7,19 +7,20 @@ order: 50
 
 <p class="alert alert-warning"><strong><em>Warning:</em></strong> This is preliminary documentation and is subject to change.</p>
 
-# Setting Custom Fields
-<p class="alert alert-warning">Examples follow customizations that you likely will not have on your application. Either follow along against your own customizations and modify the steps accordingly, or follow the screenshots below.</p>
-
+# Set Custom Fields
 In this walkthrough, you'll gain experience setting a custom field on a dialog and overriding default implementations.
+
+<p class="alert alert-warning">The examples in this walkthrough follow customizations that you likely do not have in your ***Blackbaud CRM*** instance. You can follow along with your own customizations and modify the steps accordingly.</p>
 
 ## Prerequisites
 
-* Complete the [Using the Selenium WebDriver]({{stache.config.blue_walkthroughs_201_selenium}}) walkthrough and get access to a ***Blackbaud CRM*** instance.
-* Complete the [SpecFlow's Table and TableRow Guidelines]({{stache.config.blue_walkthroughs_201_specflow}}) walkthrough.
+* Completion of the [Using the Selenium WebDriver]({{stache.config.blue_walkthroughs_selenium}}) walkthrough.
+* Access to a ***Blackbaud CRM*** instance to test against.
+* Complete the [SpecFlow's Table and TableRow Guidelines]({{stache.config.blue_walkthroughs_specflow}}) walkthrough.
 * You are comfortable adding tests and step implementations to existing feature and step files.
 * You are comfortable accessing the existing {{ stache.config.product_name_short }} Core API.
-* You are comfortable modifying the app.config to change which application the tests run against.
-* You are comfortable identifying the unique attribute values for the XPath constructors in the Core API and have completed the [XPath Guidelines]({{stache.config.blue_walkthroughs_201_xpaths}}) walkthrough.
+* You are comfortable modifying the App.config to change which application the tests run against.
+* You are comfortable identifying the unique attribute values for the XPath constructors in the Core API and have completed the [XPath Guidelines]({{stache.config.blue_walkthroughs_xpaths}}) walkthrough.
 
 ## Add Support For Custom Fields - Overload Approach
 
@@ -31,13 +32,13 @@ In this walkthrough, you'll gain experience setting a custom field on a dialog a
 
 <p>![TODO](/assets/img/CustomFields/OriginalAddIndividual.PNG)</p>
 
-<p>Here is a customized version of the Add an individual screen with new fields.</p>
+<p>And this is a customized version of the Add an individual screen with additional fields.</p>
 
 <p>![TODO](/assets/img/CustomFields/CustomAddIndividual.PNG)</p>
 
-<p class="alert alert-info">Notice that custom fields are required fields as well. We need to consider that when setting the fields for adding an individual on this application.</p>
+<p class="alert alert-info">Notice that the custom fields are required fields. We need to keep this in mind when we set the fields for adding individuals in ***Blackbaud CRM***.</p>
 
-<p>In our test project, if we create a scenario outlined and implemented like this...</p>
+<p>In our test project, we can create a scenario outlined and implemented like this...</p>
 
 <pre><code class="language-gherkin">
 @DelvingDeeper
@@ -50,7 +51,7 @@ Scenario: Add an individual on a dialog containing a custom field.
 </code>
 </pre>
 
-<div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Core API used to implement steps.</div></div><pre><code class="language-csharp">
+<div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Core API to implement steps</div></div><pre><code class="language-csharp">
 using System;
 using Blueshirt.Core.Base;
 using Blueshirt.Core.Crm;
@@ -91,19 +92,19 @@ namespace Delving_Deeper
 </code>
 </pre>
 
-<p class="alert alert-info">The application with the custom field also had a custom group caption for the "Add an individual" task. This is why the ConstituentsFunctionalArea.AddAnIndividual() call overloads the 'groupCaption' parameter.</p>
+<p class="alert alert-info">In addition to the custom field, the customization also includes a custom group caption for the Add an individual task. This is why the <code>ConstituentsFunctionalArea.AddAnIndividual()</code> call overloads the <code>groupCaption</code> parameter.</p>
 
-<p>... and run the test against the application with the new custom field, then we get an error indicating a need to add custom support for the new field.</p>
+<p>When we run the test with the customization and its custom field in lace, an error indicates that we need to add custom support for the new field.</p>
 
 <p>![TODO](/assets/img/CustomFields/NotImplemetedFieldAddIndividual.PNG)</p>
 </li>
 
 <li>
-<p>Create Class Inheriting Core Class</p>
+<p>Create a Class That Inherits a Core Class</p>
 
-<p>To resolve this failure, we need to add support for the additional custom fields. Create a new class in your project.</p>
+<p>To resolve this failure, we create a class in the project to add support for the additional custom fields. .</p>
 
-<div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Custom Individual Dialog Class Inheriting IndividualDialog</div></div>
+<div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Custom Individual Dialog Class That Inherits IndividualDialog</div></div>
 <pre><code class="language-csharp">
 using Blueshirt.Core.Crm;
 
@@ -123,7 +124,7 @@ namespace Delving_Deeper
 
 <p>We need to map the custom field captions to their relevant XPath and Field Setter values.</p>
 
-<div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Custom Individual Dialog Class with mapped custom fields.</div></div
+<div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Custom Individual Dialog Class with mapped custom fields</div></div
 ><pre><code class="language-csharp">
 using System.Collections.Generic;
 using Blueshirt.Core.Base;
@@ -143,13 +144,13 @@ namespace Delving_Deeper
 </code>
 </pre>
 
-<p class="alert alert-warning">You should be comfortable understanding how the unique id attributes for the fields were gathered from the UI. These values are used for the XPath constructors that locate and interact with the fields. Review the [XPath Guidelines]({{stache.config.blue_walkthroughs_201_xpaths}}) if you do not follow where the values "_ATTRIBUTECATEGORYVALUE0_value" and "_ATTRIBUTECATEGORYVALUE1_value" come from.</p>
+<p class="alert alert-warning">You should understand how the unique <code>id</code> attributes for the fields were gathered from the UI. These values are used for the XPath constructors that locate and interact with the fields. If you do not understand where the values <code>_ATTRIBUTECATEGORYVALUE0_value</code> and <code>_ATTRIBUTECATEGORYVALUE1_value</code> come from, review the [XPath Guidelines]({{stache.config.blue_walkthroughs_xpaths}}).</p>
 </li>
 
 <li>
-<p>Pass Custom Supported Fields To Base.</p>
+<p>Pass Custom Supported Fields To Base</p>
 
-<p>The custom class uses its inherited IndividualDialog values to pass the required values to the Dialog's SetFields() method. SetFields has an overload that takes in a second IDictionary mapping of field captions to CrmFields. We can pass our dictionary of custom fields to add additional support for custom fields.</p>
+<p>The custom class uses its inherited <code>IndividualDialog</code> values to pass the required values to the Dialog's <code>SetFields()</code> method. <code>SetFields</code> has an overload that takes in a second <code>IDictionary</code> mapping of field captions to <code>CrmFields</code>. We can pass our dictionary of custom fields to add additional support for custom fields.</p>
 
 <div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Custom SetIndividualFields()</div></div>
 <pre><code class="language-csharp">
@@ -160,13 +161,13 @@ public new static void SetIndividualFields(TableRow fields)
 </code>
 </pre>
 
-<p class="alert alert-info">If a mapping exists in our CustomSupportedFields where the string key is an already existing key for SupportedFields, the mapped values for CustomSupportedFields is used.</p>
+<p class="alert alert-info">If a mapping exists in our <code>CustomSupportedFields</code> where the string key is an already existing key for <code>SupportedFields</code>, the mapped values for <code>CustomSupportedFields</code> is used.</p>
 </li>
 
 <li>
-<p>Modify Your Step Implementation.</p>
+<p>Modify the Step Implementation</p>
 
-<p>Modify your step definition to use the new CustomIndividualDIalog's SetIndividualFields() method.</p>
+<p>Modify the step definition to use the new <code>CustomIndividualDIalog</code>'s <code>SetIndividualFields</code>() method.</p>
 
 <div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Modified Step Implementation</div></div>
 <pre><code class="language-csharp">
@@ -185,9 +186,9 @@ public void WhenIAddConstituent(Table constituents)
 </code>
 </pre>
 
-<p class="alert alert-warning">Depending on your application, the Save step may cause a duplicate entry or error dialog to appear in the application. If this occurs, we advise adding a unique stamp to the last name of your constituent's values as shown above.</p>
+<p class="alert alert-warning">The Save step may cause a duplicate entry or error dialog. If this occurs, we advise adding a unique stamp to the last name of your constituent's values as shown above.</p>
 
-<p>The test passes now!</p>
+<p>The test passes now.</p>
 
 <p>![TODO](/assets/img/CustomFields/PassingTest.PNG)</p>
 </li>
@@ -220,9 +221,9 @@ Scenario: Add an individual on a dialog containing a custom field using a custom
 <li>
 <p>Add Method to Custom Class</p>
 
-<p>In this approach we describe setting a single field's value for a step. Add the following method to your CustomIndividualDialog class.</p>
+<p>In this approach, we describe setting a single field's value for a step. Add the following method to your <code>CustomIndividualDialog</code> class.</p>
 
-<div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Custom method.</div></div>
+<div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Custom method</div></div>
 <pre><code class="language-csharp">
 public static void SetCustomField(string fieldCaption, string value)
 {
@@ -232,13 +233,13 @@ public static void SetCustomField(string fieldCaption, string value)
 </code>
 </pre>
 
-<p class="alert alert-info">Notice how the custom method did not need the "new" attribute in the method declaration. "new" is only needed when overriding an inherited method.</>
+<p class="alert alert-info">Notice how the custom method did not need the <code>new</code> attribute in the method declaration. <code>new</code> is only needed when overriding an inherited method.</>
 </li>
 
 <li>
-<p>Implement The New Step Methods</p>
+<p>Implement the New Step Methods</p>
 
-<div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Implemetation of new steps.</div></div>
+<div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Implemetation of new steps</div></div>
 <pre><code class="language-csharp">
 [When(@"I start to add a constituent")]
 public void WhenIStartToAddAConstituent(Table constituents)
@@ -266,11 +267,11 @@ public void WhenISaveTheAddAnIndividualDialog()
 </code>
 </pre>
 
-<p>The test passes now!</p>
+<p>The test passes now.</p>
 
 <p>![TODO](/assets/img/CustomFields/2ndPassingTest.PNG)</p>
 
-<p class="alert alert-info">There are many ways to use the {{ stache.config.product_name_short }} API in order to achieve the same result. Above are two potential implementations to handle a dialog with a custom field, but these are not the only approaches. The methods and their underlying logic are totally defined by the user. You are free to create whatever helper methods you see fit. Look into the API documentation and see if you can come up with a different solution.</p>
+<p class="alert alert-info">The {{ stache.config.product_name_short }} provides multiple ways to achieve a result. This walkthrough has described two potential implementations to handle a dialog with a custom field, but these are not the only approaches. The methods and their underlying logic are totally defined by the user. You are free to create whatever helper methods you see fit. Look into the API documentation and see if you can come up with a different solution.</p>
 </li>
 
 </ol>
@@ -279,7 +280,7 @@ public void WhenISaveTheAddAnIndividualDialog()
 
 <ol>
 <li>
-<p>Identify Need To Overload Implementation</p>
+<p>Identify the Need to Overload Implementation</p>
 
 <p>Let's start with the following test case.</p>
 
@@ -293,7 +294,7 @@ Scenario: Set the Last/Org/Group name field in a constituent search dialog
 </code>
 </pre>
 
-<div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Implemetation of steps.</div></div>
+<div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Implemetation of steps</div></div>
 <pre><code class="language-csharp">
 [When(@"I open the constituent search dialog")]
 public void WhenIOpenTheConstituentSearchDialog()
@@ -316,27 +317,27 @@ public void ThenTheLastOrgGroupNameFieldIs(string expectedValue)
 </code>
 </pre>
 
-<p>When run against the standard CRM application, the test passes.</p>
+<p>When run against a standard ***Blackbaud CRM*** application, the test passes.</p>
 
 <p>![TODO](/assets/img/CustomFields/PassingDefaultConstituentSearch.PNG)</p>
 
-<p>The steps navigate to the Constituents functional area and click the "Constituent search" task.</p>
+<p>The steps navigate to the ***Constituents*** functional area and click the **Constituent search** task.</p>
 
 <p>![TODO](/assets/img/CustomFields/DefaultConstituentSearchTask.PNG)</p>
 
-<p>The "Last/Org/Group name" field is set and validated as containing the desired value.</p>
+<p>The **Last/Org/Group name** field is set and validated as containing the desired value.</p>
 
 <p>![TODO](/assets/img/CustomFields/DefaultConstituentSearchDialog.PNG)</p>
 
-<p>If we run the test against a custom application whose Constituent functional area looks like this...</p>
+<p>If we run the test against a custom application whose ***Constituent*** functional area looks like this...</p>
 
 <p>![TODO](/assets/img/CustomFields/CustomConstituentSearchTask.PNG)</p>
 
-<p>...we get the following error.</p>
+<p>... then we get the following error:</p>
 
 <p>![TODO](/assets/img/CustomFields/DefaultOnCustomSearchDialogError.PNG)</p>
 
-<p>This is resolved with the following code edit.</p>
+<p>We can resolve this with the following code edit.</p>
 
 <div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Edited step</div></div>
 <pre><code class="language-csharp">
@@ -349,25 +350,25 @@ public void WhenIOpenTheConstituentSearchDialog()
 </code>
 </pre>
 
-<p>Running the test now we get a new error.</p>
+<p>If we run the test now, we get a new error.</p>
 
 <p>![TODO](/assets/img/CustomFields/DefaultOnCustomSearchDialogFieldError.PNG)</p>
 
-<p>Another customization must exist. The error stack trace indicates that the XPath constructor for the "Last/Org/Group name" field is not compatible with this application. NoSuchElementExceptions are thrown when Selenium's WebDriver times out looking for a web element using the XPath.</p>
+<p>Another customization must exist. The error stack trace indicates that the XPath constructor for the **Last/Org/Group name** field is not compatible with this application. <code>NoSuchElementExceptions</code> are thrown when Selenium's WebDriver times out looking for a web element using the XPath.</p>
 
 <p>![TODO](/assets/img/CustomFields/CustomConstituentSearchDialog.PNG)</p>
 </li>
 
 <li>
-<p>Identify The Customization</p>
+<p>Identify the Customization</p>
 
-<p>Let's take a look at the search dialogs between the default and custom applications. Comparing the dialogs, clearly the dialog on the right has been customized. Inspecting the "Last/Org/Group name" field between the two applications, we can see they share the same unique field ID.</p>
+<p>Let's take a look at the search dialogs between the default and custom applications. Comparing the dialogs, clearly the dialog on the right has been customized. Inspecting the **Last/Org/Group name** field between the two applications, we can see they share the same unique field ID.</p>
 
 <p>![TODO](/assets/img/CustomFields/ComparingFieldIdSearchDialog.PNG)</p>
 
-<p class="alert alert-info">If you do not know how to identify the field's unique id, please review the [XPath Guidelines]({{stache.config.blue_walkthroughs_201_xpaths}})</p>
+<p class="alert alert-info">If you do not know how to identify the field's unique ID, please review the [XPath Guidelines]({{stache.config.blue_walkthroughs_xpaths}})</p>
 
-<p>Inspecting the unique dialog ids, we can see that they are different. The supported XPath constructs an XPath using the dialog id "ConstituentSearchbyNameorLookupID". We need to modify the dialog id to use the custom dialog ID.</p>
+<p>Inspecting the unique dialog IDs, we can see that they are different. The supported XPath constructs an XPath using the dialog ID <code>ConstituentSearchbyNameorLookupID</code>. We need to modify the dialog ID to use the custom dialog ID.</p>
 
 <p>![TODO](/assets/img/CustomFields/ComparingDialogIdsSearchDialog.PNG)</p>
 </li>
@@ -377,7 +378,7 @@ public void WhenIOpenTheConstituentSearchDialog()
 
 <p>Update the step code so the XPath constructors use the custom dialog ID.</p>
 
-<div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Edited steps for custom dialog id</div></div>
+<div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Edited steps for custom dialog ID</div></div>
 <pre><code class="language-csharp">
 [When(@"set the Last/Org/Group name field value to ""(.&#42;)""")]
 public void WhenSetTheLastOrgGroupNameFieldValueTo(string fieldValue)
@@ -393,7 +394,7 @@ public void ThenTheLastOrgGroupNameFieldIs(string expectedValue)
 </code>
 </pre>
 
-<p>The test passes now on the custom application.</p>
+<p>The test passes now.</p>
 
 <p>![TODO](/assets/img/CustomFields/PassingDefaultConstituentSearch.PNG)</p>
 </li>
@@ -403,9 +404,9 @@ public void ThenTheLastOrgGroupNameFieldIs(string expectedValue)
 
 <ol>
 <li>
-<p>Identify Need For Overriding Implementation</p>
+<p>Identify the Need to Override Implementation</p>
 
-<p>Let's start with the following test case that works against the standard CRM application.</p>
+<p>Let's start with the following test case that works against a standard ***Blackaud CRM*** instance.</p>
 
 <pre><code class="language-gherkin">
 @DelvingDeeper
@@ -425,7 +426,7 @@ Scenario: Add an individual and set the related individual through the constitue
 </code>
 </pre>
 
-<div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Implemetation of steps.</div></div>
+<div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Implemetation of steps</div></div>
 <pre><code class="language-csharp">
 using System;
 using Blueshirt.Core.Base;
@@ -491,11 +492,11 @@ namespace Delving_Deeper
 </code>
 </pre>
 
-<p>At some point in the test, the 'Related individual' field on the Add an individual dialog is set by using the associated searchlist.</p>
+<p>At some point in the test, the **Related individual** field on the Add an individual dialog is set by using the associated searchlist.</p>
 
 <p>![TODO](/assets/img/CustomFields/OverrideProcedure/RecordSearch.PNG)</p>
 
-<p>What if we wanted to set the field through the add button? This would require us to override the default implementation for how the 'Related individual' field is set.</p>
+<p>What if we wanted to set the field through the **Add** button? This would require us to override the default implementation for how the **Related individual** field is set.</p>
 
 <p>![TODO](/assets/img/CustomFields/OverrideProcedure/AddIcon.PNG)</p>
 </li>
@@ -503,7 +504,7 @@ namespace Delving_Deeper
 <li>
 <p>Create a Custom Method</p>
 
-<p>If you do not have a CustomIndividualDialog class created yet, add a new class to your project and implement it as follows.  First we make sure to select the 'Household' tab.</p>
+<p>If you do not have a <code>CustomIndividualDialog</code> class created yet, add a new class to your project and implement it as follows. First we make sure to select the Household tab.</p>
 
 <div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Selecting the right tab</div></div>
 <pre><code class="language-csharp">
@@ -525,9 +526,9 @@ namespace Delving_Deeper
 </code>
 </pre>
 
-<p>Next we specify custom logic if a value for the 'Related individual' field has been provided. If a value has been provided for this field, we click the button that brings up the add dialog. Be sure to read the API documentation for the XPath constructors.</p>
+<p>Next we specify custom logic if a value for the **Related individual** field is provided. If a value is provided for this field, we click the button that brings up the add dialog. Be sure to read the API documentation for the XPath constructors.</p>
 
-<div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Click the add button for the field</div></div>
+<div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Click the fields's Add button</div></div>
 <pre><code class="language-csharp">
 public new static void SetHouseholdFields(TableRow fields)
 {
@@ -540,13 +541,13 @@ public new static void SetHouseholdFields(TableRow fields)
 </code>
 </pre>
 
-<p>This is the resulting dialog from clicking the add button on the 'Related individual' field.</p>
+<p>This is the resulting dialog from clicking the add button on the **Related individual** field.</p>
 
 <p>![TODO](/assets/img/CustomFields/OverrideProcedure/TriggerDialog.PNG)</p>
 
-<p>We then set the 'Last name' field value to the value provided for 'Related individual' before hitting Ok. We could have defined any logic and interactions involving this dialog, but let's keep it simple.</p>
+<p>We then set the **Last name** field value to the value provided for **Related individual** before clicking **OK**. We could have defined any logic and interactions involving this dialog, but let's keep it simple.</p>
 
-<div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Set the 'Last name' field</div></div>
+<div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Set the Last name field</div></div>
 <pre><code class="language-csharp">
 public new static void SetHouseholdFields(TableRow fields)
 {
@@ -561,9 +562,9 @@ public new static void SetHouseholdFields(TableRow fields)
 </code>
 </pre>
 
-<p>Before we call the base implementation to handle setting the rest of the fields, we set fields["Related individual"] to equal null. We do this because we want the base SetHouseholdFields to skip it's handling of the 'Related individual' field.</p>
+<p>Before we call the base implementation to set the rest of the fields, we set fields["Related individual"] to equal null. We do this because we want the base <code>SetHouseholdFields</code> to skip its handling of the **Related individual** field.</p>
 
-<div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Set 'Related individual' to null and call the base method.</div></div>
+<div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Set Related individual to null and call the base method</div></div>
 <pre><code class="language-csharp">
 using Blueshirt.Core.Crm;
 using TechTalk.SpecFlow;
@@ -589,16 +590,16 @@ namespace Delving_Deeper
 </code>
 </pre>
 
-Another solution would have been to remove the 'Related individual' key from the fields object.
+Another solution would be to remove the **Related individual** key from the fields object.
 
-<div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Remove the 'Related individual' key</div></div><pre><code class="language-csharp">
+<div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Remove the Related individual key</div></div><pre><code class="language-csharp">
 fields.Keys.Remove("Related individual");
 </code>
 </pre>
 </li>
 
 <li>
-<p>Update The Steps</p>
+<p>Update the Steps</p>
 
 <p>Change the step setting the household tab fields.</p>
 
@@ -615,11 +616,11 @@ public void WhenSetTheHouseholdFields(Table fieldsTable)
 </code>
 </pre>
 
-<p>The test now sets the 'Related individual' field through the add button and not the search dialog.</p>
+<p>The test now sets the **Related individual** field through the add button and not the search dialog.</p>
 </li>
 
 </ol>
 
 ## See Also
 
-[SpecFlow's Table and TableRow Guidelines]({{stache.config.blue_walkthroughs_201_specflow}})
+[SpecFlow's Table and TableRow Guidelines]({{stache.config.blue_walkthroughs_specflow}})

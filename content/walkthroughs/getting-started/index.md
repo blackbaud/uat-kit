@@ -34,11 +34,10 @@ Before you create your first test project and install the NuGet packages for the
 
 <ol>
 <li>
-<p>Right-click the solution in <strong>Solution Explorer</strong> and select <strong>Manage NuGet Packages for Solution.</strong></p>
+<p>To access the NuGet package source, right-click the solution in <strong>Solution Explorer</strong> and select <strong>Manage NuGet Packages for Solution</strong>. Then the Manage NuGet Packages screen, click <strong>Settings</strong>. And on the Options screen, click the add button on enter "BB NuGet" in the <strong>Name</strong> field and "http://tfs-sym.blackbaud.com:81/nuget/" in the <strong>Source</strong> field.</p>
+<p class="alert alert-info"><strong><em>NEED TO UPDATE THIS SECTION FOR EAP. AND MAYBE AGAIN WHEN WE RELEASE.</em></strong> ... The {{ stache.config.product_name_short }} packages may be available from the public NuGet package repository in the nuget.org category. ... Or we may provide standalone nupkg files instead and have users add the location of htose files as a package source in the NuGet settings.</p>
 </li>
-<li>
-<p>On the Manage NuGet Packages screen, select the <strong>BB NuGet</strong> category and search for "Blueshirt."</p>
-<p class="alert alert-info">For release, {{ stache.config.product_name_short }} packages will be available from the public NuGet package repository in the nuget.org category. ... If Blackbaud provides standalone nupkg files instead, then users can add their location as a package source in the NuGet settings.</p>
+<p>Back on the Manage NuGet Packages screen, select the <strong>BB NuGet</strong> category and search for "Blueshirt."</p>
 </li>
 <li>
 <p>Select <strong>Blueshirt SpecFlow Plugin</strong> and click <strong>Install</strong>. Then with your unit test project and solution selected, click <strong>OK</strong> on the Select projects screen.</p>
@@ -90,17 +89,8 @@ Before you create your first test project and install the NuGet packages for the
 
 <li>
 <p>Add a new feature file.</p>
-
 <p>![New Item wizard](/assets/img/FirstProject/AddAFeatureFile.PNG)</p>
-
-<ol>
-<li>
-<p>Right-click the project in <strong>Solution Explorer</strong> and select <strong>Add</strong>, <strong>New item</strong>.</p>
-</li>
-<li>
-<p>Select the <strong>SpecFlow Feature File</strong> template and edit the file name as necessary, then click <strong>Add</strong>.</p> 
-</li>
-</ol>
+<p>Right-click the project in <strong>Solution Explorer</strong> and select <strong>Add</strong>, <strong>New item</strong>. Then select the <strong>SpecFlow Feature File</strong> template, edit the file name as necessary, and click <strong>Add</strong>.</p> 
 </li>
 
 <li>
@@ -125,17 +115,8 @@ Scenario: Quick Constituent Search
 <li>
 <p>Generate a step file.</p>
 <p></p>
-
 <p>![Step File wizard](/assets/img/FirstProject/GenerateSteps.PNG)</p>
-
-<ol>
-<li>
-<p>Right-click within the feature file and select <strong>Generate Step Definitions</strong>. The Generate Step Definition Skeleton screen appears.</p>
-</li>
-<li>
-<p>Click <strong>Generate</strong>, and then on the Select target step definition class file screen, make sure the path points to your test project and click <strong>Save</strong>. The step file appears in <strong>Solution Explorer</strong>.</p>
-</li>
-</ol>
+<p>Right-click within the feature file and select <strong>Generate Step Definitions</strong>. On the Generate Step Definition Skeleton screen, click <strong>Generate</strong>. Then on the Select target step definition class file screen, make sure the path points to your test project and click <strong>Save</strong>.</p>
 </li>
 
 <li>
@@ -187,7 +168,7 @@ namespace Blue&#95;101
 <p>At the beginning of the file, insert <code>using Blueshirt.Core.Crm</code> to import the <strong><em>Blackbaud CRM</em></strong> types defined by that namespace.</p>
 </li>
 <li>
-<p>Within the class, update placeholders within the brackets to specify the actions to take.</p>
+<p>Within the class, update the placeholders within the brackets to specify the actions to take.</p>
 <p>For example, in the first set of brackets, replace <code>ScenarioContext.Current.Pending();</code> with <code>BBCRMHomePage.Login();</code> to specify logging in to the <strong><em>Blackbuad CRM</em></strong> home page.</p>
 </li>
 </ol>
