@@ -230,17 +230,12 @@ namespace Delving_Deeper
 
 <p class="alert alert-info">For information about where the variables for the XPath constructors come from, see the [XPath Guidelines]({{stache.config.blue_walkthroughs_xpaths}}) walkthrough.</p>
 
-This approach handles the desired logic and UI interactions, but the code itself is bulky and unpleasant. The next section shows how to manipulate the format of your table to get cleaner, more adaptable code.
+This approach handles the desired logic and UI interactions, but the code itself is bulky and unpleasant. The next section demonstrates how to manipulate the format of your table to get cleaner, more adaptable code.
 
 ## Table Guidelines
+The table headers of "Field" and "Value" from the SpecFlow feature file example in the previous section [are not required to pass variables to .NET step methods.](https://github.com/techtalk/SpecFlow/wiki/SpecFlow-Assist-Helpers) To take advantage of more functionality in the {{ stache.config.product_name_short }}, we can change the table format and how we pass variables to a step method.
 
-[Table headers are no longer required to be "Field" and "Value."](https://github.com/techtalk/SpecFlow/wiki/SpecFlow-Assist-Helpers)
-
-By changing the format of our feature file tables and how we pass variables to a step method, we can take advantage of more functionality in the {{ stache.config.product_name_short }}.
-
-We can use different format for the Tables in the same test from the previous section.
-
-<div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Test example to add address to constituent</div></div><pre>.<code class="language-gherkin">
+<div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Modified test example to add address to constituent</div></div><pre>.<code class="language-gherkin">
 @DelvingDeeper
 Scenario: Add an address to a constituent
 	Given I have logged into BBCRM
@@ -254,7 +249,7 @@ Scenario: Add an address to a constituent
 </code>
 </pre>
 
-Changing the table's headers from "Field" and "Value" to the dialog's field captions forces a change to the code and how it handles the <code>Table</code> object.
+After we change the table headers from "Field" and "Value" to the field captions in the dialog, we must then change how the code handles the <code>Table</code> object.
 
 <div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Edited step definitions</div></div><pre><code class="language-csharp">
 [When(@"I add an address to the current constituent")]
@@ -271,11 +266,9 @@ public void WhenIAddAnAddressToTheCurrentConstituent(Table addressTable)
 </code>
 </pre>
 
-<p class="alert alert-info">Instead of passing the whole table to the <code>SetMethod</code>, we loop through the rows in the <code>Table</code> and pass in a single <code>TableRow</code>.
+<p class="alert alert-info">Instead of passing the whole table to the <code>SetMethod</code>, we loop through the rows in the table and pass in a single <code>TableRow</code>.
 <br>
-<br>
-We only want to pass to the <code>SetAddressFields()</code> method an object that contains the relevant address dialog values. In the previous method, the entire <code>Table</code> object contained these values.  In this situation, only a <code>TableRow</code> is needed to gather the necessary values.
-</p>
+We only want to pass an object with  the relevant address dialog values to the <code>SetAddressFields()</code> method. In the previous method, the entire <code>Table</code> object contained these values. In this situation, only a <code>TableRow</code> is necessary to gather the necessary values.</p>
 
 Let's implement the method for handling a single <code>TableRow</code>.
 
@@ -311,14 +304,13 @@ namespace Delving_Deeper
 </code>
 </pre>
 
-<p class="alert alert-info"><code>CrmField</code> also supports setting fields through a search dialog. Refer to the <code>[CrmField]()</code> and <code>[FieldType]()</code> API documentation to get a better understanding of the <code>CrmField</code> constructors.
-</p>
+<p class="alert alert-info"><code>CrmField</code> also supports setting fields through a search dialog. Refer to the <code>[CrmField]()</code> and <code>[FieldType]()</code> API documentation to get a better understanding of <code>CrmField</code> constructors.</p>
 
-With a <code>TableRow</code> whose <code>Keys</code> represent the dialog's field captions, we can now utilize the API's <code>Dialog.SetFields()</code> method. Instead of creating a switch on the field caption value, we can create a dictionary mapping the supported field captions to the relevant variables needed to set the field's value. These variables are encapsulated in the <code>CrmField</code> class.  
+With a <code>TableRow</code> whose <code>Keys</code> represent the dialog's field captions, we can now utilize the API's <code>Dialog.SetFields()</code> method. Instead of creating a switch on the field caption value, we can create a dictionary that maps the supported field captions to the relevant variables that are needed to set the field's value. These variables are encapsulated in the <code>CrmField</code> class.  
 
-Now when we want to add support for a new field, we define the logic in a single line for the <code>SupportedFields</code> dictionary instead of a switch-case handler.  
+To add support for a new field, we define the logic in a single line for the <code>SupportedFields</code> dictionary instead of a switch-case handler.  
 
-Let's examine the <code>'Then'</code> step again. By changing the table format here, we no longer need to convert the <code>Table</code> to a <code>Dictionary</code>. Instead we can directly pass the <code>TableRows</code> of the <code>Table</code> to <code>Panel.SectionDatalistRowExists()</code>.
+Let's examine the <code>Then</code> step again. Since we changed the table format, we no longer need to convert the table to a dictionary. Instead we can directly pass the <code>TableRows</code> of the <code>Table</code> to <code>Panel.SectionDatalistRowExists()</code>.
 
 <div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Edited 'Then' Step</div></div><pre><code class="language-csharp">
 [Then(@"an address exists")]
@@ -334,7 +326,7 @@ public void ThenAnAddressExists(Table addressTable)
 </code>
 </pre>
 
-With this format, we also have the ability to add multiple addresses and validate multiple addresses simply by adding rows to the table. No additional code is required.
+With this format, we can also add multiple addresses and validate multiple addresses simply by adding rows to the table. No additional code is required.
 
 <div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Modified test case to contain multiple rows</div></div><pre><code class="language-gherkin">
 @DelvingDeeper
@@ -356,11 +348,11 @@ The <code>foreach</code> loop in the step methods breaks down the <code>Table</c
 
 <p class="alert alert-info">Empty table cells are treated as empty strings.
 <br>
-Leaving a cell empty results in an attempt to set the field's value to an empty string. To skip setting the field, you must remove the key from the <code>TableRow</code> or set the value to null.
+Leaving a cell empty results in an attempt to set the field's value to an empty string. To skip setting the field, you can remove the key from the <code>TableRow</code> or set the value to null.
 <br>
 <code>if (row.ContainsKey("Country") && row["Country"] == String.Empty) row["Country"] = null;</code>
 <br>
-Empty table cells for a datalist select or validation are skipped and no code edits are necessary.
+Empty table cells for a data list select or validation are skipped and no code edits are necessary.
 </p>
 
 ## Support Multiple Dialog IDs
@@ -415,7 +407,7 @@ public void WhenSetTheAddressFields(Table addressTable)
 
 <p class="alert alert-info">Notice that you can call step methods from within step methods as done in <code>GivenIAddAnAddressToTheCurrentConstiteunt()</code>.</p>
 
-The above code will compile but fail against the application. The implementation of <code>SetAddressFields(TableRow addressFields)</code> statically enters "AddressAddForm2" as the dialog's unique if for the XPath constructors.
+The above code compiles but fails against the application. The implementation of <code>SetAddressFields(TableRow addressFields)</code> statically enters "AddressAddForm2" as the dialog's unique if for the XPath constructors.
 
 <div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Static dialog ID</div></div><pre><code class="language-csharp">
 public static void SetAddressFields(TableRow addressFields)
@@ -453,7 +445,7 @@ public class AddressDialog : Dialog
 </code>
 </pre>
 
-## See Also
+### See Also
 
 [SpecFlow Tables and TableRows](https://github.com/techtalk/SpecFlow/wiki/SpecFlow-Assist-Helpers)  
 

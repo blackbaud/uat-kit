@@ -125,5 +125,5 @@ Then we can add additional search criteria to the XPath to find a button with th
 
 The {{ stache.config.product_name_short }} API provides many XPath constructors for various application components such as panels and dialogs. Use the API documentation to see the XPath constructors that are available, the parameters they require, and the types of elements that they uniquely locate.
 
-## See Also
+### See Also
 [Choosing Effective XPaths](http://www.toolsqa.com/selenium-webdriver/choosing-effective-xpath/)  
