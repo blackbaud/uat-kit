@@ -5,7 +5,8 @@ description: Walkthrough of how the UAT Automation Kit uses Selenium to interact
 order: 20
 ---
 
-<p class="alert alert-warning"><strong><em>Warning:</em></strong> This is preliminary documentation and is subject to change.</p>
+<p class="alert alert-warning"><strong><em>Warning:</em></strong> This website is for the early adopter program for the {{ stache.config.product_name_long }}. It is not intended for general use at this point, and the documentation is in a preliminary state and is subject to change.</p>
+
 
 # Use the Selenium WebDriver
 In this walkthrough, you'll learn how to use Selenium's WebDriver and Wait pattern to drive browser interactions.

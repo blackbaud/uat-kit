@@ -5,7 +5,8 @@ description: Learn how to create a Blackbaud CRM GUI test suite using the UAT Au
 order: 10
 ---
 
-<p class="alert alert-warning"><strong><em>Warning:</em></strong> This is preliminary documentation and is subject to change.</p>
+<p class="alert alert-warning"><strong><em>Warning:</em></strong> This website is for the early adopter program for the {{ stache.config.product_name_long }}. It is not intended for general use at this point, and the documentation is in a preliminary state and is subject to change.</p>
+
 
 # Get Started with {{ stache.config.product_name_short }}
 This tutorial walks you through the process of creating a test project with the {{ stache.config.product_name_short }}. After you master the basics, you can use the {{ stache.config.product_name_short }} to start creating your a suite of automated tests to facilitate your User Acceptance Testing for ***Blackbaud CRM*** upgrades.

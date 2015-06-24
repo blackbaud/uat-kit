@@ -4,7 +4,7 @@ name: Overview
 order: 10
 ---
 
-<p class="alert alert-warning"><strong><em>Warning:</em></strong> This is preliminary documentation and is subject to change.</p>
+<p class="alert alert-warning"><strong><em>Warning:</em></strong> This website is for the early adopter program for the {{ stache.config.product_name_long }}. It is not intended for general use at this point, and the documentation is in a preliminary state and is subject to change.</p>
 
 # Welcome to the {{ stache.config.product_name_short }} Website
 The {{ stache.config.product_name_short }} is Blackbaud's solution to enhance and accelerate the automation of User Acceptance Testing (UAT) for ***Blackbaud CRM*** and other Infinity applications such as  ***Blackbaud Internet Solutions***. The {{ stache.config.product_name_short }} is a set of tools, templates, samples, and documentation that serves as the basis for developing a suite of automated tests, and this website features the documentation and examples thta you need to get you up and running.
