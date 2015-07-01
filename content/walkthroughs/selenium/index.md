@@ -5,33 +5,35 @@ description: Walkthrough of how the UAT Automation Kit uses Selenium to interact
 order: 20
 ---
 
-<p class="alert alert-warning"><strong><em>Warning:</em></strong> This website is for the early adopter program for the {{ stache.config.product_name_long }}. It is not intended for general use at this point, and the documentation is in a preliminary state and is subject to change.</p>
-
+{{ include 'includes/eapwarning/index.md' }}
 
 # Use the Selenium WebDriver
-In this walkthrough, you'll learn how to use Selenium's WebDriver and Wait pattern to drive browser interactions.
+The {{ stache.config.product_name_short }} provides an API that lets users take advantage of Selenium WebDriver to interact with common elements in Infinity-based applications such as ***Blackbaud CRM***. You can use Selenium's WebDriver and Wait pattern to drive browser interactions.
 
 ## Prerequisites
 
-1. A unit test project with the {{ stache.config.product_name_short }} NuGet packages installed.
-2. Access to a ***Blackbaud CRM*** instance to test against.
-3. Familiarity with:
- * The {{ stache.config.product_name_short }} Custom SpecFlow Plugin for ***Visual Studio***.
- * Creating feature files.
- * Generating step classes bound to feature files.
- * Accessing the {{ stache.config.product_name_short }} Core API.
+* A unit test project with the {{ stache.config.product_name_short }} NuGet packages.
+* Access to a ***Blackbaud CRM*** instance to test against.
+* Familiarity with the {{ stache.config.product_name_short }} Custom SpecFlow Plugin for ***Visual Studio***.
+* Familiarity with creating feature files.
+* Familiarity with generating step classes bound to feature files.
+* Familiarity with accessing the {{ stache.config.product_name_short }} Core API.
+ 
+## Objectives
+This tutorial guides you through how to create a custom interaction with the Selenium WebDriver and how to use the WebDriver and Wait pattern to drive browser interactions. In this walkthrough, you will:
+*
 
 ## Create a Custom Interaction with the WebDriver
 
 <ol>
 <li>
-<p>In your unit test project in ***Visual Studio***, create a Gherkin test and step method.</p>
+<p>Create a Gherkin test and step method in your unit test project in ***Visual Studio***.</p>
 
 <ol>
 <li>
-<p>Create an unimplemented feature test that requires navigation between functional areas.</p>
-<p>Right-click the project in Solution Explorer, select <strong>Add</strong>, <strong>New item</strong>, and then select the SpecFlow Feature File template and click <strong>Add</strong>. Then update the behavior-driven development test to confirm that you can navigate from the <strong><em>Constituents</em></strong> functional area to the <strong><em>Revenue</em></strong> functional area.</p>
-<div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Unimplemented feature test.</div></div>
+<p>To create a feature test that requires navigation between functional areas, right-click the project in Solution Explorer, select <strong>Add</strong>, <strong>New item</strong>, and then select the <strong>SpecFlow Feature File</strong> template and click <strong>Add</strong>.</p>
+<p>Then update the behavior-driven development test to confirm that you can navigate from the <strong><em>Constituents</em></strong> functional area to the <strong><em>Revenue</em></strong> functional area.</p>
+<div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Unimplemented feature test</div></div>
 <pre><code class="language-gherkin">
 @DelvingDeeper
 Scenario: Log into BBCRM, load a functional area, and change functional area.
@@ -43,12 +45,12 @@ Scenario: Log into BBCRM, load a functional area, and change functional area.
 </li>
 
 <li>
-<p>Generate the failing step class methods.</p>
-<p>Right-click within the feature file and select <strong>Generate Step Definitions</strong>, click <strong>Generate</strong>, and then make sure the path points to your test project and click <strong>Save</strong>. The step file appears in Solution Explorer.</p>
-<p>At the beginning of the file, insert <code>using Blueshirt.Core.Base</code> to import the <strong><em>Blackbaud CRM</em></strong> types defined by that namespace.</p>
+<p>To generate the failing step class methods, right-click within the feature file and select <strong>Generate Step Definitions</strong>, then click <strong>Generate</strong>, make sure the path points to your test project, and click <strong>Save</strong>.</p>
+<p>At the beginning of the file step file, insert <code>using Blueshirt.Core.Base</code> and <code>using Blueshirt.Core.Crm</code> to import the <strong><em>Blackbaud CRM</em></strong> types defined by those namespace.</p>
 <div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Failing step class methods</div></div>
 <pre><code class="language-csharp">
 using Blueshirt.Core.Base;
+using Blueshirt.Core.Crm;
 using TechTalk.SpecFlow;
 
 namespace Delving_Deeper
@@ -80,31 +82,27 @@ namespace Delving_Deeper
 </li>
 
 <li>
-<p>Update the placeholder in the first set of brackets to specify an unimplemented class and method.</p>
-<p>Replace the <code>ScenarioContext.Current.Pending();</code> placeholder with <code>BBCRMHomePage.Logon(); MyCustomBBCrmHomePage.NavigateToFunctionalArea(functionalArea);</code> to specify logging in to <strong><em>Blackbuad CRM</em></strong> and navigating to the <strong><em>Constituents</em></strong> functional area.</p>
-<p>If you attempt to build the project at this point with the unimplemented class and method in place, the build should fail.</p>
+<p>Update the first <code>ScenarioContext.Current.Pending();</code> placeholder an unimplemented class and method.</p>
+<p>Delete <code>ScenarioContext.Current.Pending();</code> and replace it with <code>BBCRMHomePage.Login(); MyCustomBBCrmHomePage.NavigateToFunctionalArea(functionalArea);</code> to specify logging in to <strong><em>Blackbuad CRM</em></strong> and navigating to the <strong><em>Constituents</em></strong> functional area.</p>
 <div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Unimplemented class and method</div></div>
 <pre><code class="language-csharp">
 [Given(@"I have logged into BBCRM and navigated to functional area ""(.&#42;)""")]
 public void GivenIHaveLoggedIntoBbcrmAndNavigatedToFunctionalArea(string functionalArea)
 {
-    BBCRMHomePage.Logon();
+    BBCRMHomePage.Login();
     MyCustomBBCrmHomePage.NavigateToFunctionalArea(functionalArea);
 }
 </code>
 </pre>
+<p>If you build the project at this point with the unimplemented class and method in place, the build should fail.</p>
 </li>
 </ol>
 </li>
 
 <li>
-<p>Create a custom class that inherits <code>BBCRMHomePage</code>.</p>
+<p>To create a custom class that inherits <code>BBCRMHomePage</code>, right-click the project in <strong>Solution Explorer</strong> and select <strong>Add</strong>, <strong>New item</strong>. On the Add New Item screen, select the <strong>Visual C# Items</strong> category and the <strong>Class</strong> template, enter "MyCustomBBCrmHomePage.cs" for the file name, and click <strong>Add</strong>.</p>
 
-<p>Right-click the project in Solution Explorer, select <strong>Add</strong>, <strong>New item</strong>, and then select the Class template on the Add New Item screen. For this example, name the file "MyCustomBBCrmHomePage.cs" and click <strong>Add</strong>.</p>
-
-<p>At the beginning of the new class file, insert <code>using Blueshirt.Core.Crm</code> to import the <strong><em>Blackbaud CRM</em></strong> types defined by that namespace, and then rename the class as <code>MyCustomBBCrmHomePage</code> and specify that it inherits <code>BBCRMHomePage</code>.</p>
-
-<p>Next, rename the custom class's method as <code>NavigateToFunctionalArea</code> and specify that the new method throws a <code>NotImplementedException</code>. If you attempt to build the project at this point with the exception specified for the method, the build should now succeed.</p>
+<p>At the beginning of the class file, insert <code>using Blueshirt.Core.Crm</code> to import the <strong><em>Blackbaud CRM</em></strong> types defined by that namespace, and specify that the <code>MyCustomBBCrmHomePage</code> class inherits from <code>BBCRMHomePage</code>. Then add the <code>NavigateToFunctionalArea</code> method to the class and specify that the method throws a <code>NotImplementedException</code>.</p>
 
 <div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Custom class and method</div></div>
 <pre><code class="language-csharp">
@@ -123,15 +121,21 @@ namespace Delving_Deeper
 }
 </code>
 </pre>
+<p>If you attempt to build the project at this point with the exception specified for the method, the build should now succeed.</p>
 </li>
+
 <li>
 <p>Implement the custom method.</p>
 
 <p class="alert alert-info">The common pattern that the {{ stache.config.product_name_short }} employs is to wait until a condition is met before proceeding with the next action. It uses the Selenium Webdriver to interact with the browser and determine whether the desired condition is met.</p>
 
-<p>At the beginning of the new class file, insert insert references to the "OpenQA.Selenium" and "OpenQA.Selenium.Support.UI" namespaces to import the types defined by the namespaces.</p>
+<ol>
+<li>
+<p>At the beginning of the new class file, insert references to the "OpenQA.Selenium" and "OpenQA.Selenium.Support.UI" namespaces to import the types defined by the namespaces.</p>
+</li>
 
-<p>Next, update the method to create a while loop that waits for "True" to be returned before exiting the loop. When "False" is returned, the loop starts over. We can specify an amount of time that should expire in the loop until a WebDriverTimeoutException is thrown. Finally we can specify exception types to ignore in the loop. If exceptions of the specified types are thrown, the resulting action is the equivalent of "False" being returned at that moment.</p>
+<li>
+<p>In the method, create a while loop that waits for "True" to be returned. If "False" is returned, the loop starts over. We can specify an amount of time to expire in the loop before throwing a <code>WebDriverTimeoutException</code>. And we can specify exception types to ignore in the loop. If exceptions of the specified types are thrown, the resulting action is the equivalent to "False" being returned at that moment.</p>
 
 <div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Loop</div></div>
 <pre><code class="language-csharp">
@@ -146,10 +150,12 @@ public static void NavigateToFunctionalArea(string caption)
 }
 </code>
 </pre>
+</li>
 
-<p>Next, update the method to replace its <code>NotImplementedException</code>. We use the WebDriver (referenced as <code>driver</code> in our lambda method) to find an element on our application and check a condition on the element. In this instance, we want to check if the element is <code>Displayed</code> before proceeding. If we find the element but it is not visible yet, we can immediately return "False" because our desired condition is not met. This causes the loop to start over, and the WebDriver attempts to get a refreshed version of the element. When the element is visible, we use the WebDriver to send a "Click" action on the element and return "True" to exit the loop so that the next step method call can begin.</p>
+<li>
+<p>Update the method to replace <code>NotImplementedException</code>. We use the WebDriver (referenced as <code>driver</code> in our lambda method) to find an element on our application and check a condition on the element. In this instance, we want to check if the element is <code>Displayed</code> before proceeding. If we find the element but it is not visible yet, we can immediately return "False" because our desired condition is not met. This causes the loop to start over, and the WebDriver attempts to get a refreshed version of the element. When the element is visible, we use the WebDriver to send a "Click" action on the element and return "True" to exit the loop so that the next step method call can begin.</p>
 
-<div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Example of using the WebDriver to find a web element, check a condition on it, and execute a step if the condition has been met.</div></div>
+<div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Example of using WebDriver to find an element, check a condition, and execute a step if the condition is met</div></div>
 <pre><code class="language-csharp">
 WebDriverWait navigateWaiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(TimeoutSecs));
 navigateWaiter.IgnoreExceptionTypes(typeof(InvalidOperationException));
@@ -162,7 +168,9 @@ navigateWaiter.Until(driver =>
 });
 </code>
 </pre>
+</li>
 
+<li>
 <p>An immediate question might be "How did the WebDriver find the element we wanted?" The WebDriver has an API with different selection methods to find elements in your browser application. The {{ stache.config.product_name_short }} relies on XPaths to parse the HTML elements and find the desired element. More details about XPaths and best practices can be found in the reference links at the end of this article. Suggested Enterprise CRM XPath patterns and examples will be discussed in a later walkthrough.</p>
 
 <p>For now, update the code driver <code>.FindElement</code> line to the following:</p>
@@ -172,6 +180,8 @@ IWebElement functionalAreaElement = driver.FindElement(By.XPath(String.Format("/
 </code>
 </pre>
 </li>
+</ol>
+</li>
 
 <li>
 <p>Finish Implementing Step Methods</p>
@@ -180,7 +190,7 @@ IWebElement functionalAreaElement = driver.FindElement(By.XPath(String.Format("/
 [Given(@"I have logged into BBCRM and navigated to functional area ""(.&#42;)""")]
 public void GivenIHaveLoggedIntoBbcrmAndNavigatedToFunctionalArea(string functionalArea)
 {
-    BBCRMHomePage.Logon();
+    BBCRMHomePage.Login();
     MyCustomBBCrmHomePage.NavigateToFunctionalArea(functionalArea);
 }
 
@@ -259,7 +269,7 @@ namespace Delving_Deeper
 [Given(@"I have logged into BBCRM and navigated to functional area ""(.&#42;)""")]
 public void GivenIHaveLoggedIntoBbcrmAndNavigatedToFunctionalArea(string functionalArea)
 {
-    BBCRMHomePage.Logon();
+    BBCRMHomePage.Login();
     MyCustomBBCrmHomePage.NavigateToFunctionalArea(functionalArea);
 }
 </code>
@@ -328,7 +338,7 @@ IWebElement functionalAreaElement = driver.FindElement(By.XPath(String.Format("/
 [Given(@"I have logged into BBCRM and navigated to functional area ""(.&#42;)""")]
 public void GivenIHaveLoggedIntoBbcrmAndNavigatedToFunctionalArea(string functionalArea)
 {
-    BBCRMHomePage.Logon();
+    BBCRMHomePage.Login();
     MyCustomBBCrmHomePage.NavigateToFunctionalArea(functionalArea);
 }
 

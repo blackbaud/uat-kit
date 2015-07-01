@@ -5,8 +5,7 @@ description: Walkthrough of how to create XPaths to find elements in Blackbaud C
 order: 30
 ---
 
-<p class="alert alert-warning"><strong><em>Warning:</em></strong> This website is for the early adopter program for the {{ stache.config.product_name_long }}. It is not intended for general use at this point, and the documentation is in a preliminary state and is subject to change.</p>
-
+{{ include 'includes/eapwarning/index.md' }}
 
 # XPath Guidelines
 This demonstrates how to create XPaths that consistently and uniquely locate elements within ***Blackbaud CRM***.

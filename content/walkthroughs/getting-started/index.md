@@ -5,28 +5,33 @@ description: Learn how to create a Blackbaud CRM GUI test suite using the UAT Au
 order: 10
 ---
 
-<p class="alert alert-warning"><strong><em>Warning:</em></strong> This website is for the early adopter program for the {{ stache.config.product_name_long }}. It is not intended for general use at this point, and the documentation is in a preliminary state and is subject to change.</p>
-
+{{ include 'includes/eapwarning/index.md' }}
 
 # Get Started with {{ stache.config.product_name_short }}
-This tutorial walks you through the process of creating a test project with the {{ stache.config.product_name_short }}. After you master the basics, you can use the {{ stache.config.product_name_short }} to start creating your a suite of automated tests to facilitate your User Acceptance Testing for ***Blackbaud CRM*** upgrades.
+This tutorial walks you through the process of creating a test project with the {{ stache.config.product_name_short }}. After you master the basics, you can use the {{ stache.config.product_name_short }} to create a suite of automated tests to facilitate your User Acceptance Testing for ***Blackbaud CRM*** upgrades.
 
 <p class="alert alert-info">This tutorial assumes familiarity with ***Visual Studio***, Gherkin, SpecFlow, WebDriver, and XPath.</p>
 
 ## Prerequisites
-Before you create your first test project and install the NuGet packages for the {{ stache.config.product_name_short }}, you must have a hanful of prerequisites in place:
+Before you create a test project and install the NuGet packages for the {{ stache.config.product_name_short }}, you must have a handful of prerequisites in place:
+* Install ***Visual Studio 2013*** or later. You can install the free ***Visual Studio 2013 Community*** edition, or you can use a more advanced edition. To install the free Community edition, see [Microsoft's installation instructions](https://www.visualstudio.com/en-us/products/free-developer-offers-vs.aspx).
+* Make sure the ***Visual Studio*** NuGet extension is in place. Starting with ***Visual Studio 2012***, NuGet is included by default in every edition except Team Foundation Server, and you can find updates to NuGet through the Extension Manager. For more information about NuGet, see [www.nuget.org](https://www.nuget.org/).
+* Install the IDE integration for the ***Visual Studio*** SpecFlow extension. For information about SpecFlow, see [SpecFlow](http://www.specflow.org/).
+* Install the Chromedriver standalone server that implements WebDriver's wire protocol for Chromium. For information about ChromeDriver, see [sites.google.com/a/chromium.org/chromedriver/downloads](https://sites.google.com/a/chromium.org/chromedriver/downloads).
 
-* Install ***Visual Studio 2013*** or later. You can install the free ***Visual Studio 2013 Community*** edition, or you can use a more advanced edition. See [Microsoft's installation instructions](https://www.visualstudio.com/en-us/products/free-developer-offers-vs.aspx) to install the free version.
-* Make sure the ***Visual Studio*** NuGet extension is in place. Starting with ***Visual Studio 2012***, NuGet is included in every edition (except Team Foundation Server) by default, and updates to NuGet can be found through the Extension Manager. For more information about NuGet, see [https://www.nuget.org/](https://www.nuget.org/).
-* Install the IDE integration for the ***Visual Studio*** SpecFlow extension. For more information about SpecFlow, see [SpecFlow](http://www.specflow.org/).
-* Install the Chromedriver standalone server that implements WebDriver's wire protocol for Chromium. For more information about ChromeDriver, see [https://sites.google.com/a/chromium.org/chromedriver/downloads](https://sites.google.com/a/chromium.org/chromedriver/downloads).
+## Objectives
+This tutorial guides you through the steps to create a simple test that confirms that the constituent search screen returns a specific result. In this walkthrough, you will:
+* Create a test project in ***Visual Studio*** and install NuGet packages for the {{ stache.config.product_name_short }}.
+* Update the test project's App.config to include URL and login information for your test environment.
+* Create a behavior-driven development test with Gherkin in a SpecFlow feature file, and create a step file to  specify actions for the test.
+* Build the test project and run the test.
 
 ## Create a Test Project
 <ol>
 <li>
-<p>In ***Visual Studio***, select <strong>File</strong>, <strong>New</strong>, <strong>Project</strong>, and then select the <strong>Test</strong> category and the <strong>Unit Test Project</strong> template. Edit the project name, location, and solution name as necessary.</p>
+<p>In ***Visual Studio***, select <strong>File</strong>, <strong>New</strong>, <strong>Project</strong>, and then select the <strong>Test</strong> category under <strong>Visual C#</strong> and the <strong>Unit Test Project</strong> template. Edit the project name, location, and solution name as necessary.</p>
 <p>![New Project wizard](/assets/img/FirstProject/NewBSProject.PNG)</p>
-<p class="alert alert-info">The {{ stache.config.product_name_short }} takes advantage of the <strong>Unit Test Project</strong> template to create a test project, but it is a system test, not a unit test.</p>
+<p class="alert alert-info">The {{ stache.config.product_name_short }} takes advantage of the <strong>Unit Test Project</strong> template to create a test project for system tests. It does not create unit tests.</p>
 </li>
 
 <li>
@@ -35,16 +40,17 @@ Before you create your first test project and install the NuGet packages for the
 
 <ol>
 <li>
-<p>To access the NuGet package source, right-click the solution in <strong>Solution Explorer</strong> and select <strong>Manage NuGet Packages for Solution</strong>. Then the Manage NuGet Packages screen, click <strong>Settings</strong>. And on the Options screen, click the add button on enter "BB NuGet" in the <strong>Name</strong> field and "http://tfs-sym.blackbaud.com:81/nuget/" in the <strong>Source</strong> field.</p>
+<p>To access the NuGet package source, right-click the solution in <strong>Solution Explorer</strong> and select <strong>Manage NuGet Packages for Solution</strong>. Then on the Manage NuGet Packages screen, click <strong>Settings</strong>. And on the Options screen, click the add button on enter "BB NuGet" in the <strong>Name</strong> field and "http://tfs-sym.blackbaud.com:81/nuget/" in the <strong>Source</strong> field.</p>
 <p class="alert alert-info"><strong><em>NEED TO UPDATE THIS SECTION FOR EAP. AND MAYBE AGAIN WHEN WE RELEASE.</em></strong> ... The {{ stache.config.product_name_short }} packages may be available from the public NuGet package repository in the nuget.org category. ... Or we may provide standalone nupkg files instead and have users add the location of htose files as a package source in the NuGet settings.</p>
 </li>
+<li>
 <p>Back on the Manage NuGet Packages screen, select the <strong>BB NuGet</strong> category and search for "Blueshirt."</p>
 </li>
 <li>
-<p>Select <strong>Blueshirt SpecFlow Plugin</strong> and click <strong>Install</strong>. Then with your unit test project and solution selected, click <strong>OK</strong> on the Select projects screen.</p>
+<p>Select <strong>Blueshirt SpecFlow Plugin</strong> and click <strong>Install</strong>. Then with your unit test project and solution selected on the Select projects screen, click <strong>OK</strong>.</p>
 </li>
 <li>
-<p>Select <strong>Blueshirt Core Classes</strong> and click <strong>Install</strong>. Then with your unit test project and solution selected, click <strong>OK</strong> on the Select projects screen.</p>
+<p>Select <strong>Blueshirt Core Classes</strong> and click <strong>Install</strong>. Then with your unit test project and solution selected on the Select projects screen, click <strong>OK</strong>.</p>
 </li>
 <li>
 <p>After you install both packages, click <strong>Close</strong>.</p>
@@ -69,7 +75,7 @@ Before you create your first test project and install the NuGet packages for the
 </code>
 </pre>
 
-<p>From <strong>Solution Explorer</strong>, open the App.config file and scroll down to the appSettings elemnt.</p>
+<p>From <strong>Solution Explorer</strong>, open the App.config file and scroll down to the appSettings element.</p>
 
 <ul>
 <li>
@@ -82,16 +88,16 @@ Before you create your first test project and install the NuGet packages for the
 </li>
 <li>
 <p>Insert an <code>add</code> element and set its <code>key</code> attribute to "Credentials" and its <code>value</code> attribute to the <strong><em>Blackbaud CRM</em></strong> user name and password to use for testing.</p>
-<p>You must use <strong><em>Blackbaud CRM</em></strong> credentials, not Windows authentication credentials. If you do not want to enter credentials here for a test, you can exclude the third add element and manually log in to <strong><em>Blackbaud CRM</em></strong> before you run the test.</p>
+<p>You must use <strong><em>Blackbaud CRM</em></strong> credentials, not Windows authentication credentials. If you do not want to enter credentials here for a test, you can exclude the third <code>add</code> element and manually log in to <strong><em>Blackbaud CRM</em></strong> before you run the test.</p>
 <p class="alert alert-warning"><strong><em>Warning:</em></strong> For security reasons, you should not use credentials for your production environment. The {{ stache.config.product_name_short }} is intended for test or staging environments.</p>
 </li>
 </ul>
 </li>
 
 <li>
-<p>Add a new feature file.</p>
+<p>Create a feature file.</p>
 <p>![New Item wizard](/assets/img/FirstProject/AddAFeatureFile.PNG)</p>
-<p>Right-click the project in <strong>Solution Explorer</strong> and select <strong>Add</strong>, <strong>New item</strong>. Then select the <strong>SpecFlow Feature File</strong> template, edit the file name as necessary, and click <strong>Add</strong>.</p> 
+<p>Right-click the project in <strong>Solution Explorer</strong> and select <strong>Add</strong>, <strong>New item</strong>. Then select the <strong>Visual C# Items</strong> category and <strong>SpecFlow Feature File</strong> template, edit the file name as necessary, and click <strong>Add</strong>.</p> 
 </li>
 
 <li>
@@ -183,7 +189,7 @@ namespace Blue&#95;101
 <p>Right-click the project in <strong>Solution Explorer</strong> and select <strong>Add</strong>, <strong>Existing Item.</strong></p>
 </l>
 <li>
-<p>On the Add existing item screen, navigate to ChromeDriver download and click <strong>Add</strong>. The .exe file appears in <strong>Solution Explorer</strong>.</p>
+<p>On the Add existing item screen, navigate to the ChromeDriver download and click <strong>Add</strong>. The .exe file appears in <strong>Solution Explorer</strong>.</p>
 <p class="alert alert-info">To ensure that ChromeDriver is on your path, set its <strong>Copy to Output Directory</strong> property to "Copy always."</p>
 </l>
 </ol>
@@ -192,7 +198,7 @@ namespace Blue&#95;101
 </li>
 
 <li>
-<p>Build and run your tests.</p>
+<p>Build the project and run your test.</p>
 
 <p>![For example using the Visual Studio Test Explorer](/assets/img/FirstProject/ConstituentSearchResults.PNG)</p>
 
@@ -201,7 +207,7 @@ namespace Blue&#95;101
 <p>Right-click the project in <strong>Solution Explorer</strong> and select <strong>Build</strong>.</p>
 </l>
 <li>
-<p>Open Test Explorer (<strong>Test</strong>, <strong>Windows</strong>, <strong>Test Explorer</strong>), and select <strong>Run, Not Run Tests</strong>.</p>
+<p>In Test Explorer (<strong>Test</strong>, <strong>Windows</strong>, <strong>Test Explorer</strong>), right-click the test and select <strong>Run Selected Tests</strong>.</p>
 </l>
 
 </ol>

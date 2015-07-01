@@ -1,0 +1,1 @@
+<p class="alert alert-warning"><strong><em>Warning:</em></strong> This website is for the early adopter program for the {{ stache.config.product_name_long }}. It is not intended for general use at this point, and the website and its documentation are subject to change.</p>

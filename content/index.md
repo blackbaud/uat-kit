@@ -4,17 +4,17 @@ order: 1
 description: This is the homepage description.
 documentation_items:
   - title: Overview
-    description: Learn about the tools compromising the automation SDK and how they work together.
+    description: Find out how the UAT Automation Kit can help you to automate your User Acceptance Tests tests for upgrades.
     image: fa-compass
     href: <%= stache.config.blue_overview %>
 
   - title: Walkthroughs
-    description: From setting up Visual Studio to automating product customizations, learn how to use the SDK with our tutorials.
+    description: From setting up Visual Studio to automating product customizations, learn how to use the tool through a series of tutorials and guidelines.
     image: fa-graduation-cap
     href: <%= stache.config.blue_walkthroughs %>
     
   - title: API
-    description: Documentation of the available Core and Base code. Learn what out-of-the-box functionality comes with the SDK.
+    description: Refer to documentation of the available Core and Base code to see the out-of-the-box functionality that comes with the UAT Automation Kit. 
     image: fa-file-text
     href: <%= stache.config.blue_api %>
 ---
@@ -22,7 +22,8 @@ documentation_items:
 <header class="welcome" data-stellar-background-ratio="0.5">
   <div class="text-vertical-center">
     <h1>Welcome to the {{ stache.config.product_name_long }}</h1>
-    <h2>An automation tool for <a class="welcome-header-link" href="https://www.blackbaud.com/fundraising-crm/blackbaud-nonprofit-crm">Blackbaud CRM</a>.</h2>
+    <h1>Early Adopter Program</h1>
+    <h2><strong>This website is for the Early Adopter program<br>for Blackbaud's automation tool for <strong><em><a class="welcome-header-link" href="https://www.blackbaud.com/fundraising-crm/blackbaud-nonprofit-crm">Blackbaud CRM</a></em></strong>.<br>It is not intended for general use at this point,<br>and the website and its documentation<br> are subject to change.</strong></h2>
     <ul class="list-inline">
       <li>
         <a href="{{stache.config.blue_walkthroughs_getting-started}}" class="btn btn-lg btn-primary">Get Started</a>
@@ -31,19 +32,18 @@ documentation_items:
   </div>
 </header>
 
-<p class="alert alert-warning"><strong><em>Warning:</em></strong> This website is for the early adopter program for the {{ stache.config.product_name_long }}. It is not intended for general use at this point, and the documentation is in a preliminary state and is subject to change.</p>
-
 <section id="about" class="about section-padding">
   <div class="container">
     <div class="row">
       <div class="col-sm-12 text-center">
-        <h2>What is the {{ stache.config.product_name_long }}?</h2>
-        <p class="lead">Get an overview of the automation tool and how to use it to create a suite of automated tests.</p>
-        <p><a href="{{stache.config.blue_overview}}" class="btn btn-lg btn-primary">Overview</a></p>
+        <h2>Use the {{ stache.config.product_name_short }} to Create a Suite of Automated Tests</h2>
+        <p class="lead">The automation tool is a set of tools, templates, samples, and documentation to enhance and accelerate the automation of User Acceptance Testing for Blackbaud CRM and other Infinity applications.</p>
+<!--        <p><a href="{{ stache.config.tutorials_getting_started }}" class="btn btn-lg btn-primary">Getting Started</a></p>-->
       </div>  <!-- .col-sm-12 -->
     </div>  <!-- .row -->
   </div>  <!-- .container -->
 </section>  <!-- .about -->
+
 
 <section id="features" class="learn section-padding bg-primary">
   <div class="container">
@@ -53,7 +53,6 @@ documentation_items:
       <div class="col-lg-10 col-lg-offset-1">
         
         <h2>{{ stache.config.product_name_short }} Resources</h2>
-         <p class="lead">Our walkthroughs get you up and running and guide you through using the {{ stache.config.product_name_short }}.</p>
          
         {{# eachWithMod documentation_items mod=3 }}
 
@@ -64,10 +63,8 @@ documentation_items:
           <div class="col-md-4 col-sm-6">
             <a href="{{ href }}" class="btn-fa-link">
               <span class="fa-stack fa-4x">
-                <i class="fa fa-square fa-stack-2x"></i>
-                {{# if image }}
-                <i class="fa {{ image }} fa-stack-1x text-primary"></i>
-                {{/ if }}
+                <i class="fa fa-square fa-stack-2x"></i>{{# if image }}
+                <i class="fa {{ image }} fa-stack-1x text-primary"></i>{{/ if }}
               </span>  <!-- .fa-stack -->
             </a>  <!-- .btn-fa-link -->
             <h4><strong>{{ title }}</strong></h4>

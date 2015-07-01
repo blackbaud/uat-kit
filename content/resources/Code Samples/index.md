@@ -17,10 +17,9 @@ code:
     tutorial: <%= stache.config.blue_walkthroughs %>201/
 ---
 
+{{ include 'includes/eapwarning/index.md' }}
+
 # UAT Automation Kit Code Samples
-
-<p class="alert alert-warning"><strong><em>Warning:</em></strong> This website is for the early adopter program for the {{ stache.config.product_name_long }}. It is not intended for general use at this point, and the documentation is in a preliminary state and is subject to change.</p>
-
 <div class="code">
 
   <div class="clearfix"></div>
@@ -40,7 +39,7 @@ code:
                {{# if description }}
                 <p>{{ description }}</p>
               {{/ if }}
-              <a href="{{ ../stache.config.github }}{{ repo }}"  target="_blank" class="btn btn-primary" role="button">View Code</a>
+              <a href="{{ ../stache.config.github }}{{ repo }}" target="_blank" class="btn btn-primary" role="button">View Code</a>
               {{# if tutorial }}
                 <a href="{{ tutorial }}" class="btn btn-white">
                   View Tutorial
