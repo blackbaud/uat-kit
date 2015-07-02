@@ -18,6 +18,8 @@ Before you create a test project and install the NuGet packages for the {{ stach
 * Make sure the ***Visual Studio*** NuGet extension is in place. Starting with ***Visual Studio 2012***, NuGet is included by default in every edition except Team Foundation Server, and you can find updates to NuGet through the Extension Manager. For more information about NuGet, see [www.nuget.org](https://www.nuget.org/).
 * Install the IDE integration for the ***Visual Studio*** SpecFlow extension. For information about SpecFlow, see [SpecFlow](http://www.specflow.org/).
 * Install the Chromedriver standalone server that implements WebDriver's wire protocol for Chromium. For information about ChromeDriver, see [sites.google.com/a/chromium.org/chromedriver/downloads](https://sites.google.com/a/chromium.org/chromedriver/downloads).
+* Install or get access to a ***Blackbaud CRM*** instance to test against. To run tests that you create with the {{ stache.config.product_name_short }}, your target ***Blackbaud CRM*** environment must either use customBasicAuthentication or the tests must not use authentication. You cannot run {{ stache.config.product_name_short }} tests with Windows authentication. 
+
 
 ## Objectives
 This tutorial guides you through the steps to create a simple test that confirms that the constituent search screen returns a specific result. In this walkthrough, you will:
@@ -28,6 +30,32 @@ This tutorial guides you through the steps to create a simple test that confirms
 
 ## Create a Test Project
 <ol>
+<li>
+<p>Set up authentication for the <strong><em>Blackbaud CRM</em></strong> instance that you will test against.</p>
+<p class="alert alert-info">To run the tests that you create with the {{ stache.config.product_name_short }}, your target ***Blackbaud CRM*** environment must either use customBasicAuthentication or the tests must not use authentication. If you prefer to run tests without authentication, skip this step and in the step below about updating the App.config file, exclude the <code>add</code> element for credentials.</p>
+<ol>
+<li>
+<p>Make sure that customBasicAuthentication is enabled in the Web.config file for your ***Blackbaud CRM*** instance.</p>
+<p>In the installation directory, open the bbappfx\vroot folder, and open the Web.config file and locate the <code>customBasicAuthentication</code> element. If the <code>enabled</code> attribute is not already set to "true," then update the attribute.</p>
+<pre><code>
+&#60;customBasicAuthentication enabled="true" requireSSL="False" cachingEnabled="True" cachingDuration="600" &#47;&#62;
+</code>
+</pre>
+
+</li>
+<li>
+<p>In <strong><em>Internet Information Services</em></strong> (<strong><em>IIS</em></strong>), disable all authentication at the vroot level for the <strong><em>Blackbaud CRM</em></strong> instance except for Anonymous Authentication.</p>
+<p>![Enable IIS Anonymous Authentication](/assets/img/IISAuthentication.PNG)</p>
+</li>
+
+<li>
+<p>In <strong><em>IIIS</em></strong>, disable all authentication for the uimodel and webui folders under the vroot level.</p>
+<p>![Disable IIS Authentication](/assets/img/IISAuthentication2.PNG)</p>
+</li>
+</ol>
+
+<p class="alert alert-info">If you set up customBasicAuthentication for your target ***Blackbaud CRM*** environment, then make sure to enter your <strong><em>Blackbaud CRM</em></strong> credentials in the third <code>add</code> element in the step below about updating the App.config file.</p>
+</li>
 <li>
 <p>In ***Visual Studio***, select <strong>File</strong>, <strong>New</strong>, <strong>Project</strong>, and then select the <strong>Test</strong> category under <strong>Visual C#</strong> and the <strong>Unit Test Project</strong> template. Edit the project name, location, and solution name as necessary.</p>
 <p>![New Project wizard](/assets/img/FirstProject/NewBSProject.PNG)</p>
@@ -88,7 +116,7 @@ This tutorial guides you through the steps to create a simple test that confirms
 </li>
 <li>
 <p>Insert an <code>add</code> element and set its <code>key</code> attribute to "Credentials" and its <code>value</code> attribute to the <strong><em>Blackbaud CRM</em></strong> user name and password to use for testing.</p>
-<p>You must use <strong><em>Blackbaud CRM</em></strong> credentials, not Windows authentication credentials. If you do not want to enter credentials here for a test, you can exclude the third <code>add</code> element and manually log in to <strong><em>Blackbaud CRM</em></strong> before you run the test.</p>
+<p>Keep in mind that your tests must use <strong><em>Blackbaud CRM</em></strong> credentials, not Windows authentication credentials. If you do not want to set up customBasicAuthentication for your target ***Blackbaud CRM*** environment and enter credentials here, you must exclude the third <code>add</code> element and manually log in to <strong><em>Blackbaud CRM</em></strong> before you run the test.</p>
 <p class="alert alert-warning"><strong><em>Warning:</em></strong> For security reasons, you should not use credentials for your production environment. The {{ stache.config.product_name_short }} is intended for test or staging environments.</p>
 </li>
 </ul>
@@ -119,8 +147,8 @@ Scenario: Quick Constituent Search
 </pre>
 </li>
 
-<li>
 <p>Generate a step file.</p>
+<li>
 <p></p>
 <p>![Step File wizard](/assets/img/FirstProject/GenerateSteps.PNG)</p>
 <p>Right-click within the feature file and select <strong>Generate Step Definitions</strong>. On the Generate Step Definition Skeleton screen, click <strong>Generate</strong>. Then on the Select target step definition class file screen, make sure the path points to your test project and click <strong>Save</strong>.</p>

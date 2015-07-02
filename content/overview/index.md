@@ -22,7 +22,7 @@ This automation tool was created in response to requests for assistance with UAT
 The {{ stache.config.product_name_short }} provides an API that lets users take advantage of Selenium WebDriver to interact with common elements in Infinity-based applications such as ***Blackbaud CRM***. Tests can be run against the NUnit open-source test runner or within ***Visual Studio*** and integrated with TFS.
 
 Blackbaud provides NuGet packages for a Custom Specflow Generator and core API, and the automation tool's features include:
-* A SpecFlow NuGet package to drive automated tests with Selenium WebDriver SpecFlow 
+* A SpecFlow NuGet package that generates the code to drive automated tests with Selenium WebDriver SpecFlow 
 * A core API library NuGet package to provide access to methods that can be used to test both out-of-the-box and custom features in ***Blackbaud CRM*** and other Infinity applications
 * Documentation on how to get started and how to write customized tests
 * Example projects
@@ -42,5 +42,4 @@ In addition, since the {{ stache.config.product_name_short }} requires a fair am
 * Familiarity with C#. The out-of-the-box features with the {{ stache.config.product_name_short }} set developers up to work in C# in their ***Visual Studio*** projects.
 * Familiarity with Gherkin to author feature files for behavior-driven development (BDD) testing.
 * Familiarity with SpecFlow to generate and populate step files and to pass variables to .NET step methods.
-* Familiarity with WebDriver to create custom interactions.
 * Familiarity with XPath to select elements in the browser. XPath is especially important to create tests for customizations because the {{ stache.config.product_name_short }} relies on XPaths to parse HTML elements and find desired elements, so users who plan to create UAT suites for customizations will need to be particularly familiar with XPath.
