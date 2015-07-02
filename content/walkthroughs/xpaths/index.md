@@ -8,14 +8,23 @@ order: 30
 {{ include 'includes/eapwarning/index.md' }}
 
 # XPath Guidelines
-This demonstrates how to create XPaths that consistently and uniquely locate elements within ***Blackbaud CRM***.
+XPath is a syntax that defines parts of XML documents and uses path expressions to select nodes within those XML documents. The {{ stache.config.product_name_short }} relies on XPaths to parse HTML elements and find desired elements, and this tutorial describes how to create XPaths that consistently and uniquely locate elements within ***Blackbaud CRM***.
 
 ## Prerequisites
 
-* Completion of the [Using the Selenium WebDriver]({{stache.config.blue_walkthroughs_selenium}}) walkthrough.
+* Complete of the [Use the Selenium WebDriver]({{stache.config.blue_walkthroughs_selenium}}) walkthrough.
 * Access to a ***Blackbaud CRM*** instance to test against.
 * Familiarity with XML syntax.
 * Familiarity with the concepts of [Choosing Effective XPaths](http://www.toolsqa.com/selenium-webdriver/choosing-effective-xpath/).
+
+## Objectives
+This tutorial guides you through the steps to create an XPath. In this walkthrough, you will:
+* Create a behavior-driven development test with Gherkin to navigate between functional areas.
+* Create a step file to  specify actions for the test.
+* Create a custom class that uses WebDriver to find an element, check a condition, and execute a step if the condition is met.
+* Provide an XPath within the custom class's method to parse HTML elements and find the desired element.
+* Build the test project and run the test.
+*** Temporary section here. Temporary section here.
 
 ## Introduction to XPaths
 

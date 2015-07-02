@@ -11,7 +11,7 @@ order: 20
 The {{ stache.config.product_name_short }} provides an API that lets users take advantage of Selenium WebDriver to interact with common elements in Infinity-based applications such as ***Blackbaud CRM***. You can use Selenium's WebDriver and Wait pattern to drive browser interactions.
 
 ## Prerequisites
-
+* Complete the [Get Started]({{stache.config.blue_walkthroughs_getting-started}}) walkthrough.
 * A unit test project with the {{ stache.config.product_name_short }} NuGet packages.
 * Access to a ***Blackbaud CRM*** instance to test against.
 * Familiarity with the {{ stache.config.product_name_short }} Custom SpecFlow Plugin for ***Visual Studio***.
@@ -20,10 +20,15 @@ The {{ stache.config.product_name_short }} provides an API that lets users take 
 * Familiarity with accessing the {{ stache.config.product_name_short }} Core API.
  
 ## Objectives
-This tutorial guides you through how to create a custom interaction with the Selenium WebDriver and how to use the WebDriver and Wait pattern to drive browser interactions. In this walkthrough, you will:
-*
+This tutorial guides you through the steps to create a custom interaction with the Selenium WebDriver and use the WebDriver and Wait pattern to drive browser interactions. In this walkthrough, you will:
+* Create a behavior-driven development test with Gherkin to navigate between functional areas.
+* Create a step file to  specify actions for the test.
+* Create a custom class that uses WebDriver to find an element, check a condition, and execute a step if the condition is met.
+* Provide an XPath within the custom class's method to parse HTML elements and find the desired element.
+* Build the test project and run the test.
 
 ## Create a Custom Interaction with the WebDriver
+<p class="alert alert-info">The {{ stache.config.product_name_short }} API provides browser interactions that encapsulate different WebDriver logic. Before you create new WebDriver logic, check the API to see if the functionality is already provided. Hopefully the desired WebDriver logic and XPath constructor are already available in the API.</p>
 
 <ol>
 <li>
@@ -46,7 +51,7 @@ Scenario: Log into BBCRM, load a functional area, and change functional area.
 
 <li>
 <p>To generate the failing step class methods, right-click within the feature file and select <strong>Generate Step Definitions</strong>, then click <strong>Generate</strong>, make sure the path points to your test project, and click <strong>Save</strong>.</p>
-<p>At the beginning of the file step file, insert <code>using Blueshirt.Core.Base</code> and <code>using Blueshirt.Core.Crm</code> to import the <strong><em>Blackbaud CRM</em></strong> types defined by those namespace.</p>
+<p>At the beginning of the step file, insert <code>using Blueshirt.Core.Base</code> and <code>using Blueshirt.Core.Crm</code> to import the <strong><em>Blackbaud CRM</em></strong> types defined by those namespace.</p>
 <div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Failing step class methods</div></div>
 <pre><code class="language-csharp">
 using Blueshirt.Core.Base;
@@ -127,7 +132,7 @@ namespace Delving_Deeper
 <li>
 <p>Implement the custom method.</p>
 
-<p class="alert alert-info">The common pattern that the {{ stache.config.product_name_short }} employs is to wait until a condition is met before proceeding with the next action. It uses the Selenium Webdriver to interact with the browser and determine whether the desired condition is met.</p>
+<p class="alert alert-info">The common pattern that the {{ stache.config.product_name_short }} employs is to wait until a condition is met and then proceed with the next action. It uses the Selenium Webdriver to interact with the browser and determine whether the desired condition is met.</p>
 
 <ol>
 <li>
@@ -135,7 +140,7 @@ namespace Delving_Deeper
 </li>
 
 <li>
-<p>In the method, create a while loop that waits for "True" to be returned. If "False" is returned, the loop starts over. We can specify an amount of time to expire in the loop before throwing a <code>WebDriverTimeoutException</code>. And we can specify exception types to ignore in the loop. If exceptions of the specified types are thrown, the resulting action is the equivalent to "False" being returned at that moment.</p>
+<p>Create a while loop that waits for "True" to be returned and starts over if "False" is returned. Specify the amount of time to expire before the loop throws a <code>WebDriverTimeoutException</code>, and specify the exception types to ignore in the loop. If exceptions of the specified types are thrown, the resulting action is the equivalent to "False" being returned at that moment.</p>
 
 <div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Loop</div></div>
 <pre><code class="language-csharp">
@@ -153,7 +158,7 @@ public static void NavigateToFunctionalArea(string caption)
 </li>
 
 <li>
-<p>Update the method to replace <code>NotImplementedException</code>. We use the WebDriver (referenced as <code>driver</code> in our lambda method) to find an element on our application and check a condition on the element. In this instance, we want to check if the element is <code>Displayed</code> before proceeding. If we find the element but it is not visible yet, we can immediately return "False" because our desired condition is not met. This causes the loop to start over, and the WebDriver attempts to get a refreshed version of the element. When the element is visible, we use the WebDriver to send a "Click" action on the element and return "True" to exit the loop so that the next step method call can begin.</p>
+<p>Replace <code>NotImplementedException</code>. Use the WebDriver (referenced as <code>driver</code> in the lambda method) to find an element in <strong><em>Blackbaud CRM</em></strong> and check a condition on the element. In this example, check whether the element is <code>Displayed</code>. If the element is found but is not visible yet, return "False" because the desired condition is not met. This causes the loop to start over, and the WebDriver attempts to get a refreshed version of the element. When the element is visible, the WebDriver can send a <code>Click</code> action on the element and return "True" to exit the loop so that the next step method call can begin.</p>
 
 <div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Example of using WebDriver to find an element, check a condition, and execute a step if the condition is met</div></div>
 <pre><code class="language-csharp">
@@ -171,9 +176,9 @@ navigateWaiter.Until(driver =>
 </li>
 
 <li>
-<p>An immediate question might be "How did the WebDriver find the element we wanted?" The WebDriver has an API with different selection methods to find elements in your browser application. The {{ stache.config.product_name_short }} relies on XPaths to parse the HTML elements and find the desired element. More details about XPaths and best practices can be found in the reference links at the end of this article. Suggested Enterprise CRM XPath patterns and examples will be discussed in a later walkthrough.</p>
+<p>To find elements the browser application, the WebDriver has an API with different selection methods. The {{ stache.config.product_name_short }} relies on XPaths to parse HTML elements and find desired elements. To learn about XPath patterns and best practices for <strong><em>Blackbaud CRM</em></strong>, see [XPath Guidelines]({{stache.config.blue_walkthroughs_xpaths}}).</p>
 
-<p>For now, update the code driver <code>.FindElement</code> line to the following:</p>
+<p>But for now, update the code driver <code>.FindElement</code> line with the following XPath information:</p>
 
 <div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">WebDriver FindElement using an XPath for the selector.</div></div><pre><code class="language-csharp">
 IWebElement functionalAreaElement = driver.FindElement(By.XPath(String.Format("//button[text()='{0}']", caption)));
@@ -184,7 +189,7 @@ IWebElement functionalAreaElement = driver.FindElement(By.XPath(String.Format("/
 </li>
 
 <li>
-<p>Finish Implementing Step Methods</p>
+<p>Return to the step file and update the remaining <code>ScenarioContext.Current.Pending();</code> placeholders to implement the remaining step methods.</p>
 <div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Fully implemented step methods.</div></div>
 <pre><code class="language-csharp">
 [Given(@"I have logged into BBCRM and navigated to functional area ""(.&#42;)""")]
@@ -211,13 +216,20 @@ public void ThenThePanelHeaderCaptionIs(string headerCaption)
 </li>
 
 <li>
-<p>Make sure your App.config is set to run on your accessible application, build the solution, and run the test.</p>
+<p>Build the project and run your test.</p>
+<p class="alert alert-info"><strong><em>Reminder</em></strong>: If you did not already set your App.config to run on your accessible application and place ChromeDriver on your path, see <a href="{{stache.config.blue_walkthroughs_getting-started}}">Get Started</a>.</p>
+
+<ol>
+<li>
+<p>Right-click the project in <strong>Solution Explorer</strong> and select <strong>Build</strong>.</p>
+</l>
+<li>
+<p>In Test Explorer (<strong>Test</strong>, <strong>Windows</strong>, <strong>Test Explorer</strong>), right-click the test and select <strong>Run Selected Tests</strong>.</p>
 <p>![](/assets/img/Selenium/RunSelectedTests.PNG)</p>
-
-<p>The test should pass!</p>
 <p>![](/assets/img/Selenium/SelectedTestsPass.PNG)</p>
+</l>
+</ol>
 
-<p class="alert alert-info">The {{ stache.config.product_name_short }} API provides lots browser interactions that encapsulate different WebDriver logic. Before you create new WebDriver logic, check the API to see what functionality is already provided. Hopefully the desired WebDriver logic and XPath constructor are already available from the API.</p>
 </li>
 </ol>
 

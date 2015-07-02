@@ -2,7 +2,7 @@
 layout: layout-showcase
 name: Suggested Reading
 description: Learn more about the third-party tools the UAT Automation Kit uses to create custom logic and interactions.
-order: 80
+order: 20
 ---
 
 {{ include 'includes/eapwarning/index.md' }}

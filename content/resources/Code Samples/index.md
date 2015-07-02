@@ -1,7 +1,7 @@
 ---
 layout: layout-container
 showHeadings: false
-order: 60
+order: 10
 name: Code Samples
 description: A listing of code samples for the UAT Automation Kit walkthroughs.
 published: true
