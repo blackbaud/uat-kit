@@ -18,13 +18,11 @@ XPath is a syntax that defines parts of XML documents and uses path expressions 
 * Familiarity with the concepts of [Choosing Effective XPaths](http://www.toolsqa.com/selenium-webdriver/choosing-effective-xpath/).
 
 ## Objectives
-This tutorial guides you through the steps to create an XPath. In this walkthrough, you will:
-* Create a behavior-driven development test with Gherkin to navigate between functional areas.
-* Create a step file to  specify actions for the test.
-* Create a custom class that uses WebDriver to find an element, check a condition, and execute a step if the condition is met.
-* Provide an XPath within the custom class's method to parse HTML elements and find the desired element.
-* Build the test project and run the test.
-*** Temporary section here. Temporary section here.
+This tutorial guides you through the steps to create an XPath for a feature in ***Blackbaud CRM***. In this walkthrough, you will:
+* Use an XPath to find elements in the browser.
+* Modify an XPath to find a single element.
+* Use an XPath to find a single element from among multiple panels in ***Blackbaud CRM*** by filtering out elements that are present in the HTML but are not displayed in the browser.
+* Use an XPath to find a single element on a dialog from among multiple dialogs that are being displayed.
 
 ## Introduction to XPaths
 
@@ -46,7 +44,7 @@ For example, right-click the **Constituent search** task in the ***Home*** funct
 
 XPaths specify selector conditions to parse the entire DOM and return all matching elements.
 
-From the Elements panel of Chrome's Developer Tools, you can press Ctrl+F and enter an XPath to view the search results for an XPath selector. To search for <code>[div]</code> elements with the text "Constituent search" that are direct descendants of <code>[button]</code> elements with <code>class</code> attributes that contains "linkbutton," enter the XPath <code>//button[contains(@class,'linkbutton')]/div[text()='Constituent search']</code> in the search field.
+From the Elements panel in Chrome's Developer Tools, you can press Ctrl+F and enter an XPath to view the search results for an XPath selector. To search for <code>[div]</code> elements with the text "Constituent search" that are direct descendants of <code>[button]</code> elements with <code>class</code> attributes that contains "linkbutton," enter the XPath <code>//button[contains(@class,'linkbutton')]/div[text()='Constituent search']</code> in the search field.
 
 ![XPathMultipleResults](/assets/img/XPaths/XPathMultipleResults.PNG)
 
