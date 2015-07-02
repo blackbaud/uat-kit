@@ -9,21 +9,20 @@ documentation_items:
     href: <%= stache.config.blue_overview %>
 
   - title: Walkthroughs
-    description: From setting up Visual Studio to automating product customizations, learn how to use the tool through a series of tutorials and guidelines.
+    description: From setting up Visual Studio to automating product customizations, learn how to create tests with a series of tutorials and guidelines.
     image: fa-graduation-cap
     href: <%= stache.config.blue_walkthroughs %>
     
   - title: API
-    description: Refer to documentation of the available Core and Base code to see the out-of-the-box functionality that comes with the UAT Automation Kit. 
+    description: Access documentation for the available Core and Base code to what functionality comes out of the box with the UAT Automation Kit. 
     image: fa-file-text
     href: <%= stache.config.blue_api %>
 ---
 
 <header class="welcome" data-stellar-background-ratio="0.5">
   <div class="text-vertical-center">
-    <h1>Welcome to the {{ stache.config.product_name_long }}</h1>
-    <h1>Early Adopter Program</h1>
-    <h2><strong>This website is for the Early Adopter program<br>for Blackbaud's automation tool for <strong><em><a class="welcome-header-link" href="https://www.blackbaud.com/fundraising-crm/blackbaud-nonprofit-crm">Blackbaud CRM</a></em></strong>.<br>It is not intended for general use at this point,<br>and the website and its documentation<br> are subject to change.</strong></h2>
+    <h1>Welcome to the {{ stache.config.product_name_long }} Early Adopter Program</h1>
+    <h2><strong>This website is for the Early Adopter program for Blackbaud's automation tool for <strong><em><a class="welcome-header-link" href="https://www.blackbaud.com/fundraising-crm/blackbaud-nonprofit-crm">Blackbaud CRM</a></em></strong>. It is not intended for general use at this point, and the website and its documentation are subject to change.</strong></h2>
     <ul class="list-inline">
       <li>
         <a href="{{stache.config.blue_walkthroughs_getting-started}}" class="btn btn-lg btn-primary">Get Started</a>
