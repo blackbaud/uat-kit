@@ -12,17 +12,24 @@ In this walkthrough, you will get experience with handling SpecFlow's Table and 
 
 ## Prerequisites
 
-* Completion of the [Using the Selenium WebDriver]({{stache.config.blue_walkthroughs_selenium}}) walkthrough.
+* Complete the [Selenium WebDriver]({{stache.config.blue_walkthroughs_selenium}}) walkthrough.
 * Access to a ***Blackbaud CRM*** instance to test against.
 * Familiarity with adding tests and step implementations to existing feature and step files.
 * Familiarity with accessing the {{ stache.config.product_name_short }} Core API.
 * Familiarity with modifying the App.config to change which application the tests run against.
 * Familiarity with identifying the unique attribute values for the XPath constructors in the Core API and completion of the [XPath Guidelines]({{stache.config.blue_walkthroughs_xpaths}}) walkthrough.
 
+## Objectives
+This tutorial guides you through the steps to handle SpecFlow's Table and TableRow objects with the {{ stache.config.product_name_short }}. In this walkthrough, you will:
+* Create a test to add an address to a constituent to explore the old approach for using tables to pass variables to .NET step methods.
+* Manipulate the format of the table to create cleaner, more adaptable code and take advantage of {{ stache.config.product_name_short }} features.
+* Modify the example to add multiple addreses by adding rows to the table.
+* Create a test that edits an existing address.
+
 ## From Feature File to Step File - The Old Approach to Tables
 
 SpecFlow feature files allow you to use tables to pass variables to .NET step methods.
-<div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Test example to add address to constituent</div></div><pre><code class="language-gherkin">
+<div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Test to add address to constituent</div></div><pre><code class="language-gherkin">
 @DelvingDeeper
 Scenario: Add an address to a constituent
 	Given I have logged into BBCRM
@@ -63,7 +70,7 @@ namespace Delving_Deeper
         [Given(@"I have logged into BBCRM")]
         public void GivenIHaveLoggedIntoBBCRM()
         {
-            BBCRMHomePage.Logon();
+            BBCRMHomePage.Login();
         }
 
         [Given(@"a constituent exists with last name ""(.&#42;)""")]
@@ -94,7 +101,7 @@ Here is an implementation of the step methods.
 [Given(@"I have logged into BBCRM")]
 public void GivenIHaveLoggedIntoBBCRM()
 {
-    BBCRMHomePage.Logon();
+    BBCRMHomePage.Login();
 }
 
 [Given(@"a constituent exists with last name ""(.&#42;)""")]
@@ -228,14 +235,14 @@ namespace Delving_Deeper
 </code>
 </pre>
 
-<p class="alert alert-info">For information about where the variables for the XPath constructors come from, see the [XPath Guidelines]({{stache.config.blue_walkthroughs_xpaths}}) walkthrough.</p>
+<p class="alert alert-info">For information about where the variables for the XPath constructors come from, see [XPath Guidelines]({{stache.config.blue_walkthroughs_xpaths}}).</p>
 
 This approach handles the desired logic and UI interactions, but the code itself is bulky and unpleasant. The next section demonstrates how to manipulate the format of your table to get cleaner, more adaptable code.
 
 ## Table Guidelines
 The table headers of "Field" and "Value" from the SpecFlow feature file example in the previous section [are not required to pass variables to .NET step methods.](https://github.com/techtalk/SpecFlow/wiki/SpecFlow-Assist-Helpers) To take advantage of more functionality in the {{ stache.config.product_name_short }}, we can change the table format and how we pass variables to a step method.
 
-<div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Modified test example to add address to constituent</div></div><pre>.<code class="language-gherkin">
+<div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Modified test to add address to constituent</div></div><pre>.<code class="language-gherkin">
 @DelvingDeeper
 Scenario: Add an address to a constituent
 	Given I have logged into BBCRM
@@ -270,7 +277,7 @@ public void WhenIAddAnAddressToTheCurrentConstituent(Table addressTable)
 <br>
 We only want to pass an object with  the relevant address dialog values to the <code>SetAddressFields()</code> method. In the previous method, the entire <code>Table</code> object contained these values. In this situation, only a <code>TableRow</code> is necessary to gather the necessary values.</p>
 
-Let's implement the method for handling a single <code>TableRow</code>.
+Let's implement the method to handle a single <code>TableRow</code>.
 
 <div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Edited AddressDialog class</div></div><pre><code class="language-csharp">
 using System;
@@ -306,7 +313,7 @@ namespace Delving_Deeper
 
 <p class="alert alert-info"><code>CrmField</code> also supports setting fields through a search dialog. Refer to the <code>[CrmField]()</code> and <code>[FieldType]()</code> API documentation to get a better understanding of <code>CrmField</code> constructors.</p>
 
-With a <code>TableRow</code> whose <code>Keys</code> represent the dialog's field captions, we can now utilize the API's <code>Dialog.SetFields()</code> method. Instead of creating a switch on the field caption value, we can create a dictionary that maps the supported field captions to the relevant variables that are needed to set the field's value. These variables are encapsulated in the <code>CrmField</code> class.  
+With a <code>TableRow</code> whose <code>Keys</code> represent the dialog's field captions, we can now utilize the API's <code>Dialog.SetFields()</code> method. Instead of creating a switch on the field caption value, we can create a dictionary to map the supported field captions to the relevant variables that are needed to set the field's value. These variables are encapsulated in the <code>CrmField</code> class.  
 
 To add support for a new field, we define the logic in a single line for the <code>SupportedFields</code> dictionary instead of a switch-case handler.  
 
@@ -326,9 +333,9 @@ public void ThenAnAddressExists(Table addressTable)
 </code>
 </pre>
 
-With this format, we can also add multiple addresses and validate multiple addresses simply by adding rows to the table. No additional code is required.
+With this format, we can also add and validate multiple addresses simply by adding rows to the table. No additional code is required.
 
-<div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Modified test case to contain multiple rows</div></div><pre><code class="language-gherkin">
+<div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Modified test to contain multiple rows</div></div><pre><code class="language-gherkin">
 @DelvingDeeper
 Scenario: Add an address to a constituent
 	Given I have logged into BBCRM
@@ -346,11 +353,7 @@ Scenario: Add an address to a constituent
 
 The <code>foreach</code> loop in the step methods breaks down the <code>Table</code> to <code>TableRows</code>, which allows us to reliably add and validate each address.
 
-<p class="alert alert-info">Empty table cells are treated as empty strings.
-<br>
-Leaving a cell empty results in an attempt to set the field's value to an empty string. To skip setting the field, you can remove the key from the <code>TableRow</code> or set the value to null.
-<br>
-<code>if (row.ContainsKey("Country") && row["Country"] == String.Empty) row["Country"] = null;</code>
+<p class="alert alert-info">Empty table cells are treated as empty strings, and leaving a cell empty results in an attempt to set the field's value to an empty string. To skip setting the field, you can remove the key from the <code>TableRow</code> or set the value to null: <code>if (row.ContainsKey("Country") && row["Country"] == String.Empty) row["Country"] = null;</code>
 <br>
 Empty table cells for a data list select or validation are skipped and no code edits are necessary.
 </p>
@@ -405,7 +408,7 @@ public void WhenSetTheAddressFields(Table addressTable)
 </code>
 </pre>
 
-<p class="alert alert-info">Notice that you can call step methods from within step methods as done in <code>GivenIAddAnAddressToTheCurrentConstiteunt()</code>.</p>
+<p class="alert alert-info">Notice that you can call step methods from within step methods as in <code>GivenIAddAnAddressToTheCurrentConstiteunt()</code>.</p>
 
 The above code compiles but fails against the application. The implementation of <code>SetAddressFields(TableRow addressFields)</code> statically enters "AddressAddForm2" as the dialog's unique if for the XPath constructors.
 

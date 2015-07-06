@@ -9,19 +9,26 @@ order: 50
 
 
 # Set Custom Fields
-In this walkthrough, you'll gain experience setting a custom field on a dialog and overriding default implementations.
+In this walkthrough, you'll gain experience setting a custom field on a dialog and overriding default implementations. The {{ stache.config.product_name_short }} provides multiple ways to achieve a result, and this walkthrough describes two potential implementations.
 
 <p class="alert alert-warning">The examples in this walkthrough follow customizations that you likely do not have in your ***Blackbaud CRM*** instance. You can follow along with your own customizations and modify the steps accordingly.</p>
 
 ## Prerequisites
 
-* Completion of the [Using the Selenium WebDriver]({{stache.config.blue_walkthroughs_selenium}}) walkthrough.
+* Complete the [Selenium WebDriver]({{stache.config.blue_walkthroughs_selenium}}) walkthrough.
 * Access to a ***Blackbaud CRM*** instance to test against.
-* Completion of the [SpecFlow's Table and TableRow Guidelines]({{stache.config.blue_walkthroughs_specflow}}) walkthrough.
+* Complete of the [SpecFlow's Table and TableRow Guidelines]({{stache.config.blue_walkthroughs_specflow}}) walkthrough.
 * Familiarity with adding tests and step implementations to existing feature and step files.
-* Familiarity with accessing the existing {{ stache.config.product_name_short }} Core API.
+* Familiarity with accessing the {{ stache.config.product_name_short }} Core API.
 * Familiarity with modifying the App.config to change which application the tests run against.
 * Familiarity with  identifying the unique attribute values for the XPath constructors in the Core API and completion of the [XPath Guidelines]({{stache.config.blue_walkthroughs_xpaths}}) walkthrough.
+
+## Objectives
+This tutorial guides you through the steps to create a test to add an individual when the Add an  individual screen has been customized to include custom fields. It describes two potential implementations to handle a dialog with a custom field, but these are not the only approaches. In this walkthrough, you will:
+* Use the overload approach to add support for custom fields.
+* Use the custom method approach to add support for custom fields.
+* Overload an implementation when a customization in ***Blackbaud CRM*** is not compatible with a test that works against a standard ***Blackbaud CRM*** instance.
+* Override an implementation to the add action with a field to add an individual.
 
 ## Add Support For Custom Fields - Overload Approach
 
@@ -35,11 +42,11 @@ In this walkthrough, you'll gain experience setting a custom field on a dialog a
 
 <p>![TODO](/assets/img/CustomFields/CustomAddIndividual.PNG)</p>
 
-<p class="alert alert-info">The custom fields are required. We need to keep this in mind when we add individuals in ***Blackbaud CRM***.</p>
+<p class="alert alert-info">These custom fields are required. We need to keep this in mind when we add individuals in ***Blackbaud CRM***.</p>
 
 <p>In our test project, we can create a feature file to create a behavior-driven development test with Gherkin.</p>
 
-<pre><code class="language-gherkin">
+<div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Test to add individual and include custom fields</div></div><pre><code class="language-gherkin">
 @DelvingDeeper
 Scenario: Add an individual on a dialog containing a custom field.
 	Given I have logged into BBCRM
@@ -93,9 +100,9 @@ namespace Delving_Deeper
 </code>
 </pre>
 
-<p class="alert alert-info">In addition to the custom field, the customization also includes a custom group caption for the Add an individual task. This is why the <code>ConstituentsFunctionalArea.AddAnIndividual()</code> call overloads the <code>groupCaption</code> parameter.</p>
+<p class="alert alert-info">In addition to the custom fields, the customization also includes a custom group caption for the Add an individual task. This is why the <code>ConstituentsFunctionalArea.AddAnIndividual()</code> call overloads the <code>groupCaption</code> parameter.</p>
 
-<p>When we run the test against the customization and its custom field, an error indicates that we need custom support for the new field.</p>
+<p>If we run the test against the customization and its custom field at this point, an error indicates that we need custom support for the new field.</p>
 
 <p>![TODO](/assets/img/CustomFields/NotImplemetedFieldAddIndividual.PNG)</p>
 </li>
@@ -145,7 +152,7 @@ namespace Delving_Deeper
 </li>
 
 <li>
-<p>Pass custom-supported fields To the base. The custom class uses its inherited <code>IndividualDialog</code> values to pass the required values to the dialog's <code>SetFields()</code> method. <code>SetFields</code> has an overload that takes in a second <code>IDictionary</code> mapping of field captions to <code>CrmFields</code>. We can pass our dictionary of custom fields to add additional support for custom fields.</p>
+<p>Pass custom-supported fields to the base. The custom class uses its inherited <code>IndividualDialog</code> values to pass the required values to the dialog's <code>SetFields()</code> method. <code>SetFields</code> has an overload that takes in a second <code>IDictionary</code> mapping of field captions to <code>CrmFields</code>. We can pass our dictionary of custom fields to add additional support for custom fields.</p>
 
 <div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Custom SetIndividualFields()</div></div>
 <pre><code class="language-csharp">
@@ -194,7 +201,7 @@ public void WhenIAddConstituent(Table constituents)
 <li>
 <p>You can also use an alternative Gherkin approach that drives a need for an entirely custom method.</p>
 
-<pre><code class="language-gherkin">
+<div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Alternative test to add individual and include custom fields</div></div><pre><code class="language-gherkin">
 @DelvingDeeper
 Scenario: Add an individual on a dialog containing a custom field using a custom method
 	Given I have logged into BBCRM
@@ -269,7 +276,7 @@ public void WhenISaveTheAddAnIndividualDialog()
 
 <ol>
 <li>
-<p>Identify the need to overload an implementation. We start with the following test case and step file.</p>
+<p>Identify the need to overload an implementation, then create a test case and step file.</p>
 
 <pre><code class="language-gherkin">
 @DelvingDeeper
@@ -351,7 +358,7 @@ public void WhenIOpenTheConstituentSearchDialog()
 
 <p>![TODO](/assets/img/CustomFields/ComparingFieldIdSearchDialog.PNG)</p>
 
-<p class="alert alert-info">If you do not know how to identify the field's unique ID, please review the [XPath Guidelines]({{stache.config.blue_walkthroughs_xpaths}})</p>
+<p class="alert alert-info">If you do not know how to identify the field's unique ID, see [XPath Guidelines]({{stache.config.blue_walkthroughs_xpaths}})</p>
 
 <p>Inspecting the unique dialog IDs, we can see that they are different. The supported XPath constructs an XPath using the dialog ID <code>ConstituentSearchbyNameorLookupID</code>. We need to modify the dialog ID to use the custom dialog ID.</p>
 
@@ -387,7 +394,7 @@ public void ThenTheLastOrgGroupNameFieldIs(string expectedValue)
 
 <ol>
 <li>
-<p>Identify the need to override an implementation. Start with the following test case that works against a standard ***Blackaud CRM*** instance.</p>
+<p>Identify the need to override an implementation, then create a test case and step file that work against a standard ***Blackaud CRM*** instance.</p>
 
 <pre><code class="language-gherkin">
 @DelvingDeeper
@@ -477,7 +484,7 @@ namespace Delving_Deeper
 
 <p>![TODO](/assets/img/CustomFields/OverrideProcedure/RecordSearch.PNG)</p>
 
-<p>What if we want to set the field through the **Add** button? This would require us to override the default implementation for how the **Related individual** field is set.</p>
+<p>What if we want to set the field through the **Add** button? This requires us to override the default implementation for how the **Related individual** field is set.</p>
 
 <p>![TODO](/assets/img/CustomFields/OverrideProcedure/AddIcon.PNG)</p>
 </li>
@@ -543,7 +550,7 @@ public new static void SetHouseholdFields(TableRow fields)
 </code>
 </pre>
 
-<p>Before we call the base implementation to set the rest of the fields, we set fields["Related individual"] to equal null. We do this because we want the base <code>SetHouseholdFields</code> to skip its handling of the **Related individual** field.</p>
+<p>Before we call the base implementation to set the rest of the fields, we set <code>fields["Related individual"] = null</code>. We do this because we want the base <code>SetHouseholdFields</code> to skip its handling of the **Related individual** field.</p>
 
 <div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Set Related individual to null and call the base method</div></div>
 <pre><code class="language-csharp">
@@ -571,7 +578,7 @@ namespace Delving_Deeper
 </code>
 </pre>
 
-Another solution would be to remove the **Related individual** key from the fields object.
+An alternative solution would be to remove the **Related individual** key from the fields object.
 
 <div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Remove the Related individual key</div></div><pre><code class="language-csharp">
 fields.Keys.Remove("Related individual");
@@ -580,9 +587,7 @@ fields.Keys.Remove("Related individual");
 </li>
 
 <li>
-<p>Update the Steps</p>
-
-<p>Change the step setting the household tab fields.</p>
+<p>Update the steps to change the step setting the household tab fields.</p>
 
 <div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Updated step</div></div>
 <pre><code class="language-csharp">

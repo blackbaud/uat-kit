@@ -11,8 +11,10 @@ order: 30
 XPath is a syntax that defines parts of XML documents and uses path expressions to select nodes within those XML documents. The {{ stache.config.product_name_short }} relies on XPaths to parse HTML elements and find desired elements, and this tutorial describes how to create XPaths that consistently and uniquely locate elements within ***Blackbaud CRM***.
 
 When you create XPaths for elements in ***Blackbaud CRM***, keep in mind that:
-1. The UAT Automation Kit accepts XPath parameters under the assumption that they return a single element, so make sure your XPath filter out any invisible elements.
+1. The UAT Automation Kit accepts XPath parameters under the assumption that they return a single element, so make sure your XPaths filter out any invisible elements.
 2. When you create XPaths, follow the steps that you want to reproduce in your automation. That way, the state of ***Blackbaud CRM*** when you create the XPath should match the state when the automation runs.
+
+<p class="alert alert-info">The {{ stache.config.product_name_short }} API provides many XPath constructors for various application components such as panels and dialogs. Use the API documentation to see the XPath constructors that are available, the parameters they require, and the types of elements that they uniquely locate.</p>
 
 ## Prerequisites
 
@@ -52,18 +54,17 @@ From the Elements panel in Chrome's Developer Tools, you can press Ctrl+F and en
 
 ![XPathMultipleResults](/assets/img/XPaths/XPathMultipleResults.PNG)
 
-The XPath returns multiple matching elements based on the XPath selector condition. However, the {{ stache.config.product_name_short }}'s API methods accept XPath parameters under the assumption that XPaths return a single element. So when a custom or static XPath returns multiple results, we recommend that you modify it to consistently return a single element.
+The XPath returns multiple matching elements based on the XPath selector condition. However, the {{ stache.config.product_name_short }}'s API methods accept XPath parameters under the assumption that XPaths return a single element. So when a custom or static XPath returns multiple results, you must modify it to consistently return a single element.
 
 For our **Constituent search** example to return to a single element, we can modify the XPath selector:
 
 <pre><code>
 //div[contains(@id,'contentpanel')]/div[contains(@id,'contentpanel') and not(contains(@class, 'hide-display'))]//button[contains(@class,'task-link')]/div[text()='Constituent search']
-</code>
-</pre>
+</code></pre>
 
 ![XPathSingleResult](/assets/img/XPaths/XPathSingleResult.PNG)
 
-The next section discusses common ***Blackbaud CRM*** XPath selector patterns that help return a single element.
+The next section discusses common ***Blackbaud CRM*** XPath selector patterns that we used to return a single element.
 
 ## ***Blackbaud CRM*** Patterns - Panels
 
@@ -81,7 +82,7 @@ The screenshot shows 4 matches with the first match highlighted, although the nu
 
 When you navigate between different areas, ***Blackbaud CRM*** stores previous pages in the HTML but marks them as hidden. If a user tries to navigate to a previously visited panel, it loads much faster because panel components are stored in the browser.
 
-When you hover the mouse over the child "contentpanel," only one results in the browser highlighting an element. The contentpanels that do not result in a browser highlight include <code>x-hide-display</code> in their <code>class</code> attribute and are not displayed in the browser.
+When you hover the mouse over the child <code>contentpanel</code> elements, only one results in the browser highlighting an element. The elements that do not result in a browser highlight include <code>x-hide-display</code> in their <code>class</code> attribute and are not displayed in the browser.
 
 ![CRMContentPanelHiddenPanels](/assets/img/XPaths/CRMContentPanelHiddenPanels.PNG)
 
@@ -99,11 +100,11 @@ In ***Blackbaud CRM***, click **Add a pledge** in the ***Revenue*** functional a
 
 ![DialogPledgeSave](/assets/img/XPaths/DialogPledgeSave.PNG)
 
-To make things more interesting, click the search button in the **Constituent** field.
+To make things more interesting, click the search button in the **Constituent** field to open the Revenue Constituent Search screen.
 
 ![DialogConstituentSearch](/assets/img/XPaths/DialogConstituentSearch.PNG)  
 
-And then on the search dialog, click **Add**, **Individual** ot display the Add an individual screen.
+Then on the search dialog, click **Add**, **Individual** to display the Add an individual screen.
 
 ![DialogSearchAddIndividual](/assets/img/XPaths/DialogSearchAddIndividual.PNG)  
 
@@ -131,11 +132,19 @@ Within the <code>[div]</code> for the fields, another <code>[div]</code> element
 
 ![DialogUniqueId](/assets/img/XPaths/DialogUniqueId.PNG)  
 
-We can construct an XPath to find use the <code>div</code> with this unique identifier: <code>//div[contains(@class,'bbui-dialog') and contains(@style,'visible')]//div[contains(@id,'individualRecordAddDataForm')]</code>.
+We can construct an XPath to find use the <code>div</code> with this unique identifier:
+
+<pre><code>
+//div[contains(@class,'bbui-dialog') and contains(@style,'visible')]//div[contains(@id,'individualRecordAddDataForm')]
+</code></pre>
 
 ![DialogXPathDialogUniqueId](/assets/img/XPaths/DialogXPathDialogUniqueId.png)
 
-Then we can add additional search criteria to the XPath to find a button with the text "Save" relative to the <code>[div]</code> with the unique ID. The updated XPath <code>//div[contains(@class,'bbui-dialog') and contains(@style,'visible')]//div[contains(@id,'individualRecordAddDataForm')] /../../../../../../../..//*[text()="Save"]</code> only returns 1 match.
+Then we can add additional search criteria to the XPath to find a button with the text "Save" relative to the <code>[div]</code> with the unique ID. The updated XPath only returns 1 match:
+
+<pre><code>
+//div[contains(@class,'bbui-dialog') and contains(@style,'visible')]//div[contains(@id,'individualRecordAddDataForm')] /../../../../../../../..//*[text()="Save"]
+</code></pre>
 
 ![DialogFinalXPath](/assets/img/XPaths/DialogFinalXPath.PNG)  
 
