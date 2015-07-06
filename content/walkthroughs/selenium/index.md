@@ -8,7 +8,7 @@ order: 20
 {{ include 'includes/eapwarning/index.md' }}
 
 # Use the Selenium WebDriver
-The {{ stache.config.product_name_short }} provides an API that lets users take advantage of Selenium WebDriver to interact with common elements in Infinity-based applications such as ***Blackbaud CRM***. You can use Selenium's WebDriver and Wait pattern to drive browser interactions.
+The {{ stache.config.product_name_short }} provides an API that lets you take advantage of Selenium WebDriver to interact with common elements in Infinity-based applications such as ***Blackbaud CRM***. You can use Selenium's WebDriver and Wait pattern to drive browser interactions.
 
 ## Prerequisites
 * Complete the [Get Started]({{stache.config.blue_walkthroughs_getting-started}}) walkthrough.
@@ -20,7 +20,7 @@ The {{ stache.config.product_name_short }} provides an API that lets users take 
 * Familiarity with accessing the {{ stache.config.product_name_short }} Core API.
  
 ## Objectives
-This tutorial guides you through the steps to create a custom interaction with the Selenium WebDriver and use the WebDriver and Wait pattern to drive browser interactions. In this walkthrough, you will:
+This tutorial guides you through the steps to create a custom interaction with the Selenium WebDriver and to use the WebDriver and Wait pattern to drive browser interactions. In this walkthrough, you will:
 * Create a behavior-driven development test with Gherkin to navigate between functional areas.
 * Create a step file to  specify actions for the test.
 * Create a custom class that uses WebDriver to find an element, check a condition, and execute a step if the condition is met.
@@ -51,7 +51,7 @@ Scenario: Log into BBCRM, load a functional area, and change functional area.
 
 <li>
 <p>To generate the failing step class methods, right-click within the feature file and select <strong>Generate Step Definitions</strong>, then click <strong>Generate</strong>, make sure the path points to your test project, and click <strong>Save</strong>.</p>
-<p>At the beginning of the step file, insert <code>using Blueshirt.Core.Base</code> and <code>using Blueshirt.Core.Crm</code> to import the <strong><em>Blackbaud CRM</em></strong> types defined by those namespace.</p>
+<p>At the beginning of the step file, insert <code>using Blueshirt.Core.Base</code> and <code>using Blueshirt.Core.Crm</code> to import the <strong><em>Blackbaud CRM</em></strong> types defined by those namespaces.</p>
 <div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Failing step class methods</div></div>
 <pre><code class="language-csharp">
 using Blueshirt.Core.Base;
@@ -87,7 +87,7 @@ namespace Delving_Deeper
 </li>
 
 <li>
-<p>Update the first <code>ScenarioContext.Current.Pending();</code> placeholder an unimplemented class and method.</p>
+<p>Update the first <code>ScenarioContext.Current.Pending();</code> placeholder with an unimplemented class and method.</p>
 <p>Delete <code>ScenarioContext.Current.Pending();</code> and replace it with <code>BBCRMHomePage.Login(); MyCustomBBCrmHomePage.NavigateToFunctionalArea(functionalArea);</code> to specify logging in to <strong><em>Blackbuad CRM</em></strong> and navigating to the <strong><em>Constituents</em></strong> functional area.</p>
 <div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Unimplemented class and method</div></div>
 <pre><code class="language-csharp">
@@ -178,7 +178,7 @@ navigateWaiter.Until(driver =>
 <li>
 <p>To find elements the browser application, the WebDriver has an API with different selection methods. The {{ stache.config.product_name_short }} relies on XPaths to parse HTML elements and find desired elements. To learn about XPath patterns and best practices for <strong><em>Blackbaud CRM</em></strong>, see [XPath Guidelines]({{stache.config.blue_walkthroughs_xpaths}}).</p>
 
-<p>But for now, update the code driver <code>.FindElement</code> line with the following XPath information:</p>
+<p>For now, update the code driver <code>.FindElement</code> line with the following XPath information:</p>
 
 <div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">WebDriver FindElement using an XPath for the selector.</div></div><pre><code class="language-csharp">
 IWebElement functionalAreaElement = driver.FindElement(By.XPath(String.Format("//button[text()='{0}']", caption)));
@@ -217,7 +217,7 @@ public void ThenThePanelHeaderCaptionIs(string headerCaption)
 
 <li>
 <p>Build the project and run your test.</p>
-<p class="alert alert-info"><strong><em>Reminder</em></strong>: If you did not already set your App.config to run on your accessible application and place ChromeDriver on your path, see <a href="{{stache.config.blue_walkthroughs_getting-started}}">Get Started</a>.</p>
+<p class="alert alert-info"><strong><em>Reminder</em></strong>: If you did not already set your App.config to run on your accessible application and place ChromeDriver on your path, do that before you build the project and run your test. For more information, see <a href="{{stache.config.blue_walkthroughs_getting-started}}">Get Started</a>.</p>
 
 <ol>
 <li>

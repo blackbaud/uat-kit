@@ -14,7 +14,7 @@ documentation_items:
     href: <%= stache.config.blue_walkthroughs %>
     
   - title: API
-    description: Access documentation for the available Core and Base code to what functionality comes out of the box with the UAT Automation Kit. 
+    description: Access documentation for the available Core and Base code to find the functionality comes out of the box with the UAT Automation Kit. 
     image: fa-file-text
     href: <%= stache.config.blue_api %>
 ---
@@ -22,7 +22,7 @@ documentation_items:
 <header class="welcome" data-stellar-background-ratio="0.5">
   <div class="text-vertical-center">
     <h1>Welcome to the {{ stache.config.product_name_long }} Early Adopter Program</h1>
-    <h2><strong>This website is for the Early Adopter program for Blackbaud's automation tool for <strong><em><a class="welcome-header-link" href="https://www.blackbaud.com/fundraising-crm/blackbaud-nonprofit-crm">Blackbaud CRM</a></em></strong>. It is not intended for general use at this point, and the website and its documentation are subject to change.</strong></h2>
+    <h2><strong>This is the Early Adopter Program website for Blackbaud's automation tool for <strong><em><a class="welcome-header-link" href="https://www.blackbaud.com/fundraising-crm/blackbaud-nonprofit-crm">Blackbaud CRM</a></em></strong>. It is not intended for general use at this point, and the website and its documentation are subject to change.</strong></h2>
     <ul class="list-inline">
       <li>
         <a href="{{stache.config.blue_walkthroughs_getting-started}}" class="btn btn-lg btn-primary">Get Started</a>
@@ -35,8 +35,8 @@ documentation_items:
   <div class="container">
     <div class="row">
       <div class="col-sm-12 text-center">
-        <h2>Use the {{ stache.config.product_name_short }} to Create a Suite of Automated Tests</h2>
-        <p class="lead">The automation tool is a set of tools, templates, samples, and documentation to enhance and accelerate the automation of User Acceptance Testing for Blackbaud CRM and other Infinity applications.</p>
+        <h2>Get Started on Your Suite of Automated Tests for <strong><em>Blackbaud CRM</em></strong></h2>
+        <p class="lead">The {{ stache.config.product_name_short }} is a set of tools, templates, samples, and documentation to enhance and accelerate the automation of User Acceptance Testing for <strong><em>Blackbaud CRM</em></strong> and other Infinity applications.</p>
 <!--        <p><a href="{{ stache.config.tutorials_getting_started }}" class="btn btn-lg btn-primary">Getting Started</a></p>-->
       </div>  <!-- .col-sm-12 -->
     </div>  <!-- .row -->

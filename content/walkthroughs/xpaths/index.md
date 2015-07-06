@@ -10,9 +10,13 @@ order: 30
 # XPath Guidelines
 XPath is a syntax that defines parts of XML documents and uses path expressions to select nodes within those XML documents. The {{ stache.config.product_name_short }} relies on XPaths to parse HTML elements and find desired elements, and this tutorial describes how to create XPaths that consistently and uniquely locate elements within ***Blackbaud CRM***.
 
+When you create XPaths for elements in ***Blackbaud CRM***, keep in mind that:
+1. The UAT Automation Kit accepts XPath parameters under the assumption that they return a single element, so make sure your XPath filter out any invisible elements.
+2. When you create XPaths, follow the steps that you want to reproduce in your automation. That way, the state of ***Blackbaud CRM*** when you create the XPath should match the state when the automation runs.
+
 ## Prerequisites
 
-* Complete of the [Use the Selenium WebDriver]({{stache.config.blue_walkthroughs_selenium}}) walkthrough.
+* Complete of the [Selenium WebDriver]({{stache.config.blue_walkthroughs_selenium}}) walkthrough.
 * Access to a ***Blackbaud CRM*** instance to test against.
 * Familiarity with XML syntax.
 * Familiarity with the concepts of [Choosing Effective XPaths](http://www.toolsqa.com/selenium-webdriver/choosing-effective-xpath/).
@@ -50,7 +54,12 @@ From the Elements panel in Chrome's Developer Tools, you can press Ctrl+F and en
 
 The XPath returns multiple matching elements based on the XPath selector condition. However, the {{ stache.config.product_name_short }}'s API methods accept XPath parameters under the assumption that XPaths return a single element. So when a custom or static XPath returns multiple results, we recommend that you modify it to consistently return a single element.
 
-For our **Constituent search** example, we can modify the XPath selector to <code>//div[contains(@id,'contentpanel')]/div[contains(@id,'contentpanel') and not(contains(@class, 'hide-display'))]//button[contains(@class,'task-link')]/div[text()='Constituent search']</code> to return to a single element.
+For our **Constituent search** example to return to a single element, we can modify the XPath selector:
+
+<pre><code>
+//div[contains(@id,'contentpanel')]/div[contains(@id,'contentpanel') and not(contains(@class, 'hide-display'))]//button[contains(@class,'task-link')]/div[text()='Constituent search']
+</code>
+</pre>
 
 ![XPathSingleResult](/assets/img/XPaths/XPathSingleResult.PNG)
 
@@ -58,7 +67,7 @@ The next section discusses common ***Blackbaud CRM*** XPath selector patterns th
 
 ## ***Blackbaud CRM*** Patterns - Panels
 
-In the previous section, we modified the XPath selector from <code>//button[contains(@class,'linkbutton')]/div[text()='Constituent search']</code> to <code>//div[contains(@id,'contentpanel')]/div[contains(@id,'contentpanel') and not(contains(@class, 'hide-display'))]//button[contains(@class,'task-link')]/div[text()='Constituent search']</code> to go from multiple matching results to a single result.
+In the previous section, we modified the XPath selector to go from multiple matching results to a single result.
 
 Now let's look at how the modified XPath narrows the search criteria so that we can understand the differences between the original and modified XPaths.
 
@@ -66,7 +75,7 @@ First, let's enter just the first component of the XPath in the search field: <c
 
 ![CRMRootXPath](/assets/img/XPaths/CRMRootXPath.PNG)  
 
-The screenshots shows 4 matches with the first match highlighted. A single parent <code>div</code> includes "contentpanel" in its ID, and several immediate children elements also include "contentpanel" in their IDs. You can hover your mouse over each matching element to see it highlighted in the browser.
+The screenshot shows 4 matches with the first match highlighted, although the number of matches will vary based on your browsing history in ***Blackbaud CRM***. In the screenshot, a single parent <code>div</code> includes "contentpanel" in its ID, and several immediate children elements also include "contentpanel" in their IDs. You can hover your mouse over each matching element to see it highlighted in the browser.
 
 ![CRMContentPanel](/assets/img/XPaths/CRMContentPanel.PNG)  
 

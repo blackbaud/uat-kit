@@ -8,7 +8,7 @@ order: 10
 {{ include 'includes/eapwarning/index.md' }}
 
 # Get Started with {{ stache.config.product_name_short }}
-This tutorial walks you through the process of creating a test project with the {{ stache.config.product_name_short }}. After you master the basics, you can use the {{ stache.config.product_name_short }} to create a suite of automated tests to facilitate your User Acceptance Testing for ***Blackbaud CRM*** upgrades.
+This tutorial walks you through the process of creating a test project with the {{ stache.config.product_name_short }}. After you master the basics, you can use the {{ stache.config.product_name_short }} to create a suite of automated tests that facilitate your User Acceptance Testing for ***Blackbaud CRM*** upgrades.
 
 <p class="alert alert-info">This tutorial assumes familiarity with ***Visual Studio***, Gherkin, SpecFlow, WebDriver, and XPath.</p>
 
@@ -36,7 +36,7 @@ This tutorial guides you through the steps to create a simple test that confirms
 <ol>
 <li>
 <p>Make sure that customBasicAuthentication is enabled in the Web.config file for your ***Blackbaud CRM*** instance.</p>
-<p>In the installation directory, open the bbappfx\vroot folder, and open the Web.config file and locate the <code>customBasicAuthentication</code> element. If the <code>enabled</code> attribute is not already set to "true," then update the attribute.</p>
+<p>In the installation directory, open the bbappfx\vroot folder, then open the Web.config file and locate the <code>customBasicAuthentication</code> element. If the <code>enabled</code> attribute is not already set to "true," then update the attribute.</p>
 <pre><code>
 &#60;customBasicAuthentication enabled="true" requireSSL="False" cachingEnabled="True" cachingDuration="600" &#47;&#62;
 </code>
@@ -44,12 +44,12 @@ This tutorial guides you through the steps to create a simple test that confirms
 
 </li>
 <li>
-<p>In <strong><em>Internet Information Services</em></strong> (<strong><em>IIS</em></strong>), disable all authentication at the vroot level for the <strong><em>Blackbaud CRM</em></strong> instance except for Anonymous Authentication.</p>
+<p>In <strong><em>Internet Information Services</em></strong> (<strong><em>IIS</em></strong>), disable all authentication except for Anonymous Authentication at the vroot level for the <strong><em>Blackbaud CRM</em></strong> instance.</p>
 <p>![Enable IIS Anonymous Authentication](/assets/img/IISAuthentication.PNG)</p>
 </li>
 
 <li>
-<p>In <strong><em>IIIS</em></strong>, disable all authentication for the uimodel and webui folders under the vroot level.</p>
+<p>In <strong><em>IIS</em></strong>, disable all authentication for the uimodel and webui folders under the vroot level.</p>
 <p>![Disable IIS Authentication](/assets/img/IISAuthentication2.PNG)</p>
 </li>
 </ol>
@@ -147,8 +147,8 @@ Scenario: Quick Constituent Search
 </pre>
 </li>
 
-<p>Generate a step file.</p>
 <li>
+<p>Generate a step file.</p>
 <p></p>
 <p>![Step File wizard](/assets/img/FirstProject/GenerateSteps.PNG)</p>
 <p>Right-click within the feature file and select <strong>Generate Step Definitions</strong>. On the Generate Step Definition Skeleton screen, click <strong>Generate</strong>. Then on the Select target step definition class file screen, make sure the path points to your test project and click <strong>Save</strong>.</p>
@@ -203,8 +203,7 @@ namespace Blue&#95;101
 <p>At the beginning of the file, insert <code>using Blueshirt.Core.Crm</code> to import the <strong><em>Blackbaud CRM</em></strong> types defined by that namespace.</p>
 </li>
 <li>
-<p>Within the class, update the placeholders within the brackets to specify the actions to take.</p>
-<p>For example, in the first set of brackets, replace <code>ScenarioContext.Current.Pending();</code> with <code>BBCRMHomePage.Login();</code> to specify logging in to the <strong><em>Blackbuad CRM</em></strong> home page.</p>
+<p>Within the class, update the placeholders within the brackets to specify the actions to take. For example, in the first set of brackets, replace <code>ScenarioContext.Current.Pending();</code> with <code>BBCRMHomePage.Login();</code> to specify logging in to the <strong><em>Blackbuad CRM</em></strong> home page.</p>
 </li>
 </ol>
 </li>
@@ -215,11 +214,13 @@ namespace Blue&#95;101
 <ol>
 <li>
 <p>Right-click the project in <strong>Solution Explorer</strong> and select <strong>Add</strong>, <strong>Existing Item.</strong></p>
-</l>
+</li>
 <li>
 <p>On the Add existing item screen, navigate to the ChromeDriver download and click <strong>Add</strong>. The .exe file appears in <strong>Solution Explorer</strong>.</p>
-<p class="alert alert-info">To ensure that ChromeDriver is on your path, set its <strong>Copy to Output Directory</strong> property to "Copy always."</p>
-</l>
+</li>
+<li>
+<p>To ensure that ChromeDriver is on your path, set its <strong>Copy to Output Directory</strong> property to "Copy always."</p>
+</li>
 </ol>
 
 <p class="alert alert-danger">While you currently must manually download the latest [ChromeDriver](https://sites.google.com/a/chromium.org/chromedriver/downloads), copy it to your project's directory, and add it as an existing item to your project, we plan to include ChromeDriver in the <em>Blueshirt SpecFlow Plugin</em> NuGet ackage in a future version.</p>
