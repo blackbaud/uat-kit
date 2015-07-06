@@ -40,7 +40,7 @@ IWebElement someElement = driver.FindElement(By.XPath(String.Format("//button[co
 </code>
 </pre>
 
-Web browsers such as Google Chrome allow you to view HTML elements and their heirarchy. With ***Blackbaud CRM*** open in Chrome, you can right-click items such as buttons, links, or images to access the **Inspect element** option.
+Web browsers such as Google Chrome allow you to view HTML elements and their hierarchy. With ***Blackbaud CRM*** open in Chrome, you can right-click items such as buttons, links, or images to access the **Inspect element** option.
 
 ![InspectElement](/assets/img/XPaths/InspectElement.PNG)  
 
@@ -116,7 +116,7 @@ If we use the same XPath of <code>//button[text()='Save']</code> to search for t
 
 ![DialogSecondSave](/assets/img/XPaths/DialogSecondSave.PNG)  
 
-We need to modify the XPath to only match descendant buttons on the top-most dialog. To do this, we must find something unique about a parent element of the Add an individual screen's **Save** button. From the Elements panel of Chrome's Developer Tools, follow the heirarchy tree to find the element that highlights the entire dialog.
+We need to modify the XPath to only match descendant buttons on the top-most dialog. To do this, we must find something unique about a parent element of the Add an individual screen's **Save** button. From the Elements panel of Chrome's Developer Tools, follow the hierarchy tree to find the element that highlights the entire dialog.
 
 ![DialogEntireAddDialog](/assets/img/XPaths/DialogEntireAddDialog.PNG)  
 
