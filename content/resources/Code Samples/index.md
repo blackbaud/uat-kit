@@ -8,12 +8,12 @@ published: true
 code:
   - title: Get Started with the UAT Automation Kit
     description: In this sample, you'll learn how to create a test project to get you started on the path to creating a ***Blackbaud CRM*** GUI test suite with the UAT Automation Kit.
-    repo: stache/
+    download: /assets/code-samples/201/ProjectBlue201.zip
     tutorial: <%= stache.config.blue_walkthroughs %>101/
 
   - title: UAT Automation Kit 201 Code Sample
     description: In the following walkthroughs, you'll learn how to use the UAT Automation Kit's underlying third-party tools to create custom logic and interactions with the browser.
-    repo: https://github.com/blackbaud/blue-docs/tree/master/static/assets/code-samples/201
+    download: /assets/code-samples/201/ProjectBlue201.zip
     tutorial: <%= stache.config.blue_walkthroughs %>201/
 ---
 
@@ -39,7 +39,7 @@ code:
                {{# if description }}
                 <p>{{ description }}</p>
               {{/ if }}
-              <a href="{{ ../stache.config.github }}{{ repo }}" target="_blank" class="btn btn-primary" role="button">View Code</a>
+              <a href="{{download}}" class="btn btn-primary" role="button">Download Code</a>
               {{# if tutorial }}
                 <a href="{{ tutorial }}" class="btn btn-white">
                   View Tutorial
@@ -55,6 +55,11 @@ code:
   {{/ eachWithMod }}
 
 </div>
+
+
+## test download
+
+<a href="/assets/code-samples/201/ProjectBlue201.zip" download>Test Download</a>
 
 
 
