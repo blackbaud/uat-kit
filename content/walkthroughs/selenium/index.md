@@ -51,11 +51,11 @@ Scenario: Log into BBCRM, load a functional area, and change functional area.
 
 <li>
 <p>To generate the failing step class methods, right-click within the feature file and select <strong>Generate Step Definitions</strong>, then click <strong>Generate</strong>, make sure the path points to your test project, and click <strong>Save</strong>.</p>
-<p>At the beginning of the step file, insert <code>using Blueshirt.Core.Base</code> and <code>using Blueshirt.Core.Crm</code> to import the <strong><em>Blackbaud CRM</em></strong> types defined by those namespaces.</p>
+<p>At the beginning of the step file, insert <code>using Blackbaud.UAT.Core.Base</code> and <code>using Blackbaud.UAT.Core.Crm</code> to import the <strong><em>Blackbaud CRM</em></strong> types defined by those namespaces.</p>
 <div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Failing step class methods</div></div>
 <pre><code class="language-csharp">
-using Blueshirt.Core.Base;
-using Blueshirt.Core.Crm;
+using Blackbaud.UAT.Core.Base;
+using Blackbaud.UAT.Core.Crm;
 using TechTalk.SpecFlow;
 
 namespace Delving_Deeper
@@ -107,12 +107,12 @@ public void GivenIHaveLoggedIntoBbcrmAndNavigatedToFunctionalArea(string functio
 <li>
 <p>To create a custom class that inherits <code>BBCRMHomePage</code>, right-click the project in <strong>Solution Explorer</strong> and select <strong>Add</strong>, <strong>New item</strong>. On the Add New Item screen, select the <strong>Visual C# Items</strong> category and the <strong>Class</strong> template, enter "MyCustomBBCrmHomePage.cs" for the file name, and click <strong>Add</strong>.</p>
 
-<p>At the beginning of the class file, insert <code>using Blueshirt.Core.Crm</code> to import the <strong><em>Blackbaud CRM</em></strong> types defined by that namespace, and specify that the <code>MyCustomBBCrmHomePage</code> class inherits from <code>BBCRMHomePage</code>. Then add the <code>NavigateToFunctionalArea</code> method to the class and specify that the method throws a <code>NotImplementedException</code>.</p>
+<p>At the beginning of the class file, insert <code>using Blackbaud.UAT.Core.Crm</code> to import the <strong><em>Blackbaud CRM</em></strong> types defined by that namespace, and specify that the <code>MyCustomBBCrmHomePage</code> class inherits from <code>BBCRMHomePage</code>. Then add the <code>NavigateToFunctionalArea</code> method to the class and specify that the method throws a <code>NotImplementedException</code>.</p>
 
 <div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Custom class and method</div></div>
 <pre><code class="language-csharp">
 using System;
-using Blueshirt.Core.Crm;
+using Blackbaud.UAT.Core.Crm;
 
 namespace Delving_Deeper
 {

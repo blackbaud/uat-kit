@@ -61,8 +61,8 @@ Scenario: Add an individual on a dialog containing a custom field.
 
 <div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Core API to implement steps</div></div><pre><code class="language-csharp">
 using System;
-using Blueshirt.Core.Base;
-using Blueshirt.Core.Crm;
+using Blackbaud.UAT.Core.Base;
+using Blackbaud.UAT.Core.Crm;
 using TechTalk.SpecFlow;
 
 namespace Delving_Deeper
@@ -112,7 +112,7 @@ namespace Delving_Deeper
 
 <div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Custom Individual Dialog Class That Inherits IndividualDialog</div></div>
 <pre><code class="language-csharp">
-using Blueshirt.Core.Crm;
+using Blackbaud.UAT.Core.Crm;
 
 namespace Delving_Deeper
 {
@@ -131,8 +131,8 @@ namespace Delving_Deeper
 <div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Custom Individual Dialog Class with mapped custom fields</div></div
 ><pre><code class="language-csharp">
 using System.Collections.Generic;
-using Blueshirt.Core.Base;
-using Blueshirt.Core.Crm;
+using Blackbaud.UAT.Core.Base;
+using Blackbaud.UAT.Core.Crm;
 
 namespace Delving_Deeper
 {
@@ -417,8 +417,8 @@ Scenario: Add an individual and set the related individual through the constitue
 <div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Implemetation of steps</div></div>
 <pre><code class="language-csharp">
 using System;
-using Blueshirt.Core.Base;
-using Blueshirt.Core.Crm;
+using Blackbaud.UAT.Core.Base;
+using Blackbaud.UAT.Core.Crm;
 using TechTalk.SpecFlow;
 
 namespace Delving_Deeper
@@ -497,8 +497,8 @@ namespace Delving_Deeper
 <div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Selecting the right tab</div></div>
 <pre><code class="language-csharp">
 using System.Collections.Generic;
-using Blueshirt.Core.Base;
-using Blueshirt.Core.Crm;
+using Blackbaud.UAT.Core.Base;
+using Blackbaud.UAT.Core.Crm;
 using TechTalk.SpecFlow;
 
 namespace Delving_Deeper
@@ -554,7 +554,7 @@ public new static void SetHouseholdFields(TableRow fields)
 
 <div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Set Related individual to null and call the base method</div></div>
 <pre><code class="language-csharp">
-using Blueshirt.Core.Crm;
+using Blackbaud.UAT.Core.Crm;
 using TechTalk.SpecFlow;
 
 namespace Delving_Deeper

@@ -63,7 +63,7 @@ This tutorial guides you through the steps to create a simple test that confirms
 </li>
 
 <li>
-<p>Add the <strong>Blueshirt SpecFlow Plugin</strong> and <strong>Blueshirt Core Classes</strong> packages to your project.</p>
+<p>Add the <strong>Blackbaud UAT SpecFlow Plugin</strong> and <strong>Blackbaud UAT Core Classes</strong> packages to your project.</p>
 <p>![Package manager wizard](/assets/img/FirstProject/AddBSNuGetPackages.PNG)</p>
 
 <ol>
@@ -72,13 +72,13 @@ This tutorial guides you through the steps to create a simple test that confirms
 <p class="alert alert-info"><strong><em>NEED TO UPDATE THIS SECTION FOR EAP. AND MAYBE AGAIN WHEN WE RELEASE.</em></strong> ... The {{ stache.config.product_name_short }} packages may be available from the public NuGet package repository in the nuget.org category. ... Or we may provide standalone nupkg files instead and have users add the location of htose files as a package source in the NuGet settings.</p>
 </li>
 <li>
-<p>Back on the Manage NuGet Packages screen, select the <strong>BB NuGet</strong> category and search for "Blueshirt."</p>
+<p>Back on the Manage NuGet Packages screen, select the <strong>BB NuGet</strong> category and search for "Blackbaud UAT."</p>
 </li>
 <li>
-<p>Select <strong>Blueshirt SpecFlow Plugin</strong> and click <strong>Install</strong>. Then with your unit test project and solution selected on the Select projects screen, click <strong>OK</strong>.</p>
+<p>Select <strong>Blackbaud UAT SpecFlow Plugin</strong> and click <strong>Install</strong>. Then with your unit test project and solution selected on the Select projects screen, click <strong>OK</strong>.</p>
 </li>
 <li>
-<p>Select <strong>Blueshirt Core Classes</strong> and click <strong>Install</strong>. Then with your unit test project and solution selected on the Select projects screen, click <strong>OK</strong>.</p>
+<p>Select <strong>Blackbaud UAT Core Classes</strong> and click <strong>Install</strong>. Then with your unit test project and solution selected on the Select projects screen, click <strong>OK</strong>.</p>
 </li>
 <li>
 <p>After you install both packages, click <strong>Close</strong>.</p>
@@ -160,10 +160,10 @@ Scenario: Quick Constituent Search
 <div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Example Steps File</div></div>
 <pre><code class="language-csharp">
 using System;
-using Blueshirt.Core.Crm;
+using Blackbaud.UAT.Core.Crm;
 using TechTalk.SpecFlow;
 
-namespace Blue&#95;101
+namespace Blackbaud&#95;UAT&#95;Get&#95;Started
 {
     [Binding]
     public class ConstituentSearchSteps
@@ -200,7 +200,7 @@ namespace Blue&#95;101
 
 <ol>
 <li>
-<p>At the beginning of the file, insert <code>using Blueshirt.Core.Crm</code> to import the <strong><em>Blackbaud CRM</em></strong> types defined by that namespace.</p>
+<p>At the beginning of the file, insert <code>using Blackbaud.UAT.Core.Crm</code> to import the <strong><em>Blackbaud CRM</em></strong> types defined by that namespace.</p>
 </li>
 <li>
 <p>Within the class, update the placeholders within the brackets to specify the actions to take. For example, in the first set of brackets, replace <code>ScenarioContext.Current.Pending();</code> with <code>BBCRMHomePage.Login();</code> to specify logging in to the <strong><em>Blackbuad CRM</em></strong> home page.</p>
@@ -223,7 +223,7 @@ namespace Blue&#95;101
 </li>
 </ol>
 
-<p class="alert alert-danger">While you currently must manually download the latest [ChromeDriver](https://sites.google.com/a/chromium.org/chromedriver/downloads), copy it to your project's directory, and add it as an existing item to your project, we plan to include ChromeDriver in the <em>Blueshirt SpecFlow Plugin</em> NuGet ackage in a future version.</p>
+<p class="alert alert-danger">While you currently must manually download the latest [ChromeDriver](https://sites.google.com/a/chromium.org/chromedriver/downloads), copy it to your project's directory, and add it as an existing item to your project, we plan to include ChromeDriver in the <em>Blackbaud UAT SpecFlow Plugin</em> NuGet ackage in a future version.</p>
 </li>
 
 <li>

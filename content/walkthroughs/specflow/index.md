@@ -58,8 +58,8 @@ Specflow creates bindings between test cases and step methods. Field variables f
 
 <div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Step method with Table parameter</div></div><pre><code class="language-csharp">
 using System;
-using Blueshirt.Core.Base;
-using Blueshirt.Core.Crm;
+using Blackbaud.UAT.Core.Base;
+using Blackbaud.UAT.Core.Crm;
 using TechTalk.SpecFlow;
 
 namespace Delving_Deeper
@@ -142,7 +142,7 @@ public void ThenAnAddressExists(Table addressFields)
 
 <div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">AddressDialog Class with empty method</div></div><pre><code class="language-csharp">
 using System;
-using Blueshirt.Core.Crm;
+using Blackbaud.UAT.Core.Crm;
 using TechTalk.SpecFlow;
 
 namespace Delving_Deeper
@@ -162,7 +162,7 @@ We ensure that we are on the Address tab, and then we parse every row in the tab
 
 <div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">For each TableRow in Table</div></div><pre><code class="language-csharp">
 using System;
-using Blueshirt.Core.Crm;
+using Blackbaud.UAT.Core.Crm;
 using TechTalk.SpecFlow;
 
 namespace Delving_Deeper
@@ -188,7 +188,7 @@ To handle this, we create a switch on the caption value. The caption dictates th
 
 <div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Implemented AddressDialog</div></div><pre><code class="language-csharp">
 using System;
-using Blueshirt.Core.Crm;
+using Blackbaud.UAT.Core.Crm;
 using TechTalk.SpecFlow;
 
 namespace Delving_Deeper
@@ -282,8 +282,8 @@ Let's implement the method to handle a single <code>TableRow</code>.
 <div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Edited AddressDialog class</div></div><pre><code class="language-csharp">
 using System;
 using System.Collections.Generic;
-using Blueshirt.Core.Base;
-using Blueshirt.Core.Crm;
+using Blackbaud.UAT.Core.Base;
+using Blackbaud.UAT.Core.Crm;
 using TechTalk.SpecFlow;
 
 namespace Delving_Deeper
