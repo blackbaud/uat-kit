@@ -1,5 +1,5 @@
 ---
-layout: layout-showcase
+layout: layout-container
 name: Suggested Reading
 description: Learn more about the third-party tools the UAT Automation Kit uses to create custom logic and interactions.
 order: 20

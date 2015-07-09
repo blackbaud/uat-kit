@@ -16,7 +16,7 @@ This tutorial walks you through the process of creating a test project with the 
 Before you create a test project and install the NuGet packages for the {{ stache.config.product_name_short }}, you must have a handful of prerequisites in place:
 * Install ***Visual Studio 2013*** or later. You can install the free ***Visual Studio 2013 Community*** edition, or you can use a more advanced edition. To install the free Community edition, see [Microsoft's installation instructions](https://www.visualstudio.com/en-us/products/free-developer-offers-vs.aspx).
 * Make sure the ***Visual Studio*** NuGet extension is in place. Starting with ***Visual Studio 2012***, NuGet is included by default in every edition except Team Foundation Server, and you can find updates to NuGet through the Extension Manager. For more information about NuGet, see [www.nuget.org](https://www.nuget.org/).
-* Install the IDE integration for the ***Visual Studio*** SpecFlow extension. For information about SpecFlow, see [SpecFlow](http://www.specflow.org/).
+* Install the IDE SpecFlow extension for ***Visual Studio***. For information about SpecFlow, see [SpecFlow](http://www.specflow.org/).
 * Install the Chromedriver standalone server that implements WebDriver's wire protocol for Chromium. For information about ChromeDriver, see [sites.google.com/a/chromium.org/chromedriver/downloads](https://sites.google.com/a/chromium.org/chromedriver/downloads).
 * Install or get access to a ***Blackbaud CRM*** instance to test against. To run tests that you create with the {{ stache.config.product_name_short }}, your target ***Blackbaud CRM*** environment must either use customBasicAuthentication or the tests must not use authentication. You cannot run {{ stache.config.product_name_short }} tests with Windows authentication. 
 
@@ -108,11 +108,11 @@ This tutorial guides you through the steps to create a simple test that confirms
 <ul>
 <li>
 <p>Insert an <code>add</code> element and set its <code>key</code> attribute to "BBCRMBaseURL" and its <code>value</code> attribute to the portion of your <strong><em>Blackbaud CRM</em></strong> URL that includes the server and virtual directory.</p>
-<p class="alert alert-info">For <strong><em>Blackbaud Internet Solutions</em></strong>, set the <code>key</code> attribute to "BBISBaseURL."</p>
+<!-- <p class="alert alert-info">For <strong><em>Blackbaud Internet Solutions</em></strong>, set the <code>key</code> attribute to "BBISBaseURL."</p> -->
 </li>
 <li>
 <p>Insert an <code>add</code> element and set its <code>key</code> attribute to "BBCRMHomeURL" and its <code>value</code> attribute to the to the portion of your <strong><em>Blackbaud CRM</em></strong> URL after the virtual directory up to the database name.</p>
-<p class="alert alert-info">For <strong><em>Blackbaud Internet Solutions</em></strong>, set the <code>key</code> attribute to "BBISHomeURL."</p>
+<!-- <p class="alert alert-info">For <strong><em>Blackbaud Internet Solutions</em></strong>, set the <code>key</code> attribute to "BBISHomeURL."</p> -->
 </li>
 <li>
 <p>Insert an <code>add</code> element and set its <code>key</code> attribute to "Credentials" and its <code>value</code> attribute to the <strong><em>Blackbaud CRM</em></strong> user name and password to use for testing.</p>
