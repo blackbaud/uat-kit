@@ -13,7 +13,7 @@ code:
 
   - title: UAT Automation Kit 201 Code Sample
     description: In the following walkthroughs, you'll learn how to use the UAT Automation Kit's underlying third-party tools to create custom logic and interactions with the browser.
-    download: /assets/code-samples/201/ProjectBlue201.zip
+    download: /assets/code-samples/DelvingDeeper/DelvingDeeper.zip
     tutorial: <%= stache.config.blue_walkthroughs %>201/
 ---
 
