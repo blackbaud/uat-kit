@@ -1,7 +1,7 @@
 ---
 layout: layout-sidebar
 name: Walkthroughs
-order: 10
+order: 30
 ---
 
 {{ include 'includes/eapwarning/index.md' }}

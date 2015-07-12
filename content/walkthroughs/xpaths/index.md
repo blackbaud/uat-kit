@@ -76,7 +76,7 @@ First, let's enter just the first component of the XPath in the search field: <c
 
 ![CRMRootXPath](/assets/img/XPaths/CRMRootXPath.PNG)  
 
-The screenshot shows 4 matches with the first match highlighted, although the number of matches will vary based on your browsing history in ***Blackbaud CRM***. In the screenshot, a single parent <code>div</code> includes "contentpanel" in its ID, and several immediate children elements also include "contentpanel" in their IDs. You can hover your mouse over each matching element to see it highlighted in the browser.
+The screenshot shows 4 matches with the first match highlighted, although the number of matches will vary based on your session history in ***Blackbaud CRM***. In the screenshot, a single parent <code>div</code> includes "contentpanel" in its ID, and several immediate children elements also include "contentpanel" in their IDs. You can hover your mouse over each matching element to see it highlighted in the browser.
 
 ![CRMContentPanel](/assets/img/XPaths/CRMContentPanel.PNG)  
 

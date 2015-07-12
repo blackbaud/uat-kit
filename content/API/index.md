@@ -1,7 +1,7 @@
 ---
 layout: layout-showcase
 name: API
-order: 30
+order: 40
 ---
 
 {{ include 'includes/eapwarning/index.md' }}

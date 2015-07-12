@@ -17,7 +17,7 @@ The {{ stache.config.product_name_short }} provides an API that lets you take ad
 * Familiarity with the {{ stache.config.product_name_short }} Custom SpecFlow Plugin for ***Visual Studio***.
 * Familiarity with creating feature files.
 * Familiarity with generating step classes bound to feature files.
-* Familiarity with accessing the {{ stache.config.product_name_short }} Core API.
+* Access to {{ stache.config.product_name_short }} Core API.
  
 ## Objectives
 This tutorial guides you through the steps to create a custom interaction with the Selenium WebDriver and to use the WebDriver and Wait pattern to drive browser interactions. In this walkthrough, you will:
@@ -51,7 +51,7 @@ Scenario: Log into BBCRM, load a functional area, and change functional area.
 
 <li>
 <p>To generate the failing step class methods, right-click within the feature file and select <strong>Generate Step Definitions</strong>, then click <strong>Generate</strong>, make sure the path points to your test project, and click <strong>Save</strong>.</p>
-<p>At the beginning of the step file, insert <code>using Blackbaud.UAT.Core.Base</code> and <code>using Blackbaud.UAT.Core.Crm</code> to import the <strong><em>Blackbaud CRM</em></strong> types defined by those namespaces.</p>
+<p>At the beginning of the step file, insert <code>using Blackbaud.UAT.Core.Base</code> and <code>using Blackbaud.UAT.Core.Crm</code> to import the <strong><em>Blackbaud CRM</em></strong> types defined by those namespaces. Then update the class to specify that it inherits from <code>BaseSteps</code></p>
 <div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Failing step class methods</div></div>
 <pre><code class="language-csharp">
 using Blackbaud.UAT.Core.Base;

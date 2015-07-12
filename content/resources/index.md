@@ -1,7 +1,7 @@
 ---
 layout: layout-showcase
 name: Resources
-order: 40
+order: 50
 ---
 
 {{ include 'includes/eapwarning/index.md' }}

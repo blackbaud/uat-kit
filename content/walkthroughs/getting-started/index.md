@@ -65,7 +65,26 @@ This tutorial guides you through the steps to create a simple test that confirms
 <li>
 <p>Add the <strong>Blackbaud UAT SpecFlow Plugin</strong> and <strong>Blackbaud UAT Core Classes</strong> packages to your project.</p>
 <p>![Package manager wizard](/assets/img/FirstProject/AddBSNuGetPackages.PNG)</p>
+<p class="alert alert-info">The NuGet packages are provided manually during EAP, so only customers who are signed up for the EAP can get the packages.</p>
 
+<ol>
+<li>
+<p> To access the NuGet package source after you place it on your local ystem, right-click the solution in <strong>Solution Explorer</strong> and select <strong>Manage NuGet Packages for Solution</strong>. Then on the Manage NuGet Packages screen, search for the Blackbaud UAT packages.</p>
+</li>
+<li>
+<p>Select <strong>Blackbaud UAT SpecFlow Plugin</strong> and click <strong>Install</strong>. Then with your unit test project and solution selected on the Select projects screen, click <strong>OK</strong>.</p>
+</li>
+<li>
+<p>Select <strong>Blackbaud UAT Core Classes</strong> and click <strong>Install</strong>. Then with your unit test project and solution selected on the Select projects screen, click <strong>OK</strong>.</p>
+</li>
+<li>
+<p>After you install both packages, click <strong>Close</strong>.</p>
+</li>
+</ol>
+</li>
+
+<!--
+Hiding this ordered list for EAP. Jim said we will provide NuGet packages directly during EAP, so I created EAP content for that. Will need to revisit this after EAP when we decide on the permanent method of supplying NuGet packages.
 <ol>
 <li>
 <p>To access the NuGet package source, right-click the solution in <strong>Solution Explorer</strong> and select <strong>Manage NuGet Packages for Solution</strong>. Then on the Manage NuGet Packages screen, click <strong>Settings</strong>. And on the Options screen, click the add button on enter "BB NuGet" in the <strong>Name</strong> field and "http://tfs-sym.blackbaud.com:81/nuget/" in the <strong>Source</strong> field.</p>
@@ -85,6 +104,7 @@ This tutorial guides you through the steps to create a simple test that confirms
 </li>
 </ol>
 </li>
+-->
 
 <li>
 <p>Add target environment URLs to the project's App.config file.</p>

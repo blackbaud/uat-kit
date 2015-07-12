@@ -1,7 +1,7 @@
 ---
 layout: layout-showcase
 name: Overview
-order: 10
+order: 20
 ---
 
 {{ include 'includes/eapwarning/index.md' }}
