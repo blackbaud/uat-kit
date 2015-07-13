@@ -273,7 +273,7 @@ public void WhenIAddAnAddressToTheCurrentConstituent(Table addressTable)
 </code>
 </pre>
 
-<p class="alert alert-info">Instead of passing the whole table to the <code>SetMethod</code>, we loop through the rows in the table and pass in a single <code>TableRow</code>.
+<p class="alert alert-info">Instead of passing the whole table to the set method, we loop through the rows in the table and pass in a single <code>TableRow</code>.
 <br>
 We only want to pass an object with  the relevant address dialog values to the <code>SetAddressFields()</code> method. In the previous method, the entire <code>Table</code> object contained these values. In this situation, only a <code>TableRow</code> is necessary to gather the necessary values.</p>
 

@@ -76,9 +76,7 @@ First, let's enter just the first component of the XPath in the search field: <c
 
 ![CRMRootXPath](/assets/img/XPaths/CRMRootXPath.PNG)  
 
-The screenshot shows 4 matches with the first match highlighted, although the number of matches will vary based on your session history in ***Blackbaud CRM***. In the screenshot, a single parent <code>div</code> includes "contentpanel" in its ID, and several immediate children elements also include "contentpanel" in their IDs. You can hover your mouse over each matching element to see it highlighted in the browser.
-
-![CRMContentPanel](/assets/img/XPaths/CRMContentPanel.PNG)  
+The screenshot shows matches, with the first match highlighted. The number of matches will vary based on your session history in ***Blackbaud CRM***. In the screenshot, a single parent <code>div</code> includes "contentpanel" in its ID, and immediate children elements also include "contentpanel" in their IDs. You can hover your mouse over each matching element to see it highlighted in the browser.
 
 When you navigate between different areas, ***Blackbaud CRM*** stores previous pages in the HTML but marks them as hidden. If a user tries to navigate to a previously visited panel, it loads much faster because panel components are stored in the browser.
 

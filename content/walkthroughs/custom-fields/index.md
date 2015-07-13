@@ -27,9 +27,11 @@ In this walkthrough, you'll gain experience setting a custom field on a dialog a
 This tutorial guides you through the steps to create a test to add an individual when the Add an  individual screen has been customized to include custom fields. It describes two potential implementations to handle a dialog with a custom field, but these are not the only approaches. In this walkthrough, you will:
 * Use the overload approach to add support for custom fields.
 * Use the custom method approach to add support for custom fields.
+<!--
+Commenting out the last 2 bullets. When I asked Jim to review the list, he asked if these are just restating 1 and 2 but did not give any input on what they should say. I'm just removing them to address his concern, but I'm hiding them rather than deleting them in case we need to go back and restore them.
 * Overload an implementation when a customization in ***Blackbaud CRM*** is not compatible with a test that works against a standard ***Blackbaud CRM*** instance.
 * Override an implementation to the add action with a field to add an individual.
-
+-->
 ## Add Support For Custom Fields - Overload Approach
 
 <ol>
