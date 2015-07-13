@@ -6,7 +6,7 @@ name: Code Samples
 description: A listing of code samples for the UAT Automation Kit walkthroughs.
 published: true
 code:
-  - title: NEW VERSION Get Started with the UAT Automation Kit
+  - title: Get Started with the UAT Automation Kit
     description: Use this sample to learn how to create a test project and get started on the path to creating a ***Blackbaud CRM*** test suite with the UAT Automation Kit.
     download: /assets/code-samples/GetStarted/GetStarted.zip
     tutorial: <%= stache.config.blue_walkthroughs %>getting-started/
