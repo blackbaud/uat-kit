@@ -32,12 +32,14 @@ This tutorial guides you through the steps to create a simple test that confirms
 <ol>
 <li>
 <p>Set up authentication for the <strong><em>Blackbaud CRM</em></strong> instance that you will test against.</p>
-<p class="alert alert-info">To run the tests that you create with the {{ stache.config.product_name_short }}, your target ***Blackbaud CRM*** environment must either use customBasicAuthentication or the tests must not use authentication. If you prefer to run tests without authentication, skip this step and in the step below about updating the App.config file, exclude the <code>add</code> element for credentials.</p>
+<p class="alert alert-info">To run the tests that you create with the {{ stache.config.product_name_short }}, your target ***Blackbaud CRM*** environment must either use customBasicAuthentication or the tests must not use authentication. If you prefer to run tests without authentication, skip this step and in the step below about updating the <strong>App.config</strong> file, exclude the <code>add</code> element for credentials.</p>
 <ol>
 <li>
-<p>Make sure that customBasicAuthentication is enabled in the Web.config file for your ***Blackbaud CRM*** instance.</p>
-<p>In the installation directory, open the bbappfx\vroot folder, then open the Web.config file and locate the <code>customBasicAuthentication</code> element. If the <code>enabled</code> attribute is not already set to "true," then update the attribute.</p>
-<pre><code>
+<p>Make sure that customBasicAuthentication is enabled in the <strong>Web.config</strong> file for your ***Blackbaud CRM*** instance.</p>
+<p>In the installation directory, open the bbappfx\vroot folder, then open the <strong>Web.config</strong> file and locate the <code>customBasicAuthentication</code> element. If the <code>enabled</code> attribute is not already set to "true," then update the attribute.</p>
+
+<div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Web.config file</div></div>
+<pre><code class="language-markup">
 &#60;customBasicAuthentication enabled="true" requireSSL="False" cachingEnabled="True" cachingDuration="600" &#47;&#62;
 </code>
 </pre>
@@ -54,7 +56,7 @@ This tutorial guides you through the steps to create a simple test that confirms
 </li>
 </ol>
 
-<p class="alert alert-info">If you set up customBasicAuthentication for your target ***Blackbaud CRM*** environment, then make sure to enter your <strong><em>Blackbaud CRM</em></strong> credentials in the third <code>add</code> element in the step below about updating the App.config file.</p>
+<p class="alert alert-info">If you set up customBasicAuthentication for your target ***Blackbaud CRM*** environment, then make sure to enter your <strong><em>Blackbaud CRM</em></strong> credentials when you update the <strong>App.config</strong> file in the step 3.</p>
 </li>
 <li>
 <p>In ***Visual Studio***, select <strong>File</strong>, <strong>New</strong>, <strong>Project</strong>, and then select the <strong>Test</strong> category under <strong>Visual C#</strong> and the <strong>Unit Test Project</strong> template. Edit the project name, location, and solution name as necessary.</p>
@@ -107,10 +109,10 @@ Hiding this ordered list for EAP. Jim said we will provide NuGet packages direct
 -->
 
 <li>
-<p>Add target environment URLs to the project's App.config file.</p>
+<p>Add target environment URLs to the project's <strong>App.config</strong> file.</p>
 
 <div class="codeSnippetContainerTabs"><div class="codeSnippetContainerTabSingle">Example appSettings section</div></div>
-<pre><code class="language-csharp">
+<pre><code class="language-markup">
 &lt;appSettings&gt;
 
   &lt;add key="BBCRMBaseUrl" value="https://blackbaudDemo.com/bbappfx" /&gt;
@@ -123,7 +125,7 @@ Hiding this ordered list for EAP. Jim said we will provide NuGet packages direct
 </code>
 </pre>
 
-<p>From <strong>Solution Explorer</strong>, open the App.config file and scroll down to the appSettings element.</p>
+<p>From <strong>Solution Explorer</strong>, open the <strong>App.config</strong> file and scroll down to the appSettings element.</p>
 
 <ul>
 <li>
