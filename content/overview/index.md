@@ -7,7 +7,7 @@ order: 20
 {{ include 'includes/eapwarning/index.md' }}
 
 # Welcome to the {{ stache.config.product_name_short }} Website
-The {{ stache.config.product_name_short }} is Blackbaud's solution to enhance and accelerate the automation of User Acceptance Testing (UAT) for Infinity applications such as ***Blackbaud CRM***. The {{ stache.config.product_name_short }} is a set of tools, templates, samples, and documentation that serves as the basis for developing a suite of automated tests, and this website features the documentation and examples thta you need to get you up and running.
+The {{ stache.config.product_name_short }} is Blackbaud's solution to enhance and accelerate the automation of User Acceptance Testing (UAT) for Infinity applications such as ***Blackbaud CRM***. The {{ stache.config.product_name_short }} is a set of tools, templates, samples, and documentation that serves as the basis for developing a suite of automated tests, and this website features the documentation and examples that you need to get you up and running.
 
 ## What Is the {{ stache.config.product_name_short }}?
 ***Blackbaud CRM*** is a powerful tool to manage your constituent relationships and includes a diverse portfolio of features to manage everything from fundraising and marketing to volunteers and memberships. This extensive functionality provides you with building blocks that are critical to achieve your organization's mission, but all that functionality can also make User Acceptance Testing (UAT) for upgrades very complicated. ***Blackbaud CRM*** customers manually run UAT tests as part of new implementations, service pack releases, and version upgrades, and they can spend a great deal of time testing because of the manual effort involved.
