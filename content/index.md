@@ -21,7 +21,7 @@ documentation_items:
 
 <header class="welcome" data-stellar-background-ratio="0.5">
   <div class="text-vertical-center">
-    <h1>Welcome to the {{ stache.config.product_name_long }} Early Adopter Program</h1>
+    <h1>Welcome to the {{ stache.config.product_name_long }}</h1>
     <h2><strong>This is the Early Adopter Program website for Blackbaud's automation tool for User Acceptance Testing in <strong><em><a class="welcome-header-link" href="https://www.blackbaud.com/fundraising-crm/blackbaud-nonprofit-crm">Blackbaud CRM</a></em></strong>. It is not intended for general use at this point, and the website and its documentation are subject to change.</strong></h2>
     <ul class="list-inline">
       <li>
