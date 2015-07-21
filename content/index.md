@@ -12,12 +12,14 @@ documentation_items:
     description: From setting up Visual Studio to automating product customizations, learn how to create tests with a series of tutorials and guidelines.
     image: fa-graduation-cap
     href: <%= stache.config.blue_walkthroughs %>
-    
+
   - title: API
-    description: Access documentation for the available Core and Base code to find the functionality comes out of the box with the UAT Automation Kit. 
+    description: Access documentation for the available Core and Base code to find the functionality comes out of the box with the UAT Automation Kit.
     image: fa-file-text
     href: <%= stache.config.blue_api %>
 ---
+
+<h1>Change to Dev Branch</h1>
 
 <header class="welcome" data-stellar-background-ratio="0.5">
   <div class="text-vertical-center">
@@ -46,19 +48,19 @@ documentation_items:
 
 <section id="features" class="learn section-padding bg-primary">
   <div class="container">
-  
+
     <div class="row text-center">
-    
+
       <div class="col-lg-10 col-lg-offset-1">
-        
+
         <h2>{{ stache.config.product_name_short }} Resources</h2>
-         
+
         {{# eachWithMod documentation_items mod=3 }}
 
             {{# if firstOrMod0 }}
-        <div class="row col-lg-offset-0"> 
+        <div class="row col-lg-offset-0">
             {{/ if }}
-          
+
           <div class="col-md-4 col-sm-6">
             <a href="{{ href }}" class="btn-fa-link">
               <span class="fa-stack fa-4x">
@@ -71,8 +73,8 @@ documentation_items:
             <p>{{ description }}</p>
             {{/ if }}
           </div>  <!-- .col-md-3 -->
-          
-          
+
+
             {{# if lastOrMod1 }}
         </div>  <!-- .row -->
             {{/ if }}
@@ -88,7 +90,7 @@ documentation_items:
     <div class="row">
       <div class="col-sm-12">
         <h2>Get Help</h2>
-        <p>Got questions?  We want to help! 
+        <p>Got questions?  We want to help!
           Check out <a href="{{ stache.config.stache_docs_resources_faq }}">frequently asked questions</a></p>
       </div>  
     </div>  
