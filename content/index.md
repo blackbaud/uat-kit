@@ -19,8 +19,6 @@ documentation_items:
     href: <%= stache.config.blue_api %>
 ---
 
-<h1>Change to Dev Branch</h1>
-
 <header class="welcome" data-stellar-background-ratio="0.5">
   <div class="text-vertical-center">
     <h1>Welcome to the {{ stache.config.product_name_long }}</h1>
