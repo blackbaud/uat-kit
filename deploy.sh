@@ -12,12 +12,18 @@ exitWithMessageOnError () {
   if [ ! $? -eq 0 ]; then
     echo "An error has occurred during web site deployment."
     echo $1
+    notifySlack "Stache build error: $1"
     exit 1
   fi
 }
 
+notifySlack() {
+  curl -X POST --data-urlencode 'payload={"text":"['"$WEBSITE_SITE_NAME"'] '"$1"'","channel":"#sky"}' https://hooks.slack.com/services/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
+}
+
 # Prerequisites
 # -------------
+notifySlack "Stache build started."
 
 # Verify node.js installed
 hash node 2>/dev/null
@@ -105,7 +111,7 @@ selectNodeVersion
 
 # 2. Install npm packages
 if [ -e "$DEPLOYMENT_SOURCE/package.json" ]; then
-  eval $NPM_CMD install
+  eval $NPM_CMD install --production
   exitWithMessageOnError "npm failed"
 fi
 
@@ -122,7 +128,7 @@ fi
 if [ -e "$DEPLOYMENT_SOURCE/Gruntfile.js" ]; then
   eval $NPM_CMD install grunt-cli
   exitWithMessageOnError "installing grunt failed"
-  ./node_modules/.bin/grunt --no-color build
+  ./node_modules/.bin/grunt --no-color --force customBuild
   exitWithMessageOnError "grunt failed"
 fi
 
@@ -140,4 +146,5 @@ if [[ -n "$POST_DEPLOYMENT_ACTION" ]]; then
   exitWithMessageOnError "post deployment action failed"
 fi
 
+notifySlack "Stache build successfully completed."
 echo "Finished successfully."
