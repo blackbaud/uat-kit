@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <appSettings>
+    <!-- Use a RemoteDriver - false or RemoteDriver location e.g. "IPAddress" -->
+    <!-- <add key="RemoteDriver" value="IPAddress" /> -->
+    <add key="RemoteDriver" value="false" />
+    <!-- Start chrome with specified language e.g. en-GB-->
+    <!-- You should manually un-comment this and set to your required value to avoid unexpected consequences on nuget upgrade -->
+    <!-- <add key="ChromeDriver.language" value="en-US" /> -->
+    <!-- Webdriver (feature) logging - false, true or verbose-->
+    <add key="ChromeDriver.Logging" value="false" />
+    <!-- Chromedriver performance logging - true or false-->
+    <add key="ChromeDriver.PerfLogging" value="false" />
+    <!-- Capture screen at end of test - false, true (always) or fail (on failure only) -->
+    <add key="ChromeDriver.Screenshot" value="fail" />
+    <!-- Url to upload performance log to - false or a Url e.g "https://URL.com" -->
+    <!-- Note that Setting a WebPageTestUrl will implicitly set Performance logging and Screenshot to true -->
+    <add key="ChromeDriver.WebPageTestUrl" value="false" />
+    <!-- Credentials for performance log upload - "domain\usernamme:password" or empty for no authentication -->
+    <add key="ChromeDriver.WebPageTestCredentials" value="" />
+    <!-- Chromedriver Mobile emulation https://developer.chrome.com/devtools/docs/device-mode - false or device to emulate e.g."Apple iPhone 6" -->
+    <add key="ChromeDriver.MobileEmulationDevice" value="false" />
+  </appSettings>
+  <specFlow>
+    <unitTestProvider name="BBTest" />
+    <plugins>
+    </plugins>
+  </specFlow>
+</configuration>

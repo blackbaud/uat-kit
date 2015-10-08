@@ -1,0 +1,37 @@
+﻿<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>Blackbaud.UAT.SpecFlow.Selenium</id>
+    <version>1.0.0</version>
+    <title>Blackbaud UAT SpecFlow Plugin</title>
+    <authors>Blackbaud</authors>
+    <owners>Blackbaud</owners>
+    <licenseUrl>http://developer.blackbaud.com/LICENSE/</licenseUrl>
+    <iconUrl>https://avatars2.githubusercontent.com/u/1738029?v=3&amp;s=200</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <summary>Test class generator to drive automated web ui tests with Selenium and SpecFlow</summary>
+    <description>
+      Blackbuad UAT SpecFlow Generator Plugin.
+      Produces bindings with dual signatures enabling that the tests for both MSTest and NUnit compatible runners.
+      Manages chromedriver lifecycle.
+      Based on http://www.baseclass.ch/Contrib/SpecFlowSelenium.
+      See http://www.baseclass.ch/documents/MITLicense.txt.
+    </description>
+    <tags>Blackbaud UAT Specflow Selenium MSTest NUnit Gherkin </tags>
+    <frameworkAssemblies>
+      <frameworkAssembly assemblyName="System.Configuration"  />
+    </frameworkAssemblies>
+    <dependencies>
+      <dependency id="SpecFlow" version="1.9.0" />
+      <dependency id="NUnit" version="2.6" />
+      <dependency id="SharpZipLib" version="0.86.0"/>
+      <dependency id="Selenium.Support" version="2.46.0" />
+      <dependency id="Newtonsoft.Json" version="6.0.8" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="Install.ps1" target="tools\net40" />
+    <file src="Blackbaud.UAT.SpecFlow.Selenium.SpecFlowPlugin.dll" target="lib\net40" />
+    <file src="App.config.transform" target="content" />
+  </files>
+</package>

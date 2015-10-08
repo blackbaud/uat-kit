@@ -1,0 +1,201 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{0002E497-81DF-4A90-AE9C-BBB52706C4B2}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Blackbaud.UAT.Core</RootNamespace>
+    <AssemblyName>Blackbaud.UAT.Core</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <TargetFrameworkProfile />
+    <!--
+	<RestorePackages>true</RestorePackages>
+	-->
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\release\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+    <DocumentationFile>bin\release\Blackbaud.UAT.Core.XML</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>..\DLLReferences\Blackbaud.UAT\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>..\DLLReferences\Blackbaud.UAT\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net40\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="TechTalk.SpecFlow, Version=1.9.0.77, Culture=neutral, PublicKeyToken=0778194805d6db41, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\SpecFlow.1.9.0\lib\net35\TechTalk.SpecFlow.dll</HintPath>
+    </Reference>
+    <Reference Include="WebDriver, Version=2.48.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Selenium.WebDriver.2.48.0\lib\net40\WebDriver.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="WebDriver.Support, Version=2.48.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Selenium.Support.2.48.0\lib\net40\WebDriver.Support.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Base\BaseComponent.cs" />
+    <Compile Include="Base\BaseSteps.cs" />
+    <Compile Include="Crm\Dialogs\CommitmentsDialog.cs" />
+    <Compile Include="Crm\Dialogs\DesignationsDialog.cs" />
+    <Compile Include="Crm\Dialogs\EventDialog.cs" />
+    <Compile Include="Crm\Dialogs\PledgeDialog.cs" />
+    <Compile Include="Crm\Dialogs\AddMembershipProgramDialog.cs" />
+    <Compile Include="Crm\Dialogs\Batch\BatchDialog.cs" />
+    <Compile Include="Crm\Dialogs\Batch\EnhancedRevenueBatchDialog.cs" />
+    <Compile Include="Crm\Dialogs\IndividualDialog.cs" />
+    <Compile Include="Crm\Dialogs\MarketingAcknowledgementRuleDialog.cs" />
+    <Compile Include="Crm\Dialogs\MarketingAcknowledgementTemplateDialog.cs" />
+    <Compile Include="Crm\Dialogs\NewAdhocQueryDialog.cs" />
+    <Compile Include="Crm\Dialogs\PackageDialog.cs" />
+    <Compile Include="Crm\Dialogs\PaymentDialog.cs" />
+    <Compile Include="Crm\Dialogs\MajorGivingPlanDialog.cs" />
+    <Compile Include="Crm\Dialogs\QuerySourceViewDialog.cs" />
+    <Compile Include="Crm\Dialogs\RegistrantDialog.cs" />
+    <Compile Include="Crm\Dialogs\SegmentDialog.cs" />
+    <Compile Include="Crm\Dialogs\SearchDialog.cs" />
+    <Compile Include="Crm\Dialogs\Dialog.cs" />
+    <Compile Include="Crm\Dialogs\AdHocQueryDialog.cs" />
+    <Compile Include="Crm\Dialogs\MultiLevelEventDialog.cs" />
+    <Compile Include="Crm\Dialogs\TaskDialog.cs" />
+    <Compile Include="Crm\FunctionalAreas\AnalysisFunctionalArea.cs" />
+    <Compile Include="Crm\FunctionalAreas\FunctionalArea.cs" />
+    <Compile Include="Crm\FunctionalAreas\ConstituentsFunctionalArea.cs" />
+    <Compile Include="Crm\FunctionalAreas\EventsFunctionalArea.cs" />
+    <Compile Include="Crm\FunctionalAreas\FundraisingFunctionalArea.cs" />
+    <Compile Include="Crm\FunctionalAreas\HomeFunctionalArea.cs" />
+    <Compile Include="Crm\FunctionalAreas\MarketingAndCommFunctionalArea.cs" />
+    <Compile Include="Crm\FunctionalAreas\ProspectsFunctionalArea.cs" />
+    <Compile Include="Crm\FunctionalAreas\RevenueFunctionalArea.cs" />
+    <Compile Include="Crm\Panels\AdHocQueryPanel.cs" />
+    <Compile Include="Crm\Panels\BatchEntryPanel.cs" />
+    <Compile Include="Crm\Panels\BusinessProcess\BusinessProcess.cs" />
+    <Compile Include="Crm\Panels\BusinessProcess\MarketingAcknowledgementBusinessProcess.cs" />
+    <Compile Include="Crm\Panels\BusinessProcess\ReceiptBusinessProcess.cs" />
+    <Compile Include="Crm\Panels\ConstituentPanel.cs" />
+    <Compile Include="Crm\Panels\EventManagementTemplatesPanel.cs" />
+    <Compile Include="Crm\Panels\EventPanel.cs" />
+    <Compile Include="Crm\Panels\InformationLibraryPanel.cs" />
+    <Compile Include="Crm\Panels\LocationsPanel.cs" />
+    <Compile Include="Crm\Panels\MajorGivingSetupPanel.cs" />
+    <Compile Include="Crm\Panels\MarketingAcknowledgementsPanel.cs" />
+    <Compile Include="Crm\Panels\MarketingAcknowledgementTemplatePanel.cs" />
+    <Compile Include="Crm\Panels\MultiEventPanel.cs" />
+    <Compile Include="Crm\Panels\PackagesPanel.cs" />
+    <Compile Include="Crm\Panels\Panel.cs" />
+    <Compile Include="Crm\Panels\PlanPanel.cs" />
+    <Compile Include="Crm\Panels\PledgePanel.cs" />
+    <Compile Include="Crm\Panels\PledgeSubtypePanel.cs" />
+    <Compile Include="Crm\Panels\QueryPanel.cs" />
+    <Compile Include="Bbis\Pages\BBISHomePage.cs" />
+    <Compile Include="Crm\Pages\BBCRMHomePage.cs" />
+    <Compile Include="Crm\Panels\ReceiptsPanel.cs" />
+    <Compile Include="Crm\Panels\RecurringGiftPanel.cs" />
+    <Compile Include="Crm\Panels\RegistrantPanel.cs" />
+    <Compile Include="Crm\Panels\RevenueRecordPanel.cs" />
+    <Compile Include="Crm\Panels\SegmentPanel.cs" />
+    <Compile Include="Crm\Panels\SegmentsPanel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Blackbaud.UAT.Core.nuspec" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Readme.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="contributing.md" />
+    <Content Include="License.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <!--
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
+  -->
+  <PropertyGroup>
+    <PreBuildEvent>$(SolutionDir).nuget\nuget.exe restore $(SolutionPath) -source "http://tfs-sym.blackbaud.com/nuget;https://www.nuget.org/api/v2"</PreBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
