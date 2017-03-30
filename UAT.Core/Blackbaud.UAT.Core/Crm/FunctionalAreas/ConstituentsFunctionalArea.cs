@@ -59,13 +59,24 @@ namespace Blackbaud.UAT.Core.Crm
         /// <param name="individual">Mapping of the 'Add an individual' dialog's field captions to their desired values.</param>
         /// <param name="groupCaption">The group header caption of the task.  Defaults to "Individuals and households".</param>
         /// <param name="taskCaption">The link caption of the task.  Defaults to "Add an individual".</param>
-        public static void AddAnIndividual(TableRow individual, string groupCaption = "Individuals and households", 
-            string taskCaption = "Add an individual")
+        public static void AddAnIndividual(TableRow individual, string groupCaption = "Individuals and households",  string taskCaption = "Add an individual")
+        {
+            AddAnIndividual(individual, groupCaption, taskCaption, 120);
+        }
+
+        /// <summary>
+        /// Open the dialog to add an individual, set the fields to the provided values, and save.
+        /// </summary>
+        /// <param name="individual">Mapping of the 'Add an individual' dialog's field captions to their desired values.</param>
+        /// <param name="groupCaption">The group header caption of the task.  Defaults to "Individuals and households".</param>
+        /// <param name="taskCaption">The link caption of the task.  Defaults to "Add an individual".</param>
+        /// <param name="timeout">Time to wait for operation, default is 120 seconds.</param>
+        public static void AddAnIndividual(TableRow individual, string groupCaption = "Individuals and households", string taskCaption = "Add an individual", int timeout = 120)
         {
             OpenLink(groupCaption, taskCaption);
             IndividualDialog.SetIndividualFields(individual);
             Dialog.Save();
-            GetDisplayedElement(Panel.getXPanelHeader("individual"));
+            GetDisplayedElement(Panel.getXPanelHeader("individual"), timeout);
         }
 
         /// <summary>

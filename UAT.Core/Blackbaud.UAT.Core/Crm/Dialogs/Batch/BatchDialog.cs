@@ -42,7 +42,8 @@ namespace Blackbaud.UAT.Core.Crm
             {"Effort",new CrmField("MAILINGID", FieldType.Searchlist, "MarketingEffortSearch", "NAME")},
             {"Other type",new CrmField("OTHERTYPECODEID", FieldType.TextInput)},
             {"Given anonymously",new CrmField("GIVENANONYMOUSLY", FieldType.Checkbox)},
-            {"Pledge subtype", new CrmField("PLEDGESUBTYPEID", FieldType.Dropdown)}
+            {"Pledge subtype", new CrmField("PLEDGESUBTYPEID", FieldType.Dropdown)},
+            {"Reference", new CrmField("REFERENCE", FieldType.TextInput)}
         };
 
         /// <summary>
@@ -184,6 +185,7 @@ namespace Blackbaud.UAT.Core.Crm
         {
             OpenTab("Main");
             ClickButton("Validate", null);
+            GetDisplayedElement("//div[contains(@class,'bbui-dialog-msgbox') and contains(@style,'visible')]//span[contains(text(),'Batch')]", 240);
             OK();
         }
 

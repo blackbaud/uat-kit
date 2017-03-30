@@ -68,9 +68,6 @@ namespace Blackbaud.UAT.Core.Bbis.Pages
         public static void FilterLayoutByName(string layoutName)
         {
             //Assumes we're on the Layout Gallery
-
-            //SetTextField(getXFilterByNameField, layoutName);
-
             IWebElement filterByNameFieldElement = Driver.FindElement(By.XPath(getXFilterByNameField));
 
             WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(TimeoutSecs));
@@ -152,23 +149,9 @@ namespace Blackbaud.UAT.Core.Bbis.Pages
             WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(TimeoutSecs));
             wait.IgnoreExceptionTypes(typeof(InvalidOperationException));
 
-            //wait.Until(d =>
-            //{
-            //    if (NewLayoutButtonElement == null) return false;
-            //    NewLayoutButtonElement.Click();
-            //    return true;
-            //});
-
-            // Do the popup thing like it's 1995 ....
-
             // This assumes the newly opened window will be the last handle on the list and that the parent is first on the list.
             // Its worked fine so far so its KISS for me but if it starts mis-identifying windows we could select by Driver.Title
             Driver.SwitchTo().Window(Driver.WindowHandles[Driver.WindowHandles.Count - 1]);
-
-            // SetTextfield seems to have problems in BBIS :)
-
-            //SetTextField(getXNewLayoutLayoutName, Layoutname);
-            //SetTextField(getXNewLayoutLayoutDescription, Description);
 
             IWebElement NewLayoutLayoutNameElement = Driver.FindElement(By.XPath(getXNewLayoutLayoutName));
             IWebElement NewLayoutLayoutDescriptionElement = Driver.FindElement(By.XPath(getXNewLayoutLayoutDescription));
@@ -181,26 +164,11 @@ namespace Blackbaud.UAT.Core.Bbis.Pages
                 return true;
             });
 
-            //try
-            //{
             NewLayoutLayoutNameElement.SendKeys(Layoutname);
             NewLayoutLayoutDescriptionElement.SendKeys(Description);
-            //} catch (RuntimeBinderException) { }
 
             WaitClick(getXNewLayoutNextButton);
-            //wait.Until(d =>
-            //{
-            //    if (NewLayoutNextButton == null) return false;
-            //    NewLayoutNextButton.Click();
-            //    return true;
-            //});
             WaitClick(getXNewLayoutSaveButton);
-            //wait.Until(d =>
-            //{
-            //    if (NewLayoutSaveButton == null) return false;
-            //    NewLayoutSaveButton.Click();
-            //    return true;
-            //});
 
             Driver.SwitchTo().Window(Driver.WindowHandles[0]);
 
@@ -230,7 +198,7 @@ namespace Blackbaud.UAT.Core.Bbis.Pages
         }
 
         /// <summary>
-        ///// What it says - takes Credentials of the form "username:password".
+        /// What it says - takes Credentials of the form "username:password".
         /// </summary>
         /// <param name="credentials"></param>
         public static void LoginAs(string credentials = null)
@@ -262,6 +230,59 @@ namespace Blackbaud.UAT.Core.Bbis.Pages
                 SetCredentailsField("//*[@id=\"pnl_login\"]//*[@id=\"txtPassword\"]",creds[1].Trim());
                 WaitClick("//*[@id=\"pnl_login\"]//*[@id=\"btnLogin\"]");                
             }
+        }
+
+        /// <summary>
+        /// Set the value of a field by copy pasting the value into the field and sending a Tab keystroke.
+        /// </summary>
+        /// <param name="xPath">The xPath to find an element for setting the value to.</param>
+        /// <param name="value">The desired value of the element.</param>
+        public static new void SetTextField(string xPath, string value)
+        {
+            if (value == null) return;
+
+            var waiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(TimeoutSecs));
+            waiter.IgnoreExceptionTypes(typeof(InvalidOperationException));
+            //removed element from being a public field and moved to scope of method
+            waiter.Until(d =>
+            {
+                CopyToClipBoard(value);
+
+                var fieldElement = d.FindElement(By.XPath(xPath));
+                if (fieldElement == null
+                    || !fieldElement.Displayed || !fieldElement.Enabled) return false;
+
+                fieldElement.Click();
+
+                fieldElement.SendKeys(Keys.Control + "a");
+
+                fieldElement.SendKeys(Keys.Control + "v");
+
+                var innerwaiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(10));
+                innerwaiter.IgnoreExceptionTypes(typeof(InvalidOperationException));
+
+                try
+                {
+                    innerwaiter.Until(dd =>
+                    {
+                        //Sending a [Tab] triggers a submit on the field.  This is needed for a dropdown and speeds up a required text field being set.                
+                        fieldElement.SendKeys(Keys.Tab);
+
+                        if (fieldElement.GetAttribute("value") != value) return false;
+                        return true;
+                    });
+                }
+                catch (WebDriverTimeoutException)
+                {
+                    return false;
+                }
+                catch (Exception Ex)
+                {
+                    throw Ex;
+                }
+
+                return true;
+            });
         }
     }
 }

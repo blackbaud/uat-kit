@@ -103,11 +103,6 @@ namespace Blackbaud.UAT.Core.Crm.Panels
                 return true;
             });
         }
-     
-        //public static void CheckQueryPresent(string name)
-        //{
-        //    CheckQueryPresent(getXQuery(name));
-        //}
 
         public static void CheckQueryPresent(string name)
         {

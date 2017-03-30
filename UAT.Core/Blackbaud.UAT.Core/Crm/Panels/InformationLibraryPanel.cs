@@ -114,7 +114,7 @@ namespace Blackbaud.UAT.Core.Crm
         /// </summary>
         /// <param name="row">Mapping of the column captions to a single row's values.</param>
         /// <param name="sectionCaption">The caption of the section.</param>
-        protected static void SelectSectionDatalistRow(TableRow row, string sectionCaption)
+        protected static new void SelectSectionDatalistRow(TableRow row, string sectionCaption)
         {
             IDictionary<string, string> rowValues = new Dictionary<string, string>();
             foreach (string caption in row.Keys)
@@ -130,7 +130,7 @@ namespace Blackbaud.UAT.Core.Crm
         /// </summary>
         /// <param name="rowValues">Mapping of the column captions to a single row's values.</param>
         /// <param name="sectionCaption">The caption of the section.</param>
-        protected static void SelectSectionDatalistRow(IDictionary<string, string> rowValues, string sectionCaption)
+        protected static new void SelectSectionDatalistRow(IDictionary<string, string> rowValues, string sectionCaption)
         {
             IDictionary<string, int> columnIndex = new Dictionary<string, int>();
             foreach (string caption in rowValues.Keys)
@@ -155,7 +155,7 @@ namespace Blackbaud.UAT.Core.Crm
         /// <param name="row">Mapping of the column captions to a single row's values.</param>
         /// <param name="sectionCaption">The caption of the section.</param>
         /// <returns>True if the row exists, false otherwise.</returns>
-        protected static bool SectionDatalistRowExists(TableRow row, string sectionCaption)
+        protected static new bool SectionDatalistRowExists(TableRow row, string sectionCaption)
         {
             IDictionary<string, string> rowValues = new Dictionary<string, string>();
             foreach (string caption in row.Keys)
@@ -172,7 +172,7 @@ namespace Blackbaud.UAT.Core.Crm
         /// <param name="rowValues">Mapping of the column captions to a single row's values.</param>
         /// <param name="sectionCaption">The caption of the section.</param>
         /// <returns>True if the row exists, false otherwise.</returns>
-        protected static bool SectionDatalistRowExists(IDictionary<string, string> rowValues, string sectionCaption)
+        protected static new bool SectionDatalistRowExists(IDictionary<string, string> rowValues, string sectionCaption)
         {
             IDictionary<string, int> columnIndex = new Dictionary<string, int>();
             foreach (string caption in rowValues.Keys)
@@ -194,7 +194,7 @@ namespace Blackbaud.UAT.Core.Crm
         /// <param name="sectionCaption">The caption of the section that the datalist belongs to.</param>
         /// <param name="columnCaptionToIndex">Mapping of the datalist column captions to their DOM TD index.</param>
         /// <param name="columnCaptionToValue">Mapping of the datalist column captions to their values in a single row.</param>
-        protected static string getXSectionDatalistRow(string sectionCaption, IDictionary<string, int> columnCaptionToIndex, IDictionary<string, string> columnCaptionToValue)
+        protected static new string getXSectionDatalistRow(string sectionCaption, IDictionary<string, int> columnCaptionToIndex, IDictionary<string, string> columnCaptionToValue)
         {
             string finalString = getXSectionDatalistRows(sectionCaption);
             foreach (string columnCaption in columnCaptionToValue.Keys)
@@ -212,7 +212,7 @@ namespace Blackbaud.UAT.Core.Crm
         /// </summary>
         /// <param name="columnIndex">The DOM index for the TD element representing the desired column.</param>
         /// <param name="columnValue">The value corresponding the provided column.  </param>
-        protected static string getXDataListColumnValue(int columnIndex, string columnValue)
+        protected static new string getXDataListColumnValue(int columnIndex, string columnValue)
         {
             return String.Format("/td[{0}]//*[text()=\"{1}\" or @title=\"{1}\"]/../../../..", columnIndex, columnValue);
         }

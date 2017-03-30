@@ -33,7 +33,6 @@ namespace Blackbaud.UAT.Core.Crm
             {"Export definition", new CrmField("_EXPORTDEFINITIONID_value", FieldType.Searchlist, "ExportDefinitionSearch2", "_NAME_value")},
         };
 
-
         /// <summary>
         /// Set the field values.
         /// </summary>
