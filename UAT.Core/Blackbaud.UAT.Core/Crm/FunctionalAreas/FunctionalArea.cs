@@ -71,19 +71,7 @@ namespace Blackbaud.UAT.Core.Crm
         public static void OpenLink(string groupCaption, string linkCaption)
         {
             //TODO add retry logic.  Wait for a visible dialog to appear or a different panel header.
-            //string headerText = GetDisplayedElement(Panel.getXPanelHeader()).Text;
             WaitClick(getXFunctionalAreaTask(groupCaption, linkCaption));
-            //WebDriverWait navigateWaiter = new WebDriverWait(driver, TimeSpan.FromSeconds(timeout_secs));
-            //navigateWaiter.IgnoreExceptionTypes(typeof(InvalidOperationException));
-            //navigateWaiter.Until(d =>
-            //{
-            //    IWebElement newDialog = d.FindElement(By.XPath(Dialog.getXVisibleDialog()));
-            //    if (newDialog.Displayed) return true;
-            //    IWebElement panelHeader = d.FindElement(By.XPath(Panel.getXPanelHeader()));
-            //    if (panelHeader.Text != headerText) return true;
-            //    WaitClick(getXFunctionalAreaTask(groupCaption, linkCaption));
-            //    return false;
-            //});
         }
 
         /// <summary>

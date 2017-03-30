@@ -62,8 +62,6 @@ namespace Blackbaud.UAT.Core.Crm
         /// </summary>
         public static void Search()
         {            
-            //BaseComponent.WaitClick(String.Format(xButton,"Search"));
-            // or could do ...
             ClickButton("Search");
         }
 
@@ -191,9 +189,6 @@ namespace Blackbaud.UAT.Core.Crm
                     var names = from element in nameFieldElements select element.Text;
 
                     if (!names.Contains(expected)) return false;
-                    //{                        
-                    //    throw new Exception(String.Format("CheckConstituentResultsContain Failed: Expected Name '{0}' was not found in the Results.", expected));
-                    //}
 
                     return true;    
                 });

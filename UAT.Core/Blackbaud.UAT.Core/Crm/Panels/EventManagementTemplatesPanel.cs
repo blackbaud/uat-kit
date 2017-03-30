@@ -28,11 +28,6 @@ namespace Blackbaud.UAT.Core.Crm
             }
 
             return true;
-
-            //IDictionary<string, string> rowValues = new Dictionary<string, string>();
-            //rowValues.Add("Name", templateName);
-
-            //return SectionDatalistRowExists(rowValues, "Event management templates");
         }
 
         /// <summary>

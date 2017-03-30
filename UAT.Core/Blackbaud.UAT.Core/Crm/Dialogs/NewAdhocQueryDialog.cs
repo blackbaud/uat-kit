@@ -51,7 +51,7 @@ namespace Blackbaud.UAT.Core.Crm
         /// Format a unique XPath for a tab on the Ad-Hoc Query Dialog.
         /// </summary>
         /// <param name="tabCaption">The caption of the tab.</param>
-        protected static string getXTab(string tabCaption) { return String.Format("//span[./text() = \"{0}\"]", tabCaption); }
+        protected static new string getXTab(string tabCaption) { return String.Format("//span[./text() = \"{0}\"]", tabCaption); }
 
         public static void SetFindField(string field)
         {
@@ -72,38 +72,6 @@ namespace Blackbaud.UAT.Core.Crm
             WaitClick(getXFieldResult(field));
             WaitClick(getXAddOutputFieldArrow);                        
         }
-
-
-        //private static string NodeExpander(string nodePath)
-        //{
-        //    return String.Format("//div[@*='{0}']/img[contains(@class,'x-tree-ec-icon x-tree-elbow')]", nodePath);
-        //}
-
-        //private const string SAVE_AND_CLOSE = "//button[./text() = 'Save and close']";        
-
-        ///// <summary>
-        ///// Select a filter category in the 'Browse for fields in' panel
-        ///// </summary>
-        ///// <param name="filter">The complete filter path.  Nested filters should be provided as a complete
-        ///// path (i.e. 'Revenue\Constituent\Spouse'</param>
-        //public virtual void FilterBy(string filter)
-        //{
-        //    string[] filterPath = BuildFilterPath(filter);
-        //    string aggregatePath = string.Empty;
-        //    foreach (string node in filterPath)
-        //    {
-        //        if (aggregatePath == string.Empty) aggregatePath = node;
-        //        else aggregatePath = String.Format(@"{0}\{1}", aggregatePath, node);
-        //        driver.Get(NodeExpander(aggregatePath)).ExpandNode(driver);
-        //    }
-        //}
-
-        //private string[] BuildFilterPath(string filter)
-        //{
-        //    string[] filterPath = filter.Split(new Char[] { '\\' });
-        //    filterPath[0] = String.Format("V_QUERY_{0}", filterPath[0].ToUpper());
-        //    return filterPath;
-        //}
 
         public static void ApplyCriteria(Table criteria)
         {
@@ -126,53 +94,7 @@ namespace Blackbaud.UAT.Core.Crm
                 }
             }
             WaitClick(getXDialogButton("OK"));
-            //ClickButton("OK");
         }
-
-        ///// <summary>
-        ///// Select a field and add it as a filter field using the provided
-        ///// criteria.
-        ///// </summary>
-        ///// <param name="fieldCaption">The field to add.</param>
-        ///// <param name="criteria">Dictionary mapping of the field DOM ids (i.e. 'FILTEROPERATOR') to their desired values</param>
-        //public static void AddFilterField(string fieldCaption, Table criteria)
-        //{
-        //    ClickField(fieldCaption);
-        //    driver.Get(INCLUDE_RECORD).Click(driver);
-        //    ApplyCriteria(criteria);
-        //}
-
-        //private void ClickField(string fieldCaption, int count = 0)
-        //{
-        //    /*
-        //     * Non elegant helper method to handle clicking a field.  The panel
-        //     * of available fields can update, causing staleelelementreferences to
-        //     * be thrown when trying to click despite the element being displayed
-        //     * and enabled.
-        //     * 
-        //     * When this is the case, we need to re-get the element by the same
-        //     * XPath.
-        //     */
-        //    try
-        //    {
-        //        driver.Get(Field(fieldCaption)).Click(driver);
-        //    }
-        //    catch (OpenQA.Selenium.StaleElementReferenceException e)
-        //    {
-        //        if (count > 100) throw e;
-        //        ClickField(fieldCaption, count++);
-        //    }
-        //}
-
-        ///// <summary>
-        ///// Select a field and add it as an output field to display.
-        ///// </summary>
-        ///// <param name="fieldCaption">The field to add.</param>
-        //public virtual void AddOutputField(string fieldCaption)
-        //{
-        //    ClickField(fieldCaption);
-        //    driver.Get(DISPLAY_RECORD).Click(driver);
-        //}
 
         /// <summary>
         /// Set the values on the 'Set save options' tab

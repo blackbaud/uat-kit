@@ -7,6 +7,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using TechTalk.SpecFlow;
 using Keys = OpenQA.Selenium.Keys;
+using OpenQA.Selenium.Interactions;
 
 namespace Blackbaud.UAT.Base
 {
@@ -35,7 +36,7 @@ namespace Blackbaud.UAT.Base
         /// <param name="caption">The caption of the button.</param>
         protected static string getXButton(string caption)
         {
-            return String.Format("//*[./text()=\"{0}\" and contains(@class,\"x-btn-text\")]",caption);            
+            return String.Format("//*[./text()=\"{0}\" and contains(@class,\"x-btn-text\")]", caption);
         }
 
         /// <summary>
@@ -100,9 +101,11 @@ namespace Blackbaud.UAT.Base
         /// If no matching element is found, a WebDriverTimeoutException is thrown.
         /// </summary>
         /// <param name="xPath">The xPath to use for finding an element.</param>
-        public static void ElementValueIsNotNullOrEmpty(string xPath)
+        /// <param name="secondsToWait">Timeout allowed in seconds.</param>
+        public static void ElementValueIsNotNullOrEmpty(string xPath, double secondsToWait = -1)
         {
-            var waiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(10));
+            if ((int)secondsToWait == -1) secondsToWait = TimeoutSecs;
+            var waiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(secondsToWait));
             waiter.IgnoreExceptionTypes(typeof(InvalidOperationException), typeof(StaleElementReferenceException));
             waiter.Until(d =>
             {
@@ -118,18 +121,32 @@ namespace Blackbaud.UAT.Base
         /// </summary>
         /// <param name="xPath">The xPath to use for finding an element.</param>
         /// <param name="expectedvalue">The expected text value of the element.</param>
-        public static void ElementValueIsSet(string xPath, string expectedvalue)
+        /// <param name="secondsToWait">Timeout allowed in seconds.</param>
+        public static void ElementValueIsSet(string xPath, string expectedvalue, double secondsToWait = -1)
         {
-            var waiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(10));
+            if ((int)secondsToWait == -1) secondsToWait = TimeoutSecs;
+
+            var waiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(secondsToWait));
             waiter.IgnoreExceptionTypes(typeof(InvalidOperationException), typeof(StaleElementReferenceException));
             waiter.Until(d =>
             {
                 var element = d.FindElement(By.XPath(xPath));
-                return element != null && element.Displayed && (element.Text == expectedvalue || element.GetAttribute("value") == expectedvalue)
-                       && !element.GetAttribute("class").Contains("required");
+
+                if (element != null)
+                {
+                    if (!element.GetAttribute("class").Contains("required"))
+                    {
+                        if ((element.Text != null && element.Text.Contains(expectedvalue))
+                           || (element.GetAttribute("value") != null && element.GetAttribute("value").Contains(expectedvalue)))
+                        {
+                            return true;
+                        }
+                    }
+                }
+                return false;
             });
         }
-        
+
         //FIX ME - do we really need this
         /// <summary>
         /// Check if a displayed element exists immediately using the provided xPath selector.
@@ -141,7 +158,6 @@ namespace Blackbaud.UAT.Base
             return Exists(xPath, 0.01);
         }
 
-        //FIX ME - remove nested waiter
         /// <summary>
         /// Checks if a displayed element exists using the provided xPath selector.
         /// </summary>
@@ -165,18 +181,6 @@ namespace Blackbaud.UAT.Base
             {
                 return false;
             }
-            /*
-             * if ((int)secondsToWait == -1) secondsToWait = TimeoutSecs;
-            try
-            {
-                var element = GetEnabledElement(xPath, secondsToWait);
-                return element != null && element.Enabled;
-            }
-            catch (WebDriverTimeoutException)
-            {
-                return false;
-            }
-             */
         }
 
         /// <summary>
@@ -312,7 +316,7 @@ namespace Blackbaud.UAT.Base
         }
 
         /// <summary>
-        /// Find an element using a provided xPath and click it once it is displayed and enabled.
+        /// Find an element using a provided xPath, wait for it to be displayed and enabled then Click.
         /// </summary>
         /// <param name="xPath">The xPath to find the element by.</param>
         /// <param name="timeout">The amount of time to try and find a displayed and enabled element to click
@@ -333,6 +337,73 @@ namespace Blackbaud.UAT.Base
         }
 
         /// <summary>
+        /// Find an element using a provided xPath, wait for it to be displayed and enabled then DoubleClick.
+        /// </summary>
+        /// <param name="xPath">The xPath to find the element by.</param>
+        /// <param name="timeout">The amount of time to try and find a displayed and enabled element to DoubleClick
+        /// before throwing a WebDriverTimeoutException.</param>
+        public static void WaitDoubleClick(string xPath, double timeout)
+        {
+            Actions act = new Actions(Driver);
+            var waiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(timeout));
+            waiter.IgnoreExceptionTypes(typeof(InvalidOperationException), typeof(StaleElementReferenceException));
+            waiter.Until(d =>
+            {
+                var element = Driver.FindElement(By.XPath(xPath));
+                //adding check for enabled.  Not checking for this was causing race conditions for clicking grid cells.
+                if (element == null
+                    || element.Displayed == false || !element.Enabled)
+                    return false;
+                act.DoubleClick(element).Build().Perform();
+                return true;
+            });
+        }
+
+        /// <summary>
+        /// Find an element using a provided xPath, wait for it to be displayed and enabled then SendKeys directly to it.
+        /// This is intended for sending directly to input elements e.g. to bypass a native file chooser.
+        /// </summary>
+        /// <param name="xPath">The xPath to find the element by.</param>
+        /// <param name="keysToSend">The String of Keys to send to the input.</param>
+        /// <param name="timeout">The amount of time to try and find a displayed and enabled element to DoubleClick
+        /// before throwing a WebDriverTimeoutException.</param>
+        public static void WaitSendKeys(string xPath, string keysToSend, double timeout)
+        {
+            Actions act = new Actions(Driver);
+            var waiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(timeout));
+            waiter.IgnoreExceptionTypes(typeof(InvalidOperationException), typeof(StaleElementReferenceException));
+            waiter.Until(d =>
+            {
+                var element = Driver.FindElement(By.XPath(xPath));
+                //adding check for enabled.  Not checking for this was causing race conditions for clicking grid cells.
+                if (element == null
+                    || element.Displayed == false || !element.Enabled)
+                    return false;
+                act.SendKeys(element, keysToSend).Build().Perform();
+                return true;
+            });
+        }
+
+        /// <summary>
+        /// Find an element using a provided xPath, wait for it to be displayed and enabled then SendKeys directly to it.
+        /// This is intended for sending directly to input elements e.g. to bypass a native file chooser.
+        /// </summary>
+        /// <param name="xPath">The xPath to find the element by.</param>
+        /// <param name="keysToSend">The String of Keys to send to the input.</param>
+        public static void WaitSendKeys(string xPath, String keysToSend)
+        {
+            WaitSendKeys(xPath, keysToSend, TimeoutSecs);
+        }
+
+        /// <summary>
+        /// Find an element using a provided xPath, wait for it to be displayed and enabled then DoubleClick.        /// </summary>
+        /// <param name="xPath">The xPath to find the element by.</param>
+        public static void WaitDoubleClick(string xPath)
+        {
+            WaitDoubleClick(xPath, TimeoutSecs);
+        }
+
+        /// <summary>
         /// Find an element using a provided xPath and click it once it is displayed and enabled.
         /// </summary>
         /// <param name="xPath">The xPath to find the element by.</param>
@@ -350,7 +421,7 @@ namespace Blackbaud.UAT.Base
         {
             // ArgumentNullException thrown when text is "null or Empty"
             var thread = string.IsNullOrEmpty(value) ? new Thread(Clipboard.Clear) : new Thread(() => Clipboard.SetText(value));
-            
+
             thread.SetApartmentState(ApartmentState.STA);
             thread.Start();
             thread.Join();
@@ -392,13 +463,10 @@ namespace Blackbaud.UAT.Base
                 {
                     return false;
                 }
-  
-                fieldElement.SendKeys(Keys.Control + "a");
-                
-                fieldElement.SendKeys(Keys.Control + "v");                
 
-                //Sending a [Tab] triggers a submit on the field.  This is needed for a dropdown and speeds up a required text field being set.
-                //fieldElement.SendKeys(Keys.Tab);
+                fieldElement.SendKeys(Keys.Control + "a");
+
+                fieldElement.SendKeys(Keys.Control + "v");
 
                 try
                 {
@@ -407,8 +475,7 @@ namespace Blackbaud.UAT.Base
                         //Sending a [Tab] triggers a submit on the field.  This is needed for a dropdown and speeds up a required text field being set.                
                         fieldElement.SendKeys(Keys.Tab);
 
-                        if (fieldElement.GetAttribute("value") != value //) return false;
-                            || fieldElement.GetAttribute("class").Contains("required")) return false;
+                        if (fieldElement.GetAttribute("value") != value) return false;
                         return true;
                     });
                 }
@@ -416,10 +483,14 @@ namespace Blackbaud.UAT.Base
                 {
                     return false;
                 }
+                catch (Exception Ex)
+                {
+                    throw Ex;
+                }
 
                 return true;
             });
-        }        
+        }
 
         /// <summary>
         /// Specialist version of setTextField to deal with the lack of focus in a login splash screen.
@@ -443,23 +514,8 @@ namespace Blackbaud.UAT.Base
 
                 fieldElement.Click();
 
-                //Console.WriteLine("Clicked Credentials field!");
-
                 var innerwaiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(10));
                 innerwaiter.IgnoreExceptionTypes(typeof(InvalidOperationException));
-                //try
-                //{
-                //    innerwaiter.Until(dd =>
-                //    {
-                //        if (!fieldElement.GetAttribute("class").Contains("focus")) return false;
-                //        return true;
-                //    });
-                //}
-                //catch (WebDriverTimeoutException)
-                //{
-                //    Console.WriteLine("Timed Out waiting for focus!!");
-                //    return false;
-                //}
 
                 fieldElement.SendKeys(Keys.Control + "a");
 
@@ -483,7 +539,7 @@ namespace Blackbaud.UAT.Base
 
                 return true;
             });
-        } 
+        }
     }
 
     /// <summary>

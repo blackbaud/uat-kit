@@ -10,7 +10,7 @@
         /// </summary>
         /// <param name="queryName">The value to check for in the header.</param>
         /// <returns>True if the header contains the value, false otherwise.</returns>
-        public static bool IsPanelHeader(string queryName)
+        public static new bool IsPanelHeader(string queryName)
         {
             WaitForPanelType("adhocquery");
             return GetDisplayedElement(getXPanelHeader()).Text.Contains(queryName);

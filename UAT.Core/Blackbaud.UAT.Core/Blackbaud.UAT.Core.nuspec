@@ -15,17 +15,16 @@
     </description>
     <tags>Blackbaud UAT Selenium MSTest NUnit SpecFlow Gherkin </tags>
     <frameworkAssemblies>
-      <frameworkAssembly assemblyName="System.Configuration"  />
+      <frameworkAssembly assemblyName="System.Configuration"  /> 
     </frameworkAssemblies>
     <dependencies>
-      <dependency id="SpecFlow" version="1.9.0" />
-      <dependency id="NUnit" version="2.6" />
-      <dependency id="Selenium.Support" version="2.46.0" />
+      <dependency id="SpecFlow" version="2.0.0" />
+      <dependency id="Selenium.Support" version="2.53.1" />
     </dependencies>
   </metadata>
   <files>
-    <file src="Blackbaud.UAT.Core.dll" target="lib\net40" />
-    <file src="Blackbaud.UAT.Core.XML" target="lib\net40"/>
-    <file src="License.txt" target="lib\net40"/>
+    <file src="Blackbaud.UAT.Core.dll" target="lib\net45" />
+    <file src="Blackbaud.UAT.Core.XML" target="lib\net45"/>
+    <file src="License.txt" target="lib\net45"/>
   </files>
 </package>

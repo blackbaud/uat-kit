@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Configuration;
 using Blackbaud.UAT.Base;
-using Blackbaud.UAT.Core.Base;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using TechTalk.SpecFlow;
 
 namespace Blackbaud.UAT.Core.Crm
 {
@@ -63,7 +64,26 @@ namespace Blackbaud.UAT.Core.Crm
 
         public static string BaseUrl
         {
-            get { return ConfigurationManager.AppSettings["BBCRMBaseUrl"] ?? "http://localhost:80/bbappfx_40"; }
+            get
+            {
+                TestContext tc;
+
+                if (ScenarioContext.Current.TryGetValue("MSTestContext", out tc))
+                {
+                    try
+                    {
+                        return tc.Properties["URL"].ToString();
+                    }
+                    catch
+                    {
+                        throw new ArgumentNullException("MSTestContext does not contain a URL property.");
+                    }
+                }
+                else
+                {
+                    return ConfigurationManager.AppSettings["BBCRMBaseUrl"] ?? "http://localhost:80/bbappfx_40";
+                }
+            }
         }
 
         public static string VirtualPath
@@ -215,7 +235,7 @@ namespace Blackbaud.UAT.Core.Crm
                     {
                         return false;
                     }
-                    return true;
+                    return true; 
                 });
             }
 
@@ -259,11 +279,6 @@ namespace Blackbaud.UAT.Core.Crm
             {
                 creds = credentials.Split(':');
             }
-
-            //if (null != credentials)
-            //{
-            //    url = BaseUrl.Replace(ptcl, ptcl + credentials.Trim() + "@");
-            //}
 
             Driver.Navigate().GoToUrl(url.TrimEnd(new char[] { '/' }) + VirtualPath);
 

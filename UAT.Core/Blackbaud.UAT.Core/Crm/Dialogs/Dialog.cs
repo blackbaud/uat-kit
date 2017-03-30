@@ -473,14 +473,6 @@ namespace Blackbaud.UAT.Core.Crm
              * element in the dialog.  ie '//html/body[contains(@class, 'mceContentBody')]'
              * 
              */
-            //waiter.Until(d =>
-            //{
-            //    //the HTML iframes have the value set to be checked for as a nested <p> element
-            //    IWebElement htmlBodyElement = d.FindElement(By.XPath(getXIFrameHtmlBodyP));
-            //    if (htmlBodyElement == null
-            //        || !htmlBodyElement.Displayed || !htmlBodyElement.Enabled || htmlBodyElement.Text != value) return false;
-            //    return true;
-            //});
         }
 
         /// <summary>
@@ -789,9 +781,6 @@ namespace Blackbaud.UAT.Core.Crm
             var setWaiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(TimeoutSecs));
             setWaiter.Until(d =>
             {
-                //WaitClick(xPath);
-                //WaitClick(getXGridEditCell);
-                //WaitClick(getXGridFocusedEditCell);
                 //Have to click several elements potentially.  there are rare moments when the edit field is weirdly on the 2nd
                 //row when trying to click the first row.
                 try
@@ -838,7 +827,7 @@ namespace Blackbaud.UAT.Core.Crm
                     {
                         var element = d3.FindElement(By.XPath(getXGridEditCell));
                         if (element != null && element.Displayed && element.Enabled
-                            && (element.Text == value || element.GetAttribute("value") == value))
+                            && ((element.Text != null && element.Text.Contains(value)) || (element.GetAttribute("value") != null && element.GetAttribute("value").Contains(value)) ))
                         {
                             element.SendKeys(Keys.Return);
                             return true;

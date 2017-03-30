@@ -9,10 +9,10 @@ namespace Blackbaud.UAT.Core.Base
     public class BaseSteps
     {        
         /// <summary>
-        /// Time stamp that should be static for all test step definitions in a single test
+        /// Time stamp that should be static for all test step definitions in a scenario
         /// </summary>
-        // One for the kids - with a twist
-        protected static string uniqueStamp = (DateTime.UtcNow.Subtract(new DateTime(1970, 7, 4)).TotalSeconds).ToString();
+        protected static string uniqueStamp
+        { get { return (string)ScenarioContext.Current["uniqueStamp"]; } }
 
         /// <summary>
         /// Fail a test by throwing a SpecFlowException with the provided message
