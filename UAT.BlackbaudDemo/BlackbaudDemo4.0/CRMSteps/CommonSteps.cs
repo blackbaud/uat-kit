@@ -10,6 +10,7 @@ namespace BlackbaudDemo40.CRMSteps
         [Given(@"I have logged into the BBCRM home page")]
         public void GivenIHaveLoggedIntoTheBBCRMHomePage()
         {
+            //BBCRMHomePageBasicAuthenticate.LoginAs();
             BBCRMHomePage.Login();
         }
     }

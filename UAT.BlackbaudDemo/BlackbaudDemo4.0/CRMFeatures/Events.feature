@@ -3,21 +3,21 @@
 	As a user of BBCRM
 	I want to add, modify, and validate Events
 
-@Events
+@Events 
 Scenario: Add an Event with a Location
 	Given I have logged into the BBCRM home page
 	And Location "Exhibit Hall" exists
 	When I add events
 	| Name         | Start date | Location     |
-	| Event_469108 | 1/1/2015   | Exhibit Hall |
-	Then an event exists with the name 'Event_469108', start date '1/1/2015', and location 'Exhibit Hall'
+	| Event_469108 | 01/01/2015 | Exhibit Hall |
+	Then an event exists with the name 'Event_469108', start date '01/01/2015', and location 'Exhibit Hall'
 
 @Events
 Scenario: Add a Coordinator to an Event
 	Given I have logged into the BBCRM home page
 	And an event exists
 	| Name         | Start date |
-	| Event_469105 | 1/1/2015   |
+	| Event_469105 | 01/01/2015 |
 	And staff constituent "Constituent_469105" exists
 	When I add coordinator 'Constituent_469105' to event 'Event_469105'
 	Then 'Constituent_469105' is a coordinator for event 'Event_469105'
@@ -27,11 +27,11 @@ Scenario: Add a multilevel Event
 	Given I have logged into the BBCRM home page
 	And an event exists
     | Name          | Start date |
-    | Event1_469106 | 1/1/2015   |
-    | Event2_469106 | 1/1/2015   |
-    | Event3_469106 | 1/1/2015   |
-	And event management template "AddMultiTemplate" exists
-	When I create a multi-event using template "AddMultiTemplate"
+    | Event1_469106 | 01/01/2015 |
+    | Event2_469106 | 01/01/2015 |
+    | Event3_469106 | 01/01/2015 |
+	And event management template "AddMultiTemplateA" exists
+	When I create a multi-event using template "AddMultiTemplateA"
 	| event         | parent        |
 	| Event1_469106 |               |
 	| Event2_469106 | Event1_469106 |
@@ -47,7 +47,7 @@ Scenario: Add Registration options to an Event
 	Given I have logged into the BBCRM home page
 	And an event exists
     | Name         | Start date |
-    | Event_469109 | 1/1/2015   |
+    | Event_469109 | 01/01/2015 |
 	When I add a registration option to event 'Event_469109'
 	| Registration type | Name       |
 	| Adult             | Full Price |
@@ -60,10 +60,10 @@ Scenario: Add multiple Registration options to Events
 	Given I have logged into the BBCRM home page
 	And an event exists
     | Name          | Start date |
-    | Event1_473412 | 1/1/2015   |
+    | Event1_473412 | 01/01/2015 |
 	And an event exists
     | Name          | Start date |
-    | Event2_473412 | 1/1/2015   |
+    | Event2_473412 | 01/01/2015 |
 	When I add a registration option to event 'Event1_473412'
     | Registration type | Name  |
     | Adult             | Adult |
@@ -82,30 +82,11 @@ Scenario: Add multiple Registration options to Events
 	| Hole-in-One Sponsor | Hole-in-One Sponsor |
 
 @Events
-Scenario: Copy Registration options to an event
-	Given I have logged into the BBCRM home page
-	And an event exists
-	| Name          | Start date |
-	| Event1_473432 | 1/1/2015   |
-	And event 'Event1_473432' has registration option
-	| Name  | Registration type |
-    | Adult | Adult             |
-    | Child | Child             |
-	And an event exists
-	| Name          | Start date |
-	| Event2_473432 | 1/1/2015   |
-	When I copy registration options from 'Event1_473432' to 'Event2_473432'
-	Then event "Event2_473432" has registration option
-	| Name  | Registration type |
-    | Adult | Adult             |
-    | Child | Child             |
-
-@Events
 Scenario: Add an Expense to an event
 	Given I have logged into the BBCRM home page
 	And an event exists
 	| Name         | Start date |
-	| Event_473517 | 1/1/2015   |
+	| Event_473517 | 01/01/2015 |
 	And constituent 'Constituent_473517' exists
 	When I add expense to 'Event_473517'
 	| Type          | Vendor             | Budgeted amount | Comment |
@@ -119,15 +100,15 @@ Scenario: Add a Task with Reminder to an event
 	Given I have logged into the BBCRM home page
 	And an event exists
 	| Name         | Start date |
-	| Event_473577 | 1/1/2015   |
+	| Event_473577 | 01/01/2015 |
 	And constituent 'Constituent_473577' exists
 	When I add a task to event 'Event_473577'
-	| Name             | Comment             | Owner              | Date due |
-	| Send Invitations | Prepare invitations | Constituent_473577 | 1/1/2050 |
+	| Name             | Comment             | Owner              | Date due   |
+	| Send Invitations | Prepare invitations | Constituent_473577 | 01/01/2050 |
 	And add reminder to task 'Send Invitations' on event 'Event_473577'
-	| Name       | Date     |
-	| Reminder 1 | 1/1/2015 |
-	Then reminder 'Reminder 1 (1/1/2015)' exists for task 'Send Invitations'
+	| Name       | Date       |
+	| Reminder 1 | 01/01/2015 |
+	Then reminder 'Reminder 1 (01/01/2015)' exists for task 'Send Invitations'
 
 @Events 
 Scenario: Add a 2 Level multi-level Event record
@@ -135,13 +116,13 @@ Scenario: Add a 2 Level multi-level Event record
 	And Location "Exhibit Hall" exists 
 	And an event exists
 	| Name                             | Start date |
-	| Alumni Weekend 2015              | 5/4/2015   |
-	| Saturday Daytime with lunch      | 5/4/2015   |
-	| Saturday Daytime                 | 5/4/2015   |
-	| Saturday night with B&B (single) | 5/4/2015   |
-	| Saturday night with B&B (double) | 5/4/2015   |
-	And event management template "AddMultiTemplate" exists
-	When I start to create a multi-event using template "AddMultiTemplate"
+	| Alumni Weekend 2015              | 05/04/2015 |
+	| Saturday Daytime with lunch      | 05/04/2015 |
+	| Saturday Daytime                 | 05/04/2015 |
+	| Saturday night with B&B (single) | 05/04/2015 |
+	| Saturday night with B&B (double) | 05/04/2015 |
+	And event management template "AddMultiTemplateB" exists
+	When I start to create a multi-event using template "AddMultiTemplateB"
 	| event                            | parent              |
 	| Alumni Weekend 2015              |                     |
 	| Saturday Daytime with lunch      | Alumni Weekend 2015 |
@@ -163,7 +144,7 @@ Scenario: Add Dietary Preferences to an event
 	Given I have logged into the BBCRM home page
 	And an event exists
 	| Name                        | Start date |
-	| Saturday Daytime with lunch | 5/4/2015 |
+	| Saturday Daytime with lunch | 05/04/2015 |
 	When I add preference "Dietary Preferences" to event "Saturday Daytime with lunch"
 	| Options     |
 	| Vegetarian  |
@@ -179,7 +160,7 @@ Scenario: Add a registrant and guest to an event
 	And constituent 'Puppy Enthusiast' exists
 	And an event exists
 	| Name         | Start date |
-	| Puppy Parade | 1/1/2015   |
+	| Puppy Parade | 01/01/2015   |
 	And event 'Puppy Parade' has registration option
 	| Registration type | Name     | Registration count | Registration fee |
 	| Adult             | Adult +1 | 2                  | $20.00           |
