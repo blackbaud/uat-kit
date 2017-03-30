@@ -3,7 +3,7 @@
 	As a user of BBCRM
 	I want to add, modify, and validate AdHoc Queries
 
-@Browser:Chrome
+@Browser:Chrome 
 @AdHocQuery
 Scenario: Add an Ad-Hoc Query
 	Given I have logged into the BBCRM home page

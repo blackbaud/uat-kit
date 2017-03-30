@@ -3,7 +3,7 @@
 	As a BBCRM User
 	I want to create a new Membership Program
 
-Scenario: Create a new Membership Program
+Scenario: Create a new Membership Program 
 	Given I have logged into the BBCRM home page
 	And there is no existing Membership Program called "Test Program"
 	When I create a new membership with General options
