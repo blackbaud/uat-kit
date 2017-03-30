@@ -3,15 +3,15 @@
 	As a user of BBCRM
 	I want to add, modify, and validate Marketing processes
 
-@DirectMarketing 
+@DirectMarketing
 Scenario: Run receipt process that marks transaction receipted
 	Given I have logged into the BBCRM home page
 	And constituent exists
 	| Last name       | Address type | Country       | Address               | City       | State | ZIP   | Email type | Email address           |
 	| Norman Rockwell | Home         | United States | 1990 Daniel Island Dr | Charleston | SC    | 29407 | Email      | testemail@blackbaud.com |
 	And I start to add a payment
-	| Constituent     | Amount  | Date       |
-	| Norman Rockwell | $100.00 | 01/01/2015 |
+	| Constituent     | Amount  | Date     |
+	| Norman Rockwell | $100.00 | 1/1/2015 |
 	And add applications to the payment
 	| Application | Applied | Designation           |
 	| Donation    | $100.00 | Camp Kids Scholarship |
@@ -44,7 +44,6 @@ Scenario: Add Marketing Acknowledgement Template
 	| Name          | Description |
 	| Test Template | Test        |
 
-@ignore
 @DirectMarketing
 Scenario: Process Marketing Acknowledgement Effort
 	Given I have logged into the BBCRM home page

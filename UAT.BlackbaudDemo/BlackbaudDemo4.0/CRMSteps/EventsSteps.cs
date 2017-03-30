@@ -2,7 +2,6 @@
 using Blackbaud.UAT.Core.Base;
 using Blackbaud.UAT.Core.Crm;
 using TechTalk.SpecFlow;
-using Blackbaud.UAT.Base;
 
 namespace BlackbaudDemo40.CRMSteps
 {
@@ -27,21 +26,7 @@ namespace BlackbaudDemo40.CRMSteps
             foreach (var eventToAdd in eventsToAdd.Rows)
             {
                 eventToAdd["Name"] += uniqueStamp;
-                BBCRMHomePage.OpenEventsFA();
-                //spawn form
-                Panel.WaitClick("//table[contains(@class,'x-btn bbui-pages-section-collapsesection x-btn-icon')]/tbody/tr[2]/td[2]/em/button");
-                Panel.WaitClick("//button[./text()='Add new' and contains(@class,'x-btn-text bbui-valuestyles-new-imageandtext')]");
-                Panel.WaitClick("//span[./text()='Event']");
-
-                //set form vars and save
-                Dialog.SetTextField("//input[contains(@id,'_NAME_value')]", eventToAdd["Name"]);
-                OpenQA.Selenium.IWebElement _web = Dialog.GetEnabledElement("//input[contains(@id,'_STARTDATE_value')]");
-                _web.SendKeys(eventToAdd["Start date"]);
-                if (eventToAdd["Location"] != null && !string.IsNullOrEmpty(eventToAdd["Location"].ToString()))
-                {
-                    Dialog.SetTextField("//input[contains(@id,'_EVENTLOCATIONID_value')]", eventToAdd["Location"]);
-                }
-                Dialog.Save();
+                EventsFunctionalArea.AddEvent(eventToAdd);
             }
         }
 
@@ -74,16 +59,7 @@ namespace BlackbaudDemo40.CRMSteps
             {
                 e["Name"] += uniqueStamp;
                 BBCRMHomePage.OpenEventsFA();
-                //spawn form
-                Panel.WaitClick("//table[contains(@class,'x-btn bbui-pages-section-collapsesection x-btn-icon')]/tbody/tr[2]/td[2]/em/button");
-                Panel.WaitClick("//button[./text()='Add new' and contains(@class,'x-btn-text bbui-valuestyles-new-imageandtext')]");
-                Panel.WaitClick("//span[./text()='Event']");
-
-                //set form vars and save
-                Dialog.SetTextField("//input[contains(@id,'_NAME_value')]", e["Name"]);
-                OpenQA.Selenium.IWebElement _web = Dialog.GetEnabledElement("//input[contains(@id,'_STARTDATE_value')]");
-                _web.SendKeys(e["Start date"]);
-                Dialog.Save();
+                EventsFunctionalArea.AddEvent(e);
             }
         }
 
@@ -102,7 +78,6 @@ namespace BlackbaudDemo40.CRMSteps
         {
             BBCRMHomePage.OpenEventsFA();
             EventsFunctionalArea.EventManagementTemplates();
-            templateName += uniqueStamp;
             if (!EventManagementTemplatesPanel.TemplateExists(templateName))
                 EventManagementTemplatesPanel.AddTemplate(templateName);
         }
@@ -112,8 +87,7 @@ namespace BlackbaudDemo40.CRMSteps
         {
             BBCRMHomePage.OpenEventsFA();
             EventsFunctionalArea.AddMultiEvent();
-            Dialog.SetDropDown("//input[contains(@id,'_EVENTMANAGEMENTTEMPLATEID_value')]", template + uniqueStamp);
-            template += uniqueStamp;
+            MultiLevelEventDialog.SetTemplate(template);
 
             foreach (var eventToAdd in events.Rows)
             {
@@ -214,12 +188,10 @@ namespace BlackbaudDemo40.CRMSteps
             GetEventPanel(eventName);
             foreach (var task in tasks.Rows)
             {
-                if (task.Keys.Contains("Owner") && task["Owner"] != string.Empty) task["Owner"] = task["Owner"] + uniqueStamp;
+                if (task.Keys.Contains("Owner") && task["Owner"] != string.Empty)
+                    task["Owner"] = task["Owner"] + uniqueStamp;
                 EventPanel.AddTaskDialog();
-                Dialog.SetTextField("//div[contains(@id,'dataformdialog')]//input[contains(@id,'_NAME_value')]", task["Name"]);
-                Dialog.SetTextField("//textarea[contains(@id,'_COMMENT_value')]", task["Comment"]);
-                Dialog.SetTextField("//input[contains(@id,'_OWNERID_value')]", task["Owner"]);
-                Dialog.GetEnabledElement("//input[contains(@id,'_COMPLETEBYDATE_value')]").SendKeys(task["Date due"]);
+                TaskDialog.SetFields(task);
                 Dialog.Save();
             }
         }
@@ -246,7 +218,7 @@ namespace BlackbaudDemo40.CRMSteps
         {
             BBCRMHomePage.OpenEventsFA();
             EventsFunctionalArea.AddMultiEvent();
-            Dialog.SetDropDown("//input[contains(@id,'_EVENTMANAGEMENTTEMPLATEID_value')]", template + uniqueStamp);
+            MultiLevelEventDialog.SetTemplate(template);
 
             foreach (var eventToAdd in events.Rows)
             {

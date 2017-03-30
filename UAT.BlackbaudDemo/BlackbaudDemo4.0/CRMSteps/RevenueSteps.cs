@@ -103,8 +103,7 @@ namespace BlackbaudDemo40.CRMSteps
                     batchRow["Constituent"] += uniqueStamp;
             }
             BatchDialog.SetGridRows(batchRows);
-            Dialog.WaitClick("//button[./text()='Update projected totals']");
-            Dialog.WaitClick("//button[./text()='OK']");
+            EnhancedRevenueBatchDialog.UpdateProjectedTotals();
             BatchDialog.Validate();
             BatchDialog.SaveAndClose();
         }

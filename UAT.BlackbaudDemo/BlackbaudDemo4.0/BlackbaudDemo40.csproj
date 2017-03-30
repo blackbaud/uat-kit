@@ -8,7 +8,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>BlackbaudDemo40</RootNamespace>
     <AssemblyName>BlackbaudDemo40</AssemblyName>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -21,7 +21,6 @@
     <SccAuxPath>SAK</SccAuxPath>
     <SccProvider>SAK</SccProvider>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -31,7 +30,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -40,15 +38,14 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Blackbaud.UAT.Core, Version=1.0.1283.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Blackbaud.UAT.Core.1.0.1283.1\lib\net45\Blackbaud.UAT.Core.dll</HintPath>
+    <Reference Include="Blackbaud.UAT.Core, Version=1.0.756.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Blackbaud.UAT.Core.1.0.756.1\lib\net40\Blackbaud.UAT.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Blackbaud.UAT.SpecFlow.Selenium.SpecFlowPlugin, Version=1.0.1235.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Blackbaud.UAT.SpecFlow.Selenium.1.0.1235.1\lib\net45\Blackbaud.UAT.SpecFlow.Selenium.SpecFlowPlugin.dll</HintPath>
+    <Reference Include="Blackbaud.UAT.SpecFlow.Selenium.SpecFlowPlugin, Version=1.0.753.9, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Blackbaud.UAT.SpecFlow.Selenium.1.0.753.9\lib\net40\Blackbaud.UAT.SpecFlow.Selenium.SpecFlowPlugin.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
@@ -56,8 +53,8 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net40\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="nunit.framework, Version=2.6.0.12051, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
@@ -71,16 +68,16 @@
     </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web.Extensions" />
-    <Reference Include="TechTalk.SpecFlow, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0778194805d6db41, processorArchitecture=MSIL">
-      <HintPath>..\packages\SpecFlow.2.0.0\lib\net45\TechTalk.SpecFlow.dll</HintPath>
+    <Reference Include="TechTalk.SpecFlow, Version=1.9.0.77, Culture=neutral, PublicKeyToken=0778194805d6db41, processorArchitecture=MSIL">
+      <HintPath>..\packages\SpecFlow.1.9.0\lib\net35\TechTalk.SpecFlow.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="WebDriver, Version=2.53.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Selenium.WebDriver.2.53.1\lib\net40\WebDriver.dll</HintPath>
+    <Reference Include="WebDriver, Version=2.46.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Selenium.WebDriver.2.46.0\lib\net40\WebDriver.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="WebDriver.Support, Version=2.53.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Selenium.Support.2.53.1\lib\net40\WebDriver.Support.dll</HintPath>
+    <Reference Include="WebDriver.Support, Version=2.46.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Selenium.Support.2.46.0\lib\net40\WebDriver.Support.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
@@ -145,16 +142,12 @@
     <Compile Include="CRMSteps\MajorGivingProspectsSteps.cs" />
     <Compile Include="CRMSteps\MembershipProgramsSteps.cs" />
     <Compile Include="CRMSteps\RevenueSteps.cs" />
-    <Compile Include="BBCRMHomePageBasicAuthenticate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CRMSteps\ConstituentsSteps.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
       <SubType>Designer</SubType>
-    </None>
-    <None Include="chromeauth.au3">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="CRMFeatures\AdHocQuery.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
@@ -188,18 +181,12 @@
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>Revenue.feature.cs</LastGenOutput>
     </None>
-    <None Include="packages.config">
-      <SubType>Designer</SubType>
-    </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="chromeauth.exe">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="chromedriver.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Versions.txt" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
@@ -222,7 +209,7 @@
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>$(SolutionDir).nuget\nuget.exe restore $(SolutionPath) -source "http://tfs-sym.blackbaud.com/nuget;https://www.nuget.org/api/v2"</PreBuildEvent>
+    <PreBuildEvent>$(SolutionDir).nuget\nuget.exe restore $(SolutionPath) -source "https://www.nuget.org/api/v2"</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

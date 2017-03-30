@@ -75,7 +75,7 @@ namespace BlackbaudDemo40.CRMSteps
                 if (constituent.ContainsKey("Last name") && !string.IsNullOrEmpty(constituent["Last name"]))
                     constituent["Last name"] += uniqueStamp;
                 BBCRMHomePage.OpenConstituentsFA();
-                ConstituentsFunctionalArea.AddAnIndividual(constituent, timeout:120);
+                ConstituentsFunctionalArea.AddAnIndividual(constituent);
             }
         }
     }

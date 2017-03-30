@@ -3,8 +3,6 @@ using Blackbaud.UAT.Core.Base;
 using Blackbaud.UAT.Core.Crm;
 using TechTalk.SpecFlow;
 
-using Blackbaud.UAT.Base;
-
 namespace BlackbaudDemo40.CRMSteps
 {
     [Binding]
@@ -127,16 +125,8 @@ namespace BlackbaudDemo40.CRMSteps
         public void GivenProspectTeamRoleExistsFor(string teamRole, string lastName)
         {
             lastName += uniqueStamp;
-            teamRole += uniqueStamp;
             GetConstituentPanel(lastName);
-            //if (!ConstituentPanel.TeamRoleExists(teamRole)) ConstituentPanel.AddTeamRole(teamRole);
-            Panel.SelectTab("Prospect");
-            Panel.SelectInnerTab("Prospect Team");
-            Panel.ClickSectionAddButton("Prospect team", "Add team member");
-            Dialog.SetTextField("//input[contains(@id,'_PROSPECTTEAMROLECODEID_value')]", teamRole);
-            Dialog.Yes();
-            //Dialog.SetTextField("//input[contains(@id,'_MEMBERID_value')]", lastName);
-            Dialog.Save();
+            if (!ConstituentPanel.TeamRoleExists(teamRole)) ConstituentPanel.AddTeamRole(teamRole);
         }
 
         [When(@"I add team member to '(.*)'")]
@@ -147,7 +137,6 @@ namespace BlackbaudDemo40.CRMSteps
             foreach (var teamMember in teamMembers.Rows)
             {
                 teamMember["Team member"] = teamMember["Team member"] + uniqueStamp;
-                teamMember["Role"] = teamMember["Role"] + uniqueStamp;
                 ConstituentPanel.AddTeamMember(teamMember);
             }
         }
@@ -158,7 +147,6 @@ namespace BlackbaudDemo40.CRMSteps
             foreach (var teamMember in teamMembers.Rows)
             {
                 if (teamMember["Name"] != string.Empty) teamMember["Name"] = teamMember["Name"] + uniqueStamp;
-                if (teamMember["Role"] != string.Empty) teamMember["Role"] = teamMember["Role"] + uniqueStamp;
                 if (!ConstituentPanel.TeamMemberExists(teamMember))
                     throw new ArgumentException(
                         String.Format("Current constituent page does not have the team member '{0}'", teamMember));
@@ -185,32 +173,16 @@ namespace BlackbaudDemo40.CRMSteps
             ConstituentsFunctionalArea.ConstituentSearch(prospect);
             foreach (var plan in plans.Rows)
             {
-                if (plan.ContainsKey("Plan name") && !string.IsNullOrEmpty(plan["Plan name"])) plan["Plan name"] += uniqueStamp;
-
+                if (plan.ContainsKey("Plan name") && !string.IsNullOrEmpty(plan["Plan name"]))
+                    plan["Plan name"] += uniqueStamp;
                 if (plan.ContainsKey("Outlines"))
                 {
                     var outline = plan["Outlines"];
                     plan["Outlines"] = null;
-                    this.AddMajorGivingPlan(plan, outline);
+                    ConstituentPanel.AddMajorGivingPlan(plan, outline);
                 }
-                else this.AddMajorGivingPlan(plan, string.Empty);
+                else ConstituentPanel.AddMajorGivingPlan(plan, string.Empty);
             }
-        }
-
-        private void AddMajorGivingPlan(TableRow detailFields, string outline)
-        {
-            Panel.SelectTab("Prospect");
-            Panel.SelectInnerTab("Plans");
-
-            Panel.ClickSectionAddButton("Plans");
-            BaseComponent.WaitClick(String.Format("//div[contains(@class,'x-menu') and contains(@style,'visibility: visible')]//span[./text()='{0}' and @class='x-menu-item-text']", "Add major giving plan"));
-
-            Dialog.SetTextField("//input[contains(@id,'_PROSPECTPLAN_NAME_value')]", detailFields["Plan name"]);
-            Dialog.SetTextField("//input[contains(@id,'_PROSPECTPLANTYPECODEID_value')]", detailFields["Plan type"]);
-            BaseComponent.GetEnabledElement("//input[contains(@id,'_STARTDATE_value')]").SendKeys(detailFields["Start date"]);
-
-            MajorGivingPlanDialog.SetOutline(outline);
-            Dialog.Save();
         }
 
         [When(@"I go to the plan '(.*)' for prospect '(.*)'")]
@@ -228,60 +200,8 @@ namespace BlackbaudDemo40.CRMSteps
         {
             foreach (var step in steps.Rows)
             {
-                this.AddCompletedStep(step);
+                PlanPanel.AddCompletedStep(step);
             }
-        }
-
-        public void AddCompletedStep(TableRow step)
-        {
-            Panel.SelectTab("Details");
-            Panel.ClickSectionAddButton("Completed steps", "Add step");
-
-            foreach (string caption in step.Keys)
-            {
-                string value = step[caption];
-                if (value == null) continue;
-                switch (caption)
-                {
-                    case "Objective":
-                        Dialog.SetTextField("//input[contains(@id,'_OBJECTIVE_value')]", value);
-                        break;
-                    case "Owner":
-                        Dialog.SetSearchList("//input[contains(@id,'_OWNERID_value')]",
-                            Dialog.getXInput("FundraiserSearch", "KEYNAME"), value);
-                        break;
-                    case "Stage":
-                        Dialog.SetDropDown("//input[contains(@id,'_PROSPECTPLANSTATUSCODEID_value')]", value);
-                        break;
-                    case "Status":
-                        Dialog.SetDropDown("//input[contains(@id,'_STATUSCODE_value')]", value);
-                        break;
-                    case "Expected date":
-                        Dialog.GetEnabledElement("//input[contains(@id,'_EXPECTEDDATE_value')]").SendKeys(value);
-                        break;
-                    case "Expected start time":
-                        Dialog.SetTextField("//input[contains(@id,'_EXPECTEDSTARTTIME_value')]", value);
-                        break;
-                    case "Expected end time":
-                        Dialog.SetTextField("//input[contains(@id,'_EXPECTEDENDTIME_value')]", value);
-                        break;
-                    case "Time zone":
-                        Dialog.SetDropDown("//input[contains(@id,'_TIMEZONEENTRYID_value')]", value);
-                        break;
-                    case "Actual date":
-                        Dialog.GetEnabledElement("//input[contains(@id,'_ACTUALDATE_value')]").SendKeys(value);
-                        break;
-                    case "Actual start time":
-                        Dialog.SetTextField("//input[contains(@id,'_ACTUALSTARTTIME_value')]", value);
-                        break;
-                    case "Actual end time":
-                        Dialog.SetTextField("//input[contains(@id,'_ACTUALENDTIME_value')]", value);
-                        break;
-                    default:
-                        throw new NotImplementedException(String.Format("Field '{0}' is not implemented", caption));
-                }
-            }
-            Dialog.Save();
         }
 
         [Then(@"a completed step is saved")]
@@ -290,7 +210,7 @@ namespace BlackbaudDemo40.CRMSteps
             foreach (var step in steps.Rows)
             {
                 if (!PlanPanel.CompletedStepExists(step))
-                    throw new ArgumentException(String.Format("Completed step '{0}' does not exist.", step.Values.ToString()));
+                    throw new ArgumentException(String.Format("Completed step '{0}' does not exist.", step.Values));
             }
         }
 

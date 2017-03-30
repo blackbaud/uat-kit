@@ -36,9 +36,9 @@ namespace BlackbaudDemo40.CRMSteps
         }
 
         [Then(@"I should get (.*) records")]
-        public void ThenIShouldGetRecords(string expected)
+        public void ThenIShouldGetRecords(int expected)
         {
-            SearchDialog.CheckConstituentSearchResultsToolbarContains(expected == "some" ? "" : expected + " records found");
+            SearchDialog.CheckConstituentSearchResultsToolbarContains(expected + " records found");
         }
 
         [Then(@"I should get more than (.*) records")]
