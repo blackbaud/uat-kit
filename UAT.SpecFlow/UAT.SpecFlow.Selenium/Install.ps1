@@ -19,11 +19,9 @@ if ($node)
     $node.ParentNode.RemoveChild($node)
 }
 
-$pack = $package -replace " ","."
-
 $newnode = $xml.CreateElement("add")
 $newnode.SetAttribute("name","Blackbaud.UAT.SpecFlow.Selenium")
-$newnode.SetAttribute("path", "..\packages\" + $pack)
+$newnode.SetAttribute("path", "..\packages\Blackbaud.UAT.SpecFlow.Selenium." + $package.Version)
 # add the node back
 $xml.SelectSingleNode("//*/specFlow/plugins").AppendChild($newnode)
 
