@@ -29,6 +29,39 @@ namespace Blackbaud.UAT.SpecFlow.Selenium
             }
         }
 
+        private static string HandleServerPath()
+        {
+            string returnString = string.Empty;
+            try
+            {
+                string dir = ConfigurationManager.AppSettings["ChromeDriver.Screenshot.ServerPath"];
+
+                if (Environment.CurrentDirectory.IndexOf("VSEQT") >= 0)
+                {
+                    string dirExtn = DateTime.Now.Year.ToString() + "_" + DateTime.Now.Month.ToString() + "_" + DateTime.Now.Day.ToString() + "_H" + DateTime.Now.Hour.ToString() + @"\";
+                    string fullDir = string.Empty;
+                    if (dir.Substring(dir.Length - 1, 1) == @"\")
+                    {
+                        fullDir = dir + dirExtn;
+                    }
+                    else
+                    {
+                        fullDir = dir + @"\" + dirExtn;
+                    }
+                    if (!System.IO.Directory.Exists(fullDir))
+                    {
+                        System.IO.Directory.CreateDirectory(fullDir);
+                    }
+                    returnString = fullDir;
+                }
+            }
+            catch
+            {
+                // bail if no config or other errors.
+            }
+            return returnString;
+        }
+
         protected static void SaveChromeArtifacts(Boolean pass = false)
         {
             try
@@ -38,10 +71,9 @@ namespace Blackbaud.UAT.SpecFlow.Selenium
                 {
                     if ("true" == grab.ToLower() || ("fail" == grab.ToLower() && !pass))
                     {
-                        ((ITakesScreenshot)Test.driver).GetScreenshot()
-                            .SaveAsFile(
-                                TechTalk.SpecFlow.ScenarioContext.Current.ScenarioInfo.Title.Replace(" ", "_") + ".png",
-                                ImageFormat.Png);
+                        ((ITakesScreenshot)Test.driver).GetScreenshot().SaveAsFile(
+                            HandleServerPath() + TechTalk.SpecFlow.ScenarioContext.Current.ScenarioInfo.Title.Replace(" ", "_") + ".png",
+                            ImageFormat.Png);
                     }
                 }
             }
@@ -55,7 +87,7 @@ namespace Blackbaud.UAT.SpecFlow.Selenium
                 string perf = ConfigurationManager.AppSettings["ChromeDriver.PerfLogging"];
                 if ("false" != perf.ToLower())
                 {
-                    Response response = Test.driver.getLog("performance");
+                    Response response = Test.driver.GetLog("performance");
                     object[] values = response.Value as object[];
                     List<object> jsonList = new List<object>();
                     foreach (Dictionary<string, object> v in values)
@@ -113,18 +145,29 @@ namespace Blackbaud.UAT.SpecFlow.Selenium
             try
             {
                 ChromeDriverService service = null;
-                Blackbaud.UAT.SpecFlow.Selenium.RemoteWebDriver driver = null;
+                RemoteWebDriver driver = null;
 
-                string remoteUrl = ConfigurationManager.AppSettings["RemoteDriver"];
+                String remoteUrl = "false";
+
+                try
+                {
+                    remoteUrl = ConfigurationManager.AppSettings["RemoteDriver"];
+                }
+                catch
+                {
+                    // do nothing if no configuration present.
+                }
+
+
                 if ("false" == remoteUrl.ToLower())
                 {
                     service = BaseTest.InitializeChromeService();
                     Test.service = service;
-                    driver = BaseTest.InitializeChromeDriver(service.ServiceUrl);
+                    driver = new RemoteWebDriver(service.ServiceUrl, getCapabilities());
                 }
                 else
                 {
-                    driver = new Blackbaud.UAT.SpecFlow.Selenium.RemoteWebDriver(new Uri(remoteUrl), DesiredCapabilities.Chrome());
+                    driver = new RemoteWebDriver(new Uri(remoteUrl), getCapabilities());
                 }
 
                 Test.driver = driver;
@@ -195,19 +238,20 @@ namespace Blackbaud.UAT.SpecFlow.Selenium
             return service;
         }
 
-        public static RemoteWebDriver InitializeChromeDriver(Uri serviceUrl)
+        public static DesiredCapabilities getCapabilities()
         {
 
             ChromeOptions options = new ChromeOptions();
-            var perfLoggingPrefs = new Dictionary<string, object> { { "enableNetwork", true }, { "enablePage", true }, { "enableTimeline", false } };
+            // timeline is deprecated
+            var perfLoggingPrefs = new Dictionary<string, object> { { "enableNetwork", true }, { "enablePage", true } };//, { "enableTimeline", false } };
             try
-            {                
+            {
                 string perf = ConfigurationManager.AppSettings["ChromeDriver.PerfLogging"];
                 if ("false" != perf.ToLower())
                 {
                     options.AddAdditionalCapability("perfLoggingPrefs", perfLoggingPrefs);
                 }
-                            }
+            }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
@@ -220,7 +264,7 @@ namespace Blackbaud.UAT.SpecFlow.Selenium
                 if ("false" != mobile.ToLower())
                 {
                     options.AddAdditionalCapability("mobileEmulation",
-                        new Dictionary<string, object> {{"deviceName", mobile}});
+                        new Dictionary<string, object> { { "deviceName", mobile } });
                 }
             }
             catch (Exception e)
@@ -231,7 +275,39 @@ namespace Blackbaud.UAT.SpecFlow.Selenium
 
             try
             {
-                options.AddArgument("--lang=" + ConfigurationManager.AppSettings["ChromeDriver.language"]);
+                string language = ConfigurationManager.AppSettings["ChromeDriver.language"];
+                if ("false" != language.ToLower())
+                {
+                    options.AddArgument("--lang=" + language);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                // Swallow non-existent Configurations
+            }
+
+            try
+            {
+                string path = ConfigurationManager.AppSettings["ChromeDriver.ExtensionPath"];
+                if ("false" != path.ToLower())
+                {
+                    options.AddArgument("load-extension=" + path);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                // Swallow non-existent Configurations
+            }
+
+            try
+            {
+                string maximise = ConfigurationManager.AppSettings["ChromeDriver.Maximise"];
+                if ("false" != maximise.ToLower())
+                {
+                    options.AddArgument("start-maximized");
+                }
             }
             catch (Exception e)
             {
@@ -255,7 +331,7 @@ namespace Blackbaud.UAT.SpecFlow.Selenium
                 // Swallow non-existent Configurations
             }
 
-            return new RemoteWebDriver(serviceUrl, capabilities);
+            return capabilities;
         }
     }
 }

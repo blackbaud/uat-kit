@@ -53,10 +53,16 @@ namespace Blackbaud.UAT.SpecFlow.Selenium
             CodeDomHelper.AddAttribute(codeTypeMember, MS_PROPERTY_ATTR, name, value);            
         }
 
+        public UnitTestGeneratorTraits GetTraits()
+        {
+            // NUnit flags as Parallel and Row, but MsTest is only Row. Use Common Denominator
+            return UnitTestGeneratorTraits.RowTests;
+        }
+
         public virtual void SetTestClass(TestClassGenerationContext generationContext, string featureTitle, string featureDescription)
         {
             generationContext.TestClass.BaseTypes.Add("BaseTest");
-
+            
             //Nunit
             CodeDomHelper.AddAttribute(generationContext.TestClass, TESTFIXTURE_ATTR);
             CodeDomHelper.AddAttribute(generationContext.TestClass, DESCRIPTION_ATTR, featureTitle);
@@ -83,6 +89,8 @@ namespace Blackbaud.UAT.SpecFlow.Selenium
             testcontext.Name += " { get; set; }//";
             generationContext.TestClass.Members.Add(testcontext);
 
+            // test runner needs to be static due to MsTest.
+            generationContext.TestRunnerField.Attributes |= MemberAttributes.Static;
 
             // this need to be a method in the derived class
             var isPass = new CodeMemberMethod();
@@ -117,6 +125,7 @@ namespace Blackbaud.UAT.SpecFlow.Selenium
         public virtual void FinalizeTestClass(TestClassGenerationContext generationContext)
         {
             generationContext.ScenarioInitializeMethod.Statements.Add(new CodeSnippetStatement("            ScenarioContext.Current.Add(\"Test\", this);"));
+            generationContext.ScenarioInitializeMethod.Statements.Add(new CodeSnippetStatement("            ScenarioContext.Current.Add(\"uniqueStamp\", (DateTime.UtcNow.Subtract(new DateTime(1970, 7, 4)).TotalSeconds).ToString());"));
             generationContext.ScenarioInitializeMethod.Statements.Add(new CodeSnippetStatement("            StartDriver();"));
 
             // From SeleniumNunit + BBTest changes
@@ -187,7 +196,7 @@ namespace Blackbaud.UAT.SpecFlow.Selenium
                                     "FeatureInfo"),
                                 "Title"),
                             CodeBinaryOperatorType.IdentityInequality,
-                            new CodePrimitiveExpression(generationContext.Feature.Title))),
+                            new CodePrimitiveExpression(generationContext.Feature.Name))),
                     new CodeExpressionStatement(
                         new CodeMethodInvokeExpression(
                             new CodeTypeReferenceExpression(
@@ -216,7 +225,7 @@ namespace Blackbaud.UAT.SpecFlow.Selenium
             //MSTest
             CodeDomHelper.AddAttribute(testMethod, MS_TEST_ATTR);
             CodeDomHelper.AddAttribute(testMethod, MS_DESCRIPTION_ATTR, scenarioTitle);
-            SetProperty(testMethod, MS_FEATURE_TITLE_PROPERTY_NAME, generationContext.Feature.Title);
+            SetProperty(testMethod, MS_FEATURE_TITLE_PROPERTY_NAME, generationContext.Feature.Name);
 
             const string browser = "Chrome";
 
