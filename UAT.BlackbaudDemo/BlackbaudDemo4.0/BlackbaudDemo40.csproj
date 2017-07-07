@@ -43,8 +43,8 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Blackbaud.UAT.Core, Version=1.0.1283.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Blackbaud.UAT.Core.1.0.1283.1\lib\net45\Blackbaud.UAT.Core.dll</HintPath>
+    <Reference Include="Blackbaud.UAT.Core, Version=1.0.1304.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Blackbaud.UAT.Core.1.0.1304.1\lib\net45\Blackbaud.UAT.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Blackbaud.UAT.SpecFlow.Selenium.SpecFlowPlugin, Version=1.0.1235.1, Culture=neutral, processorArchitecture=MSIL">
@@ -222,7 +222,8 @@
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>$(SolutionDir).nuget\nuget.exe restore $(SolutionPath) -source "http://tfs-sym.blackbaud.com/nuget;https://www.nuget.org/api/v2"</PreBuildEvent>
+    <PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
