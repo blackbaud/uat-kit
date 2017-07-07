@@ -2,11 +2,12 @@
 using Blackbaud.UAT.Base;
 using Blackbaud.UAT.Core.Base;
 using Blackbaud.UAT.Core.Crm;
-using Blackbaud.UAT.Core.Crm.Panels;
 using OpenQA.Selenium;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
 using SpecFlow.Assist.Dynamic;
+using Blackbaud.UAT.Core.Crm.Dialogs;
+using Blackbaud.UAT.Core.Crm.Panels;
 
 namespace SystemTest.Core.Steps
 {

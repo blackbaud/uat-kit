@@ -5,13 +5,13 @@ using Blackbaud.UAT.Core.Base;
 using Blackbaud.UAT.Core.Crm;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
-//using Oxford.UAT.Crm;
 using TechTalk.SpecFlow;
 using System.Configuration;
 using System.Globalization;
 using System.Threading;
 using TechTalk.SpecFlow.Assist;
-//using SpecFlow.Assist.Dynamic;
+using Blackbaud.UAT.Core.Crm.Dialogs;
+using Blackbaud.UAT.Core.Crm.Panels;
 
 namespace SystemTest.Common
 {
@@ -144,12 +144,12 @@ namespace SystemTest.Common
 
         public static int DateIncrementAfterPlus(string DateString)
         {
-            return Convert.ToInt32(DateString.Substring(DateString.IndexOf(plus) + 1, 1));
+            return Convert.ToInt32(DateString.Substring(DateString.IndexOf(plus) + 1, 2).Trim());
         }
 
         public static int DateIncrementAfterMinus(string DateString)
         {
-            return -1 * Convert.ToInt32(DateString.Substring(DateString.IndexOf(minus) + 1, 1));
+            return -1 * Convert.ToInt32(DateString.Substring(DateString.IndexOf(minus) + 1, 2).Trim());
         }
 
         public static void SetTodayDateInTableRow(string CaptionKey, TableRow tableRow)
@@ -334,7 +334,7 @@ namespace SystemTest.Common
                 //lets try the last page first as it's normally here
                 if (actualNumberOfPages > 1)
                 {
-                    BaseComponent.WaitClick(string.Format(XpathHelper.xPath.VisiblePanel + "//button[contains(@data-pagenumber, '{0}')]", actualNumberOfPages));
+                    BaseComponent.WaitClick(string.Format(XpathHelper.xPath.VisiblePanel + "//button[contains(@data-pagenumber, '{0}')]", actualNumberOfPages), 15);
                 }
                 StartProcess(Process, ExpectedRecordCount);
                 return;
@@ -373,18 +373,26 @@ namespace SystemTest.Common
             try
             {
                 //if we are not in the right pane this selection with throw an error
-                BaseComponent.GetEnabledElement(string.Format(XpathHelper.xPath.VisibleContainerBlock + "//a[text()='{0}']", Process), 5);
+                BaseComponent.GetEnabledElement(string.Format(XpathHelper.xPath.VisibleContainerBlock + "//a[text()='{0}']", Process), 15);
             }
             catch (Exception ex)
             {
                 throw new Exception(startProcessSelectionException, ex);
             }
             //click process
-            BaseComponent.WaitClick(string.Format(XpathHelper.xPath.VisibleContainerBlock + "//a[text()='{0}']", Process));
+            BaseComponent.WaitClick(string.Format(XpathHelper.xPath.VisibleContainerBlock + "//a[text()='{0}']", Process), 15);
+
+            //BaseComponent.WaitClick(XpathHelper.xPath.VisibleContainerBlock + "//button[text()='Process global change']");
             //Click start process
             BaseComponent.WaitClick("//div[text()='Start process']");
             //click start
-            BaseComponent.WaitClick(XpathHelper.xPath.VisibleBlock + "//button[text()='Start']");
+            if (Process != "Update membership status" + uniqueStamp)
+            {
+                BaseComponent.WaitClick(XpathHelper.xPath.VisibleBlock + "//button[text()='Start']");
+            }
+           
+
+
             // process completes or throw error
             //decide validation based on if we know the actual number of results!
             if (ExpectedRecordCount == 0)
