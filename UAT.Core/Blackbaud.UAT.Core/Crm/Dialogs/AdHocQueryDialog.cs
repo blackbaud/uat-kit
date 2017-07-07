@@ -7,7 +7,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using TechTalk.SpecFlow;
 
-namespace Blackbaud.UAT.Core.Crm
+namespace Blackbaud.UAT.Core.Crm.Dialogs
 {
     /// <summary>
     /// Class to handle the interactions for adding/editing an ad-hoc query dialog.

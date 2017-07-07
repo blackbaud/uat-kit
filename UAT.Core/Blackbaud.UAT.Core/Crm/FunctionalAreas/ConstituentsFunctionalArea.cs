@@ -1,5 +1,7 @@
 ﻿using System;
 using TechTalk.SpecFlow;
+using Blackbaud.UAT.Core.Crm.Dialogs;
+using Blackbaud.UAT.Core.Crm.Panels;
 
 namespace Blackbaud.UAT.Core.Crm
 {
@@ -8,6 +10,9 @@ namespace Blackbaud.UAT.Core.Crm
     /// </summary>
     public class ConstituentsFunctionalArea : FunctionalArea
     {
+        /// <summary>
+        /// Open the Constituent search dialog
+        /// </summary>
         public static void OpenConstituentSearchDialog()
         {
             OpenLink("Constituent search");

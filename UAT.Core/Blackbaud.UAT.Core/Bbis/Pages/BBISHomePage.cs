@@ -14,7 +14,9 @@ namespace Blackbaud.UAT.Core.Bbis.Pages
     /// </summary>
     public class BBISHomePage : BaseComponent
     {
-
+        /// <summary>
+        /// Return the config value for BBIS BaseUrl (BBISBaseUrl)
+        /// </summary>
         public static string BaseUrl
         {
             get
@@ -23,6 +25,9 @@ namespace Blackbaud.UAT.Core.Bbis.Pages
             }
         }
 
+        /// <summary>
+        /// Return URL config postfix for BBIS (BBISHomeUrl)
+        /// </summary>
         public static string VirtualPath
         {
             get
@@ -30,41 +35,84 @@ namespace Blackbaud.UAT.Core.Bbis.Pages
                 return ConfigurationManager.AppSettings["BBISHomeUrl"];
             }
         }
+
+        /// <summary>
+        /// Return the default page title
+        /// </summary>
         public override string Title { get { return "Login"; } }
 
+        /// <summary>
+        /// Xpath for User Name field
+        /// </summary>
         public const string getXUserNameField = "//*[@id=\"txtUsername\"]";
 
+        /// <summary>
+        /// XPath for Password field
+        /// </summary>
         public const string getXPasswordField = "//*[@id=\"txtPassword\"]";
 
+        /// <summary>
+        /// XPath for the Loging button
+        /// </summary>
         public const string getXLoginButton = "//*[@id=\"btnLogin\"]";
 
+        /// <summary>
+        /// Open the BBIS Layout Gallery
+        /// </summary>
         public static void OpenLayoutGallery()
         {
             string url = BaseUrl;
             Driver.Navigate().GoToUrl(url.TrimEnd(new char[] { '/' }) + "/cms/layoutgallery");
         }
 
+        /// <summary>
+        /// Open the BBIS Image Library
+        /// </summary>
         public static void OpenImageLibrary()
         {
             string url = BaseUrl;
             Driver.Navigate().GoToUrl(url.TrimEnd(new char[] { '/' }) + "/cms/imagegallery");
         }
 
+        /// <summary>
+        /// XPath for the New Layout Button
+        /// </summary>
         public const string getXNewLayoutButton = "//*[contains(@class,'BBAdminButtonLabel') and .//text()='New layout']";
 
-        // Popup elements
+        /// <summary>
+        /// XPath for the New Layout Layout Name
+        /// </summary>
         public const string getXNewLayoutLayoutName = "//*[@id=\"pagecntnt_tmpltcntnt_TemplateName\"]";
 
+        /// <summary>
+        /// XPath for the New Layout Layout Description
+        /// </summary>
         public const string getXNewLayoutLayoutDescription = "//*[@id=\"pagecntnt_tmpltcntnt_Description\"]";
 
+        /// <summary>
+        /// XPath for the New Layout Next Button
+        /// </summary>
         public const string getXNewLayoutNextButton = "//*[@id=\"pagecntnt_DialogButtons6_btn0txt\"]";
 
+        /// <summary>
+        /// XPath for the New Layout Save Button
+        /// </summary>
         public const string getXNewLayoutSaveButton = "//*[@id=\"pagecntnt_DialogButtons6_btn0txt\"]";
 
+        /// <summary>
+        /// XPath for the search Filter by Name Field
+        /// </summary>
         public const string getXFilterByNameField = "//*[@id=\"pagecntnt_tmpltcntnt_searchTitle\"]";        
 
+        /// <summary>
+        /// XPath for the search Filter by Button
+        /// </summary>
         public const string getXFilterByNameButton = "//*[@id=\"pagecntnt_tmpltcntnt_btnGo6_Toolbar1_btn0txt\"]";
 
+        /// <summary>
+        /// Filters Layout by the Name provided
+        /// </summary>
+        /// <param name="layoutName">The name of the layout to be filtered on</param>
         public static void FilterLayoutByName(string layoutName)
         {
             //Assumes we're on the Layout Gallery
@@ -80,12 +128,23 @@ namespace Blackbaud.UAT.Core.Bbis.Pages
             });
             filterByNameFieldElement.SendKeys(layoutName);
             filterByNameFieldElement.SendKeys(Keys.Return);
-
         }
 
+        /// <summary>
+        /// XPath for the Layout Grid Name Field
+        /// </summary>
         public const string getXLayoutGridNameField = "//*[@id='pagecntnt_tmpltcntnt_Grid1_Grid1_DataGrid1']/tbody/tr/td[2]/span/span/span";
+
+        /// <summary>
+        /// XPath for the Layout Search Results Line
+        /// </summary>
         public const string getXLayoutSearchResultsLine = "//*[@id='pagecntnt_tmpltcntnt_Grid1_Grid1_lblTotalRecs']";
 
+
+        /// <summary>
+        /// Check layout search results contain for passed string
+        /// </summary>
+        /// <param name="expected">The string excepted in the results</param>
         public static void CheckLayoutSearchResultsContain(string expected)
         {
             IList<IWebElement> layoutGridNameFieldElements = Driver.FindElements(By.XPath(getXLayoutGridNameField));
@@ -108,7 +167,10 @@ namespace Blackbaud.UAT.Core.Bbis.Pages
         // BBIS already has made some stab at meaningful id's in the HTML (<add key="AutomationHooksEnabled" value="true" /> or not)
         // However they're not useful in non-trivial situations, e.g. finding results in a grid. 
         // The grid elements id's are *unique* they're just not very helpful in idenitifying contents.
-
+        /// <summary>
+        /// Delete a layout
+        /// </summary>
+        /// <param name="layoutname">The layout name to remove</param>
         public static void DeleteLayout(string layoutname)
         {
             FilterLayoutByName(layoutname);
@@ -140,7 +202,11 @@ namespace Blackbaud.UAT.Core.Bbis.Pages
             }
         }
 
-
+        /// <summary>
+        /// Create a new layout
+        /// </summary>
+        /// <param name="Layoutname">The name fo the new layout</param>
+        /// <param name="Description">Description of the new layout</param>
         public static void NewLayout(string Layoutname, String Description)
         {
 

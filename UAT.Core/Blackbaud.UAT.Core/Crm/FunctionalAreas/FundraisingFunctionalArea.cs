@@ -1,4 +1,6 @@
 ﻿using System;
+using Blackbaud.UAT.Core.Crm.Dialogs;
+using Blackbaud.UAT.Core.Crm.Panels;
 
 namespace Blackbaud.UAT.Core.Crm
 {

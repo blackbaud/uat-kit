@@ -6,7 +6,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using TechTalk.SpecFlow;
 
-namespace Blackbaud.UAT.Core.Crm
+namespace Blackbaud.UAT.Core.Crm.Dialogs
 {
     /// <summary>
     /// Base class to handle the interactions for dialogs. 
@@ -939,6 +939,9 @@ namespace Blackbaud.UAT.Core.Crm
             ClickButton(caption, TimeoutSecs);
         }
 
+        /// <summary>
+        /// Close the Dialog
+        /// </summary>
         public void CloseDialog()
         {
             WaitClick(getXCloseX());

@@ -21,6 +21,9 @@ namespace Blackbaud.UAT.Base
         /// </summary>
         public static int TimeoutSecs { get { return 120; } }
 
+        /// <summary>
+        /// Return the default page title
+        /// </summary>
         public virtual string Title { get { return "Blackbaud"; } }
 
         /// <summary>

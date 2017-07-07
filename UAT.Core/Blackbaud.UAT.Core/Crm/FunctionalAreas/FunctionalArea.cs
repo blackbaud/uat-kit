@@ -3,6 +3,7 @@ using Blackbaud.UAT.Base;
 using Blackbaud.UAT.Core.Base;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
+using Blackbaud.UAT.Core.Crm.Panels;
 
 namespace Blackbaud.UAT.Core.Crm
 {    

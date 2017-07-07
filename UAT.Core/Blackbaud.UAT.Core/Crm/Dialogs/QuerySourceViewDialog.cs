@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Blackbaud.UAT.Core.Crm
+namespace Blackbaud.UAT.Core.Crm.Dialogs
 {
     /// <summary>
     /// Base object for QuerySourceViewDialog functionality and interactions in BBCRM.  Inherits the Dialog base class.

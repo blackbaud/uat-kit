@@ -9,13 +9,18 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using TechTalk.SpecFlow;
 
-namespace Blackbaud.UAT.Core.Crm
+namespace Blackbaud.UAT.Core.Crm.Panels
 {
     /// <summary>
     /// Base class to handle interactions for panels.
     /// </summary>
     public class Panel : BaseComponent
     {
+        /// <summary>
+        /// Xpath for tab specified by the input text
+        /// </summary>
+        /// <param name="text">The tab text</param>
+        /// <returns>formated XPath for the tab text passed in</returns>
         public static string getXPanelTab(string text) { return String.Format("//*[./text()=\"{0}\" and contains(@class,\"x-tab-strip-text\")]", text); }
 
         /// <summary>
@@ -29,6 +34,12 @@ namespace Blackbaud.UAT.Core.Crm
             return String.Format("//div[contains(@class,'bbui-pages-contentcontainer') and not(contains(@class,'hide'))]//div[contains(@id, '{0}')]//span[contains(@id, '{1}')]", dialogId, spanId);
         }
 
+        /// <summary>
+        /// XPath for Datalist Span based on dialog and span name
+        /// </summary>
+        /// <param name="dialogId">DialogID</param>
+        /// <param name="spanId">Html span ID</param>
+        /// <returns>Formated XPath</returns>
         public static string getXDatalistSpan(string dialogId, string spanId)
         {
             return String.Format("//div[contains(@class,'bbui-pages-section-datalist')]/div[contains(@id, '{0}')]//span[contains(@id, '{1}')]", dialogId, spanId);
@@ -682,6 +693,10 @@ namespace Blackbaud.UAT.Core.Crm
             WaitClick(getXInnerTab(caption));
         }
 
+        /// <summary>
+        /// Open tab for the passed in string
+        /// </summary>
+        /// <param name="caption">The name of the tab to be opened</param>
         public static void OpenTab(string caption)
         {
             WaitClick(getXPanelTab(caption));
@@ -833,13 +848,30 @@ namespace Blackbaud.UAT.Core.Crm
             return additionalPage;
         }
 
+        /// <summary>
+        /// XPath for Event search results grid name fields
+        /// </summary>
+        protected const string getXEventSearchResultsGridNameFields = "//*[contains(@class,\"bbui-dialog\") and contains(@style,\"visible\")]//*[contains(@class,\"x-grid3-body\")]/div/table/tbody/tr[1]/td[3]/div";
 
-        protected const string getXEventSearchresultsGridNameFields = "//*[contains(@class,\"bbui-dialog\") and contains(@style,\"visible\")]//*[contains(@class,\"x-grid3-body\")]/div/table/tbody/tr[1]/td[3]/div";
+        /// <summary>
+        /// Xpath for Event search results bar
+        /// </summary>
         protected const string getxEventSearchResultsBar = "//*[contains(@class,\"bbui-dialog\") and contains(@style,\"visible\")]//*[contains(@class,'x-toolbar-cell')]/div[contains(@class,'xtb-text')]";
+
+        /// <summary>
+        /// Xpath for search results grid
+        /// </summary>
         protected const string getXSearchResultsGrid = "//*[contains(@class,\"bbui-dialog\") and contains(@style,\"visible\")]//*[contains(@class,'x-grid3-body')]/div";
 
-
-        public static void CheckGridResultsContain(string expected, string XnameField = getXEventSearchresultsGridNameFields, string XresultsBar = getxEventSearchResultsBar,string resultsBarText = "found", string XresultsGrid = getXSearchResultsGrid)
+        /// <summary>
+        /// Check grid results contain items in parameters
+        /// </summary>
+        /// <param name="expected">?</param>
+        /// <param name="XnameField">?</param>
+        /// <param name="XresultsBar">?</param>
+        /// <param name="resultsBarText">?</param>
+        /// <param name="XresultsGrid">?</param>
+        public static void CheckGridResultsContain(string expected, string XnameField = getXEventSearchResultsGridNameFields, string XresultsBar = getxEventSearchResultsBar,string resultsBarText = "found", string XresultsGrid = getXSearchResultsGrid)
         {
             var waiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(20));
             waiter.IgnoreExceptionTypes(typeof(InvalidOperationException));

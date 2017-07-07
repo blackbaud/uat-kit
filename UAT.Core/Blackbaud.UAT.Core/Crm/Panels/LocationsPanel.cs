@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using TechTalk.SpecFlow;
+using Blackbaud.UAT.Core.Crm.Dialogs;
 
-namespace Blackbaud.UAT.Core.Crm
+namespace Blackbaud.UAT.Core.Crm.Panels
 {
     /// <summary>
     /// Class to handle interactions for the 'Locations' panel.

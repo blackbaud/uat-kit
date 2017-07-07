@@ -6,15 +6,22 @@ using Blackbaud.UAT.Core.Base;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using TechTalk.SpecFlow;
+using Blackbaud.UAT.Core.Crm.Panels;
 
-namespace Blackbaud.UAT.Core.Crm
+namespace Blackbaud.UAT.Core.Crm.Dialogs
 {
     /// <summary>
     /// Base class to handle the interactions for adding/editing a batch dialog.
     /// </summary>
     public class BatchDialog : Dialog
     {
+        /// <summary>
+        /// BatchDialogId constant
+        /// </summary>
         protected const string BatchDialogId = "_Batch";
+        /// <summary>
+        /// BatchDialogGridId constant
+        /// </summary>
         protected const string BatchDialogGridId = "_BatchForm";
 
         /// <summary>

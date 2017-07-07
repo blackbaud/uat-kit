@@ -26,6 +26,10 @@ namespace Blackbaud.UAT.Core.Crm.Panels
         /// </summary>
         public const string getXFilterQueryField = "//*[td/label[./text()=\"Name:\"]]/td/input[contains(@class,\"x-form-text\")]";
 
+        /// <summary>
+        /// Set filter based on string passed in
+        /// </summary>
+        /// <param name="name">Filter to set</param>
         public static void SetFilter(string name)
         {
             SetTextField(getXFilterQueryField, name);
@@ -48,15 +52,35 @@ namespace Blackbaud.UAT.Core.Crm.Panels
         //public static string getXQuery(string text) { return String.Format("//*[text()=\"{0}\" and contains(@class,\"bbui-pages-datalistgrid-rowlink\")]", text); }
         public static string getXQuery(string text) { return String.Format("//*[./text()=\"{0}\" and contains(@class,\"bbui-datalist-search-highlight\")]", text); }
 
+        /// <summary>
+        /// IWebElement representing the Query link element
+        /// </summary>
         public static IWebElement QueryLinkElement;
+
+        /// <summary>
+        /// IWebElement representing the Delete Query link element
+        /// </summary>
         public static IWebElement DeleteQueryLinkElement;
+
+        /// <summary>
+        /// IWebElement representing the Yes Delete Element
+        /// </summary>
         public static IWebElement YesReallyDeleteElement;
         
+        /// <summary>
+        /// Delete Query for the input string
+        /// </summary>
+        /// <param name="name">The query to delete</param>
         public static void DeleteQuery(string name)
         {
             DeleteQuery(getXQuery(name), getXDeleteQuery(name));
         }
 
+        /// <summary>
+        /// Delete query
+        /// </summary>
+        /// <param name="xQuery">?</param>
+        /// <param name="xDeleteQuery">?</param>
         public static void DeleteQuery(string xQuery,string xDeleteQuery)
         {
 
@@ -104,6 +128,10 @@ namespace Blackbaud.UAT.Core.Crm.Panels
             });
         }
 
+        /// <summary>
+        /// Check query is present by name
+        /// </summary>
+        /// <param name="name">Query name</param>
         public static void CheckQueryPresent(string name)
         {
             WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(TimeoutSecs));
@@ -118,17 +146,26 @@ namespace Blackbaud.UAT.Core.Crm.Panels
             });
         }
 
+        /// <summary>
+        /// Add a new Query
+        /// </summary>
         public static void AddQuery()
         {
             WaitClick(getXAddButton);
             WaitClick(getXAdhocQuery);
         }
 
+        /// <summary>
+        /// Open the queries tab
+        /// </summary>
         public static void OpenQueriesTab()
         {
             OpenTab("Queries");
         }
 
+        /// <summary>
+        /// Open the selections tab
+        /// </summary>
         public static void OpenSelectionsTab()
         {
             OpenTab("Selections");

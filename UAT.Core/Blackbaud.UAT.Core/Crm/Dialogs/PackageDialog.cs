@@ -3,7 +3,7 @@ using Blackbaud.UAT.Base;
 using Blackbaud.UAT.Core.Base;
 using TechTalk.SpecFlow;
 
-namespace Blackbaud.UAT.Core.Crm
+namespace Blackbaud.UAT.Core.Crm.Dialogs
 {
     /// <summary>
     /// Class to handle the interactions for adding/editing a package dialog.

@@ -5,6 +5,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TechTalk.SpecFlow;
+using Blackbaud.UAT.Core.Crm.Panels;
 
 namespace Blackbaud.UAT.Core.Crm
 {
@@ -42,8 +43,6 @@ namespace Blackbaud.UAT.Core.Crm
         /// that lead up to its use.
         /// </summary>
         /// <param name="caption">The caption of the tab.</param>
-        //public static string getXExtTab(string caption){ return String.Format("//*[contains(@class,\"x-toolbar-cell\") and not(contains(@class,\"x-hide-display\"))]//button[./text()=\"{0}\"] | //span[./text()=\"{0}\" and contains(@class,\"x-menu-item-text\")]",caption);}
-
         public static string getXExtTab(string caption)
         {
             return
@@ -52,6 +51,11 @@ namespace Blackbaud.UAT.Core.Crm
                     caption);
         }
 
+        /// <summary>
+        /// XPath for menu item tab based on string passed in
+        /// </summary>
+        /// <param name="caption">Menu item caption</param>
+        /// <returns></returns>
         public static string getXExtMenuTab(string caption)
         {
             return String.Format("//span[text()='{0}' and contains(@class,'x-menu-item-text')]", caption);
@@ -62,6 +66,9 @@ namespace Blackbaud.UAT.Core.Crm
         /// </summary>
         public static string getXWaitBar = "//*[@class='bbui-wait-bar']";
 
+        /// <summary>
+        /// Returns the URL from the test context
+        /// </summary>
         public static string BaseUrl
         {
             get
@@ -86,6 +93,9 @@ namespace Blackbaud.UAT.Core.Crm
             }
         }
 
+        /// <summary>
+        /// BB CRM URL postfix
+        /// </summary>
         public static string VirtualPath
         {
             get
@@ -167,7 +177,7 @@ namespace Blackbaud.UAT.Core.Crm
         public static void OpenFunctionalArea(string caption, string imageName)
         {
             WebDriverWait navigateWaiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(TimeoutSecs));
-            navigateWaiter.IgnoreExceptionTypes(typeof (InvalidOperationException));
+            navigateWaiter.IgnoreExceptionTypes(typeof(InvalidOperationException));
             navigateWaiter.Until(d =>
             {
                 try
@@ -200,12 +210,12 @@ namespace Blackbaud.UAT.Core.Crm
             else
             {
                 WebDriverWait navigateWaiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(TimeoutSecs));
-                navigateWaiter.IgnoreExceptionTypes(typeof (InvalidOperationException));
+                navigateWaiter.IgnoreExceptionTypes(typeof(InvalidOperationException));
                 //retry logic
                 navigateWaiter.Until(d1 =>
                 {
                     WebDriverWait clickWaiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(10));
-                    clickWaiter.IgnoreExceptionTypes(typeof (InvalidOperationException));
+                    clickWaiter.IgnoreExceptionTypes(typeof(InvalidOperationException));
                     try
                     {
                         clickWaiter.Until(d2 =>
@@ -235,7 +245,7 @@ namespace Blackbaud.UAT.Core.Crm
                     {
                         return false;
                     }
-                    return true; 
+                    return true;
                 });
             }
 
@@ -258,7 +268,7 @@ namespace Blackbaud.UAT.Core.Crm
         /// 
         /// </summary>
         /// <param name="credentials"></param>
-        public static void LoginAs(string credentials=null)
+        public static void LoginAs(string credentials = null)
         {
             string url = BaseUrl;
             //string ptcl = BaseUrl.StartsWith("https://") ? "https://" : "http://";
@@ -283,13 +293,13 @@ namespace Blackbaud.UAT.Core.Crm
             Driver.Navigate().GoToUrl(url.TrimEnd(new char[] { '/' }) + VirtualPath);
 
             if (creds != null)
-            {                
+            {
                 SetCredentailsField("//*[contains(@type,\"text\") and contains(@id,\"splash-login-username\")]", creds[0].Trim());
                 SetCredentailsField("//*[contains(@type,\"password\") and contains(@id,\"splash-login-password\")]",
                     creds[1].Trim());
-                
+
                 ClickButton("Login");
             }
-        }   
+        }
     }
 }

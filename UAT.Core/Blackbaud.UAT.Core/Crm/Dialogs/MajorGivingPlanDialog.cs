@@ -5,14 +5,18 @@ using Blackbaud.UAT.Core.Base;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using TechTalk.SpecFlow;
+using Blackbaud.UAT.Core.Crm.Panels;
 
-namespace Blackbaud.UAT.Core.Crm
+namespace Blackbaud.UAT.Core.Crm.Dialogs
 {
     /// <summary>
     /// Class to handle the interactions for adding/editing a major giving plan dialog
     /// </summary>
     public class MajorGivingPlanDialog : Dialog
     {
+        /// <summary>
+        /// Add DialogId html ID
+        /// </summary>
         protected const string AddDialogId = "ProspectPlanAddForm";
 
         /// <summary>

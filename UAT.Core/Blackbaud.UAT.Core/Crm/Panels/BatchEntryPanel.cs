@@ -1,14 +1,18 @@
 ﻿using System;
 using OpenQA.Selenium;
 using TechTalk.SpecFlow;
+using Blackbaud.UAT.Core.Crm.Dialogs;
 
-namespace Blackbaud.UAT.Core.Crm
+namespace Blackbaud.UAT.Core.Crm.Panels
 {
     /// <summary>
     /// Class to handle interactions for the 'Batch Entry' panel.
     /// </summary>
     public class BatchEntryPanel : Panel
     {
+        /// <summary>
+        /// Get Xpath for search input html field
+        /// </summary>
         protected const string getXSearchInput = "//div[contains(@class,'bbui-pages-contentcontainer') and not(contains(@class,'hide'))]//input[@placeholder='Search']";
 
         /// <summary>

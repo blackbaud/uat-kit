@@ -1,7 +1,8 @@
 ﻿using System;
 using TechTalk.SpecFlow;
+using Blackbaud.UAT.Core.Crm.Dialogs;
 
-namespace Blackbaud.UAT.Core.Crm
+namespace Blackbaud.UAT.Core.Crm.Panels
 {
     /// <summary>
     /// Class to handle interactions for the 'Receipts' panel.

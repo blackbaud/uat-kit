@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using Blackbaud.UAT.Core.Crm.Dialogs;
 
-namespace Blackbaud.UAT.Core.Crm
+namespace Blackbaud.UAT.Core.Crm.Panels
 {
     /// <summary>
     /// Class to handle interactions for the 'Segment' panel.
@@ -27,7 +28,7 @@ namespace Blackbaud.UAT.Core.Crm
         {
             GetDisplayedElement(getXPanelHeader("segment_revenue"));
             SelectTab("Marketing Efforts");
-            WaitClick(getXDatalistRowLinkByActionAndCaption("Got to effort", marketingTemplate));
+            WaitClick(getXDatalistRowLinkByActionAndCaption("Go to effort", marketingTemplate));
             WaitClick(BBCRMHomePage.getXTask("Delete effort"));
             Dialog.Yes();
         }

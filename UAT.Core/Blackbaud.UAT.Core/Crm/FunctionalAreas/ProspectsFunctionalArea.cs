@@ -1,4 +1,6 @@
-﻿namespace Blackbaud.UAT.Core.Crm
+﻿using Blackbaud.UAT.Core.Crm.Panels;
+
+namespace Blackbaud.UAT.Core.Crm
 {
     /// <summary>
     /// Class to handle interactions for the 'Prospects' functional area.
