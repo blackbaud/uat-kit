@@ -14,8 +14,8 @@ using TechTalk.SpecFlow.Assist;
 using System.Linq;
 using System.Dynamic;
 using SystemTest.Common.Bbis;
-
-
+using Blackbaud.UAT.Core.Crm.Dialogs;
+using Blackbaud.UAT.Core.Crm.Panels;
 
 namespace SystemTest.Common.Crm
 {

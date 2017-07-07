@@ -10,6 +10,8 @@ using Blackbaud.UAT.Core.Base;
 using SystemTest.Common;
 using TechTalk.SpecFlow.Assist;
 using SpecFlow.Assist.Dynamic;
+using Blackbaud.UAT.Core.Crm.Dialogs;
+using Blackbaud.UAT.Core.Crm.Panels;
 
 namespace SystemTest.Core.Crm   
 {

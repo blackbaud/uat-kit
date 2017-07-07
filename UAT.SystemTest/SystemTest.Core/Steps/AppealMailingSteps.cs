@@ -11,6 +11,8 @@ using SystemTest.Common;
 using TechTalk.SpecFlow.Assist;
 using SpecFlow.Assist.Dynamic;
 using SystemTest.Core.Crm;
+using Blackbaud.UAT.Core.Crm.Dialogs;
+using Blackbaud.UAT.Core.Crm.Panels;
 
 namespace SystemTest.Core.Steps
 {

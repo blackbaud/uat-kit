@@ -2,7 +2,6 @@
 using Blackbaud.UAT.Base;
 using Blackbaud.UAT.Core.Base;
 using Blackbaud.UAT.Core.Crm;
-using Blackbaud.UAT.Core.Crm.Panels;
 using OpenQA.Selenium;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
@@ -10,6 +9,8 @@ using SpecFlow.Assist.Dynamic;
 using SystemTest.Common;
 using System.Collections.Generic;
 using System.Linq;
+using Blackbaud.UAT.Core.Crm.Dialogs;
+using Blackbaud.UAT.Core.Crm.Panels;
 
 namespace SystemTest.Core.Steps
 {
@@ -222,8 +223,23 @@ namespace SystemTest.Core.Steps
             eventName += uniqueStamp;
             //navigate to event and add event
             BBCRMHomePage.OpenEventsFA();
-            Panel.WaitClick(XpathHelper.xPath.VisiblePanel + "//button[./text()='Add new']");
-            Panel.WaitClick("//span[./text()='Event']");
+            try
+            {
+                Panel.WaitClick(XpathHelper.xPath.VisiblePanel + "//button[./text()='Add new']", 15);
+                Panel.WaitClick("//span[./text()='Event']", 15);
+            }
+            catch
+            {
+                try
+                {
+                    BaseComponent.GetEnabledElement("//span[contains(.,'Cannot read property')]", 5);
+                    Dialog.OK();
+                }
+                catch { }
+                Panel.WaitClick(XpathHelper.xPath.VisiblePanel + "//button[./text()='Add new']", 15);
+                Panel.WaitClick("//span[./text()='Event']", 15);
+            }
+
             //check is visible
             BaseComponent.GetEnabledElement(XpathHelper.xPath.VisibleBlock + "//span[text()='Add an event']");
             //set fields
@@ -421,21 +437,24 @@ namespace SystemTest.Core.Steps
             EventName += uniqueStamp;
 
             BBCRMHomePage.OpenEventsFA();
-            FunctionalArea.OpenLink("Fundraising events", "Event search");
-            BaseComponent.SetTextField("//div[contains(@style,'visible')]//input[contains(@id,'_NAME_value')]", EventName);
-            SearchDialog.Search();
-            SearchDialog.SelectFirstResult();
-
-            //test for "Cannot read property 'createChild' of null" popup?
             try
             {
-                BaseComponent.GetEnabledElement("//span[contains(.,'Cannot read property')]", 5);
-                Dialog.OK();
+                Panel.WaitClick("//input[@placeholder='Enter the name of an event']/../span/img", 5); //use this for the timeout
             }
             catch
             {
-                //eat and move on
+                try
+                {
+                    BaseComponent.GetEnabledElement("//span[contains(.,'Cannot read property')]", 5);
+                    Dialog.OK();
+                }
+                catch { }
+                FunctionalArea.OpenLink("Fundraising events", "Event search");
             }
+
+            BaseComponent.SetTextField("//div[contains(@style,'visible')]//input[contains(@id,'_NAME_value')]", EventName);
+            SearchDialog.Search();
+            SearchDialog.SelectFirstResult();
 
             //Click Registrations tab
             Panel.SelectTab("Registrations");
@@ -507,23 +526,29 @@ namespace SystemTest.Core.Steps
             //sorts out date format due to datetime adding 00:00:00
             DateTime findDate = objectData.Date;
             string eventAmount = string.Format("{0} on {1}", objectData.PaymentAmount, findDate.ToShortDateString());
-            //string regXPath = string.Format("//a[contains(@title,'{0}') and ./text()='{0}']", objectData.Surname + uniqueStamp + ", " + objectData.FirstName);
-            string regXPath = XpathHelper.xPath.VisiblePanel + string.Format("//a[./text()='{0}']", objectData.Surname + uniqueStamp + ", " + objectData.FirstName);
+            string constit = objectData.Surname + uniqueStamp + ", " + objectData.FirstName;
+            string regXPath = XpathHelper.xPath.VisiblePanel + string.Format("//a[./text()='{0}' and contains(@title,'{0}')]", constit);
             #endregion
             //check is visible
             BaseComponent.GetEnabledElement(XpathHelper.xPath.VisiblePanel + string.Format("//div[contains(@class, 'xtb-text bbui-pages-section-tbarcaption') and ./text()='{0}']", sectionCaption));
+            //lets reset the filter
             try
             {
-                //Click Go to registrant
-                BaseComponent.GetEnabledElement(regXPath);
-                BaseComponent.WaitClick(regXPath, 20);
+                Panel.WaitClick(XpathHelper.xPath.VisiblePanel + "//button[./text()='Reset']", 5);
             }
-            catch (WebDriverTimeoutException ex)
-            {
-                //lets try that again if the first time fails
-                BaseComponent.GetEnabledElement(regXPath);
-                BaseComponent.WaitClick(regXPath, 30);
-            }
+            catch { }
+            //try
+            //{
+            //Click Go to registrant
+            BaseComponent.GetEnabledElement(regXPath);
+            BaseComponent.WaitClick(regXPath, 20);
+            //}
+            //catch (WebDriverTimeoutException ex)
+            //{
+            //    //lets try that again if the first time fails
+            //    BaseComponent.GetEnabledElement(regXPath);
+            //    BaseComponent.WaitClick(regXPath, 30);
+            //}
 
             //Click payment history link          
             try

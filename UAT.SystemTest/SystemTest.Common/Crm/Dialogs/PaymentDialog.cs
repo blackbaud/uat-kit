@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using Blackbaud.UAT.Base;
 using Blackbaud.UAT.Core.Base;
 using Blackbaud.UAT.Core.Crm;
+using Blackbaud.UAT.Core.Crm.Dialogs;
+using Blackbaud.UAT.Core.Crm.Panels;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 //using Oxford.UAT.Crm;

@@ -10,6 +10,8 @@ using SpecFlow.Assist.Dynamic;
 using SystemTest.Common;
 using System.Linq;
 using System.Collections.Generic;
+using Blackbaud.UAT.Core.Crm.Dialogs;
+using Blackbaud.UAT.Core.Crm.Panels;
 
 namespace SystemTest.Core.Steps
 {
