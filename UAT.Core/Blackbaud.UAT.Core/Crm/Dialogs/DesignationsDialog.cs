@@ -3,7 +3,7 @@ using Blackbaud.UAT.Base;
 using Blackbaud.UAT.Core.Base;
 using TechTalk.SpecFlow;
 
-namespace Blackbaud.UAT.Core.Crm
+namespace Blackbaud.UAT.Core.Crm.Dialogs
 {
     /// <summary>
     /// Class to handle the interactions for adding/editing a designations dialog.
@@ -15,6 +15,10 @@ namespace Blackbaud.UAT.Core.Crm
         /// </summary>
         protected static readonly string[] DialogIds = { "DesignationSplits", "BatchRevenueSplitDesignations" };
 
+        /// <summary>
+        /// Static mapping of supported field captions to CrmField objects encapsulating all relevant variables
+        /// needed to set the field's value.
+        /// </summary>
         protected static readonly IDictionary<string, CrmField> SupportedFields = new Dictionary<string, CrmField>
         {
             {"Designation", new CrmField(null, FieldType.Searchlist, "DesignationSearch", "COMBINEDSEARCH")},

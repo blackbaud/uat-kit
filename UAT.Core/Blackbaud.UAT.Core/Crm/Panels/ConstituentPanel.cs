@@ -1,15 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using TechTalk.SpecFlow;
+using Blackbaud.UAT.Core.Crm.Dialogs;
 
-namespace Blackbaud.UAT.Core.Crm
+namespace Blackbaud.UAT.Core.Crm.Panels
 {
     /// <summary>
     /// Class to handle interactions for the 'Constituent' panel.
     /// </summary>
     public class ConstituentPanel : Panel
     {
-
+        /// <summary>
+        /// XPath for Delete Yes action
+        /// </summary>
         public const string getXYesReallyDelete = "//button[contains(@class,'x-btn-text') and .//text()='Yes']";
 
         /// <summary>
@@ -122,6 +125,10 @@ namespace Blackbaud.UAT.Core.Crm
 
         }
 
+        /// <summary>
+        /// Delete constituency by constituency
+        /// </summary>
+        /// <param name="constituency">Constituency to be deleted</param>
         public static void DeleteConstituency(string constituency)
         {
             SelectInfoTab();

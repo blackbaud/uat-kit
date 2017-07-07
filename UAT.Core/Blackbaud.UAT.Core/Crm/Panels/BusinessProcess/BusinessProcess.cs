@@ -1,6 +1,7 @@
 ﻿using System;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
+using Blackbaud.UAT.Core.Crm.Panels;
 
 namespace Blackbaud.UAT.Core.Crm
 {

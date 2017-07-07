@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using TechTalk.SpecFlow;
+using Blackbaud.UAT.Core.Crm.Dialogs;
 
-namespace Blackbaud.UAT.Core.Crm
+namespace Blackbaud.UAT.Core.Crm.Panels
 {
     /// <summary>
     /// Class to handle interactions for the 'Information Library' panel.
@@ -27,7 +28,9 @@ namespace Blackbaud.UAT.Core.Crm
             WaitClick(Dialog.getXOKButton);
         }
 
-
+        /// <summary>
+        /// XPath for the root of teh query treeview with text "All"
+        /// </summary>
         public static string getXAllQueriesTreeRoot = "//*[contains(@class,\"x-tree-node-anchor\")]//span[contains(.,\"All\")]";
 
         /// <summary>
@@ -35,6 +38,10 @@ namespace Blackbaud.UAT.Core.Crm
         /// </summary>
         protected static string getXFilterQueryField = "//*[contains(@class,\"bbui-datalist-pagingbar-search\")]";
 
+        /// <summary>
+        /// Set filter based on string passed in
+        /// </summary>
+        /// <param name="name">Filter to set</param>
         public static void SetFilter(string name)
         {
             SetTextField(getXFilterQueryField, name);

@@ -1,7 +1,7 @@
 ﻿using System;
 using TechTalk.SpecFlow;
 
-namespace Blackbaud.UAT.Core.Crm
+namespace Blackbaud.UAT.Core.Crm.Dialogs
 {
     /// <summary>
     /// Add Ad-hoc Query Dialog functions and interactions in BBCRM.
@@ -53,11 +53,20 @@ namespace Blackbaud.UAT.Core.Crm
         /// <param name="tabCaption">The caption of the tab.</param>
         protected static new string getXTab(string tabCaption) { return String.Format("//span[./text() = \"{0}\"]", tabCaption); }
 
+        /// <summary>
+        /// Set the Find field to the input string
+        /// </summary>
+        /// <param name="field">The field to set</param>
         public static void SetFindField(string field)
         {
             SetTextField(getXFindField, field);            
         }
 
+        /// <summary>
+        /// Include record criteria based on field and data in the table
+        /// </summary>
+        /// <param name="field">The field</param>
+        /// <param name="criteria">Table of critera</param>
         public static void IncludeRecordCriteria(string field, Table criteria)
         {
             // Select the right field in the find results
@@ -66,6 +75,10 @@ namespace Blackbaud.UAT.Core.Crm
             ApplyCriteria(criteria);
         }
 
+        /// <summary>
+        /// Include display field based on string passed in
+        /// </summary>
+        /// <param name="field">The field to be included</param>
         public static void IncludeDisplayField(string field)
         {
             // Select the right field in the find results
@@ -73,6 +86,10 @@ namespace Blackbaud.UAT.Core.Crm
             WaitClick(getXAddOutputFieldArrow);                        
         }
 
+        /// <summary>
+        /// Apply criteria to the query based on the table passed in
+        /// </summary>
+        /// <param name="criteria">Table of criteria to apply</param>
         public static void ApplyCriteria(Table criteria)
         {
             foreach (TableRow criter in criteria.Rows)

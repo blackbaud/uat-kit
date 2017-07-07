@@ -2,8 +2,9 @@
 using Blackbaud.UAT.Base;
 using Blackbaud.UAT.Core.Base;
 using TechTalk.SpecFlow;
+using Blackbaud.UAT.Core.Crm.Panels;
 
-namespace Blackbaud.UAT.Core.Crm
+namespace Blackbaud.UAT.Core.Crm.Dialogs
 {
     /// <summary>
     /// Class to handle the interactions for adding/editing an individual dialog.
