@@ -1,5 +1,7 @@
 ﻿using Blackbaud.UAT.Core.Base;
 using Blackbaud.UAT.Core.Crm;
+using Blackbaud.UAT.Core.Crm.Panels;
+using Blackbaud.UAT.Core.Crm.Dialogs;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
 
