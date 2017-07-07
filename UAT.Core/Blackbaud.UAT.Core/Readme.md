@@ -14,3 +14,12 @@ By making the UAT Kit open source, Blackbaud allows you to extend it as necessar
 We are not accepting third-party contributions to this project at this time.
 
 If we change this policy in the future, there are a few guidelines that we need contributors to follow. For more information, see our [canonical contributing guide](https://github.com/blackbaud-community/Blackbaud-CRM/blob/master/CONTRIBUTING.md) in the Blackbaud CRM repo which provided detailed instructions, including signing the [Contributor License Agreement](http://developer.blackbaud.com/cla/).
+
+Version 1.0.1304.1 introduces some breaking namespace changes. Where previously this would suffice:
+
+using Blackbaud.UAT.Core.Crm;
+
+You will now have to optionally included:
+
+using Blackbaud.UAT.Core.Crm.Panels;
+using Blackbaud.UAT.Core.Crm.Dialogs;
