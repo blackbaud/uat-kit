@@ -1,21 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using Blackbaud.UAT.Base;
-using Blackbaud.UAT.Core.Base;
-using Blackbaud.UAT.Core.Crm;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Support.UI;
-//using Oxford.UAT.Crm;
 using TechTalk.SpecFlow;
-using System.Configuration;
-using System.Globalization;
-using System.Threading;
 using TechTalk.SpecFlow.Assist;
-using System.Linq;
-using System.Dynamic;
-using SystemTest.Common.Bbis;
 using Blackbaud.UAT.Core.Crm.Dialogs;
-using Blackbaud.UAT.Core.Crm.Panels;
 
 namespace SystemTest.Common.Crm
 {
@@ -127,9 +115,9 @@ namespace SystemTest.Common.Crm
         public static void SetRecurringGiftFields(Table AddRecurringGift)
         {
             dynamic objectData = AddRecurringGift.CreateDynamicInstance();
-            //set default inherited dialog fields
+            // set default inherited dialog fields
             SetFields(GetDialogId(DialogIds()), AddRecurringGift.Rows[0], SupportedFields);
-            //handle various payment method types
+            // handle various payment method types
             string paymentMethod = Convert.ToString(objectData.PaymentMethod);
             switch (paymentMethod.ToLower())
             {

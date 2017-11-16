@@ -1,16 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using Blackbaud.UAT.Base;
-using Blackbaud.UAT.Core.Base;
-using Blackbaud.UAT.Core.Crm;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
-//using Oxford.UAT.Crm;
 using TechTalk.SpecFlow;
-using System.Configuration;
-using System.Globalization;
-using System.Threading;
-using TechTalk.SpecFlow.Assist;
 using System.Linq;
 
 
@@ -18,8 +11,7 @@ namespace SystemTest.Common.Bbis
 {
     [Binding]
     public class BbisContentGallery : BaseComponent
-    {
-        //public const string getXPartsGridNameField = "//*[@id='pagecntnt_tmpltcntnt_partGrid_grid_grid_grid']/tbody/tr/td[4]/span/span/span";        
+    {    
         public const string getXPartsSearchResultsLine =
             "//*[@id='pagecntnt_tmpltcntnt_partGrid_grid_grid_lblTotalRecs']";
 
@@ -37,6 +29,7 @@ namespace SystemTest.Common.Bbis
         }
 
         // TODO refactor these two following functions and distill out common code and Xpaths
+        // TODO move into CORE
 
         /// <summary>
         /// Delete the named part from the Content Gallery.

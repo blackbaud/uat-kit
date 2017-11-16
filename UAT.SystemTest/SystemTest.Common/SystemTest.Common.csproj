@@ -39,8 +39,8 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Blackbaud.UAT.Core, Version=1.0.1304.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Blackbaud.UAT.Core.1.0.1304.1\lib\net45\Blackbaud.UAT.Core.dll</HintPath>
+    <Reference Include="Blackbaud.UAT.Core, Version=1.0.1429.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Blackbaud.UAT.Core.1.0.1429.1\lib\net45\Blackbaud.UAT.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="ImpromptuInterface, Version=6.2.2.0, Culture=neutral, PublicKeyToken=0b1781c923b2975b, processorArchitecture=MSIL">
@@ -79,6 +79,7 @@
     <Compile Include="Bbis\BbisSiteExplorer.cs" />
     <Compile Include="Crm\Dialogs\PaymentDialog.cs" />
     <Compile Include="Crm\Dialogs\RecurringGiftDialog.cs" />
+    <Compile Include="Crm\Panels\TransactionSummaryPanel.cs" />
     <Compile Include="Helpers\StepHelper.cs" />
     <Compile Include="Helpers\XpathHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -88,6 +89,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
+    <None Include="SystemTest.Common.nuspec" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

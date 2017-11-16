@@ -4,12 +4,10 @@ using Blackbaud.UAT.Base;
 using Blackbaud.UAT.Core.Base;
 using Blackbaud.UAT.Core.Crm;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Support.UI;
 using TechTalk.SpecFlow;
 using System.Configuration;
 using System.Globalization;
 using System.Threading;
-using TechTalk.SpecFlow.Assist;
 using Blackbaud.UAT.Core.Crm.Dialogs;
 using Blackbaud.UAT.Core.Crm.Panels;
 
@@ -101,20 +99,20 @@ namespace SystemTest.Common
                 {"Account System", new CrmField("_PDACCOUNTSYSTEMID_value", FieldType.Dropdown)}
             };
             Dialog.SetField("SelectAccountSystem", "Account System", AccountSystem, Supportedfields);
-            //OK button
+            // OK button
             BaseComponent.WaitClick("//div[contains(@class, 'x-window  bbui-dialog') and contains(@style,'visible')]//button[./text()='OK']");
         }
 
         public static void SetBenefit(string BenefitName, bool IsPledge)
         {
-            //setup
+            // setup
             var caption = "Benefit";
             var dialogId = "BenefitDetails";
             var gridId = "_BENEFITS_value";
             IDictionary<string, int> columnCaptionToIndex = new Dictionary<string, int>();
             BenefitName += uniqueStamp;
 
-            //click button for pop up
+            // click button for pop up
             if (IsPledge)
             {
                 BaseComponent.WaitClick("//a[contains(@id,'_EDITBENEFITSACTION_action')]");
@@ -124,21 +122,21 @@ namespace SystemTest.Common
                 BaseComponent.WaitClick("//div[contains(@id,'EDITBENEFITSACTION_action')]//button");
             }
 
-            //add benfitname to grid
+            // add benfitname to grid
             columnCaptionToIndex.Add(caption,
                 BaseComponent.GetDatalistColumnIndex(Dialog.getXGridHeaders(dialogId, gridId), caption));
             string gridXPath = Dialog.getXGridCell(dialogId, gridId, 1, columnCaptionToIndex[caption]);
             string gridRowXPath = Dialog.getXGridRow(dialogId, gridId, 1);
             Dialog.SetGridTextField(gridXPath, BenefitName);
 
-            //click OK
+            // click OK
             BaseComponent.WaitClick(
                 "//div[contains(@class, 'x-window  bbui-dialog') and contains(@style,'visible')]//button[./text()='OK']");
         }
 
         public static void SetCurrentThreadCultureToConfigValue()
         {
-            //lets set the thread culture to get the correct date for the browser
+            // lets set the thread culture to get the correct date for the browser
             Thread.CurrentThread.CurrentCulture = new CultureInfo(ConfigurationManager.AppSettings["ChromeDriver.language"]);
         }
 
@@ -157,14 +155,14 @@ namespace SystemTest.Common
             TimePeriod timePeriodToAdd = TimePeriod.NotSet;
             int i = 0;
 
-            //set thread to correct culture
+            // set thread to correct culture
             SetCurrentThreadCultureToConfigValue();
             if (tableRow.ContainsKey(CaptionKey) &&
                 !string.IsNullOrEmpty(tableRow[CaptionKey]) &&
                 tableRow[CaptionKey].ToLower().Contains(LowerCase.Today))
             {
 
-                //get number to increase
+                // get number to increase
                 if (tableRow[CaptionKey].Contains(plus))
                 {
                     i = DateIncrementAfterPlus(tableRow[CaptionKey]);
@@ -174,13 +172,13 @@ namespace SystemTest.Common
                     i = DateIncrementAfterMinus(tableRow[CaptionKey]);
                 }
 
-                //get time unit to increase
+                // get time unit to increase
                 if (tableRow[CaptionKey].ToLower().Contains(LowerCase.Day) || tableRow[CaptionKey].ToLower().Contains(LowerCase.Days)) timePeriodToAdd = TimePeriod.Day;
                 if (tableRow[CaptionKey].ToLower().Contains(LowerCase.Week) || tableRow[CaptionKey].ToLower().Contains(LowerCase.Weeks)) timePeriodToAdd = TimePeriod.Week;
                 if (tableRow[CaptionKey].ToLower().Contains(LowerCase.Month) || tableRow[CaptionKey].ToLower().Contains(LowerCase.Months)) timePeriodToAdd = TimePeriod.Month;
                 if (tableRow[CaptionKey].ToLower().Contains(LowerCase.Year) || tableRow[CaptionKey].ToLower().Contains(LowerCase.Years)) timePeriodToAdd = TimePeriod.Year;
 
-                //actually increase
+                // actually increase
                 switch (timePeriodToAdd)
                 {
                     case TimePeriod.Day:
@@ -196,7 +194,7 @@ namespace SystemTest.Common
                         tableRow[CaptionKey] = DateTime.Now.AddYears(i).ToShortDateString();
                         break;
                     case TimePeriod.NotSet:
-                        //handle nothing to add
+                        // handle nothing to add
                         tableRow[CaptionKey] = DateTime.Now.ToShortDateString();
                         break;
                 }
@@ -209,11 +207,11 @@ namespace SystemTest.Common
             DateTime returnValue = DateTime.MinValue;
             int i = 0;
 
-            //set thread to correct culture
+            // set thread to correct culture
             SetCurrentThreadCultureToConfigValue();
             if (DateToSet.ToLower().Contains(LowerCase.Today))
             {
-                //get number to increase
+                // get number to increase
                 if (DateToSet.Contains(plus))
                 {
                     i = DateIncrementAfterPlus(DateToSet);
@@ -223,13 +221,13 @@ namespace SystemTest.Common
                     i = DateIncrementAfterMinus(DateToSet);
                 }
 
-                //get time unit to increase
+                // get time unit to increase
                 if (DateToSet.ToLower().Contains(LowerCase.Day) || DateToSet.ToLower().Contains(LowerCase.Days)) timePeriodToAdd = TimePeriod.Day;
                 if (DateToSet.ToLower().Contains(LowerCase.Week) || DateToSet.ToLower().Contains(LowerCase.Weeks)) timePeriodToAdd = TimePeriod.Week;
                 if (DateToSet.ToLower().Contains(LowerCase.Month) || DateToSet.ToLower().Contains(LowerCase.Months)) timePeriodToAdd = TimePeriod.Month;
                 if (DateToSet.ToLower().Contains(LowerCase.Year) || DateToSet.ToLower().Contains(LowerCase.Years)) timePeriodToAdd = TimePeriod.Year;
 
-                //actually increase
+                // actually increase
                 switch (timePeriodToAdd)
                 {
                     case TimePeriod.Day:
@@ -245,7 +243,7 @@ namespace SystemTest.Common
                         returnValue = DateTime.Now.AddYears(i);
                         break;
                     case TimePeriod.NotSet:
-                        //handle nothing to add
+                        // handle nothing to add
                         returnValue = DateTime.Now;
                         break;
                 }
@@ -265,7 +263,7 @@ namespace SystemTest.Common
         {
             try
             {
-                //First get the number of items then divide by number of items per page to get the actual number of pages
+                // First get the number of items then divide by number of items per page to get the actual number of pages
                 string numberOfItems =
                     BaseComponent.GetEnabledElement(XpathHelper.xPath.VisiblePanel +
                                                     "//div[contains(@class,'xtb-text bbui-pages-section-tbarcaption-detail')]")
@@ -282,7 +280,7 @@ namespace SystemTest.Common
 
                     throw new Exception("Error getting page number as double! Value returned from xpath: " + returnString + " page title: " + pageTitle);
                 }
-                int actualNumberOfPages = Convert.ToInt32(Math.Ceiling(actualNumberOfItems / 30)); //30 items per page for this list
+                int actualNumberOfPages = Convert.ToInt32(Math.Ceiling(actualNumberOfItems / 30)); // 30 items per page for this list
                 return actualNumberOfPages;
             }
             catch (Exception ex)
@@ -316,22 +314,21 @@ namespace SystemTest.Common
         {
             try
             {
-                //check the page has rendered find the last > in the page control at the bottom of the page
-                //this does not appear if the page count is == 1
+                // check the page has rendered find the last > in the page control at the bottom of the page
+                // this does not appear if the page count is == 1
                 Panel.GetEnabledElement(XpathHelper.xPath.VisiblePanel + "//div[contains(@class,'x-panel-bbar')]//button[./text()='>']", 15);
             }
-            catch //(Exception ex)
+            catch // (Exception ex)
             {
-                //lets fail fast and move on
-                //throw new Exception("failed on line 245 of WhenIRunTheConstituentRecognitionProcess " + ex.Message, ex);
+                // lets fail fast and move on
             }
 
-            //get actual number of pages
+            // get actual number of pages
             int actualNumberOfPages = StepHelper.SetActualNumberOfPages();
 
             try
             {
-                //lets try the last page first as it's normally here
+                // lets try the last page first as it's normally here
                 if (actualNumberOfPages > 1)
                 {
                     BaseComponent.WaitClick(string.Format(XpathHelper.xPath.VisiblePanel + "//button[contains(@data-pagenumber, '{0}')]", actualNumberOfPages), 15);
@@ -342,7 +339,7 @@ namespace SystemTest.Common
             catch
             {
                 BaseComponent.WaitClick(string.Format(XpathHelper.xPath.VisiblePanel + "//button[contains(@data-pagenumber, '1')]"));
-                //check each page starting at one
+                // check each page starting at one
                 for (var i = 0; i <= actualNumberOfPages; i++)
                 {
                     try
@@ -356,10 +353,10 @@ namespace SystemTest.Common
                         {
                             throw Ex;
                         }
-                        //else
-                        //eat exception - should just mean it's not visisble on the page yet
+                        // else
+                        // eat exception - should just mean it's not visisble on the page yet
                     }
-                    //move to next page if not on the last page
+                    // move to next page if not on the last page
                     if (i != actualNumberOfPages)
                     {
                         BaseComponent.WaitClick(string.Format(XpathHelper.xPath.VisiblePanel + "//button[contains(@data-pagenumber, '{0}')]", i + 2));
@@ -379,13 +376,12 @@ namespace SystemTest.Common
             {
                 throw new Exception(startProcessSelectionException, ex);
             }
-            //click process
+            // click process
             BaseComponent.WaitClick(string.Format(XpathHelper.xPath.VisibleContainerBlock + "//a[text()='{0}']", Process), 15);
 
-            //BaseComponent.WaitClick(XpathHelper.xPath.VisibleContainerBlock + "//button[text()='Process global change']");
-            //Click start process
+            // Click start process
             BaseComponent.WaitClick("//div[text()='Start process']");
-            //click start
+            // click start
             if (Process != "Update membership status" + uniqueStamp)
             {
                 BaseComponent.WaitClick(XpathHelper.xPath.VisibleBlock + "//button[text()='Start']");
@@ -394,7 +390,7 @@ namespace SystemTest.Common
 
 
             // process completes or throw error
-            //decide validation based on if we know the actual number of results!
+            // decide validation based on if we know the actual number of results!
             if (ExpectedRecordCount == 0)
             {
                 WhenRecordsSuccessfullyProcessedIsGreaterThanZero();
@@ -409,7 +405,7 @@ namespace SystemTest.Common
         {
             try
             {
-                //wait for completed screen
+                // wait for completed screen
                 BaseComponent.GetEnabledElement(XpathHelper.xPath.VisiblePanel + "//span[contains(@id,'_STATUS_value') and ./text()='Completed']", 480);
             }
             catch (Exception ex)
@@ -417,7 +413,7 @@ namespace SystemTest.Common
                 throw new Exception("Process 'Completed' screen not rendered - process failed to run!", ex);
             }
 
-            //check converts to int
+            // check converts to int
             string xpath = "//div[contains(@class,'bbui-pages-contentcontainer') and not(contains(@class,'x-hide-display'))]//span[contains(@id,'_SUCCESSCOUNT_value')]";
             // check it's there to get
             BaseComponent.GetEnabledElement(xpath);
@@ -430,10 +426,9 @@ namespace SystemTest.Common
                 {
                     throw new Exception("Error getting processed count as int! Process count = " + processedCount);
                 }
-                //check non-negative
+                // check non-negative
                 if (actualProcessedCount <= 0)
                 {
-                    //Thread.Sleep(600000);
                     throw new Exception("Processed count is zero (or smaller)! ProcessedCount: " + processedCount);
                 }
             }
@@ -447,7 +442,7 @@ namespace SystemTest.Common
         {
             try
             {
-                //wait for completed screen
+                // wait for completed screen
                 BaseComponent.GetEnabledElement(XpathHelper.xPath.VisiblePanel + "//span[contains(@id,'_STATUS_value') and ./text()='Completed']", 480);
             }
             catch (Exception ex)
@@ -469,14 +464,14 @@ namespace SystemTest.Common
 
         public static void AddEntryOnTheFly()
         {
-            //add code table entry if it does not exits
+            // add code table entry if it does not exits
             try
             {
                 Dialog.WaitClick("//button[text()='Yes']", 5);
             }
             catch
             {
-                //nothing means pop up not spawned
+                // nothing means pop up not spawned
             }
         }
     }

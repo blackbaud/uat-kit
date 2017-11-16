@@ -1,18 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using TechTalk.SpecFlow;
-
 using Blackbaud.UAT.Base;
-using Blackbaud.UAT.Core;
 using Blackbaud.UAT.Core.Crm;
 using Blackbaud.UAT.Core.Base;
 using SystemTest.Common;
 using TechTalk.SpecFlow.Assist;
-using SpecFlow.Assist.Dynamic;
 using Blackbaud.UAT.Core.Crm.Dialogs;
 using Blackbaud.UAT.Core.Crm.Panels;
+using SystemTest.Common.Crm;
 
 namespace SystemTest.Core.Steps
 {
@@ -602,15 +599,15 @@ namespace SystemTest.Core.Steps
             {
                 Dialog.GetEnabledElement(XpathHelper.xPath.VisibleDialog + "//table[contains(@id,'_ADDSELECTEDCOMMITMENT_action')]//button[./text()='Add']", 30);
                 Dialog.WaitClick(XpathHelper.xPath.VisibleDialog + "//table[contains(@id,'_ADDSELECTEDCOMMITMENT_action')]//button[./text()='Add']");
-                //check there is a pop up withthe title "Amount to apply"
+                //check there is a pop up with the title "Amount to apply"
                 BaseComponent.GetEnabledElement("//div[contains(@id,'dataformdialog') and contains(@style,'block')]//span[text()='Amount to apply']", 15);
             }
             catch
             {
-                //first time seems to fail a lot lets try again
+                //If first time fails, try again
                 Dialog.GetEnabledElement(XpathHelper.xPath.VisibleDialog + "//table[contains(@id,'_ADDSELECTEDCOMMITMENT_action')]//button[./text()='Add']", 30);
                 Dialog.WaitClick(XpathHelper.xPath.VisibleDialog + "//table[contains(@id,'_ADDSELECTEDCOMMITMENT_action')]//button[./text()='Add']");
-                //check there is a pop up withthe title "Amount to apply"
+                //check there is a pop up with the title "Amount to apply"
                 BaseComponent.GetEnabledElement("//div[contains(@id,'dataformdialog') and contains(@style,'block')]//span[text()='Amount to apply']", 15);
             }
         }
@@ -711,19 +708,15 @@ namespace SystemTest.Core.Steps
         [Then(@"Revenue Transaction Page Transaction Summary displays payment method information")]
         public void ThenRevenueTransactionPageTransactionSummaryDisplaysPaymentMethodInformation(Table table)
         {
-            //setup date field.  StepHelper for date must come before dynamic objects
-            StepHelper.SetTodayDateInTableRow("Date", table);
             dynamic objectData = table.CreateDynamicInstance();
             string dateValue = string.Empty;
             string paymentMethodType = objectData.PaymentMethod;
-            //sorts out date format due to datetime adding 00:00:00
-            DateTime findDate = objectData.Date;
+
             //setting up decimal places for number of units and median price
             decimal numberOfUnits = Convert.ToDecimal(objectData.NumberOfUnits + ".000");
             decimal pricePerShareMedian = Convert.ToDecimal(objectData.MedianPrice + "0000");
             //check fields
-            BaseComponent.GetEnabledElement(XpathHelper.xPath.VisiblePanel + string.Format("//span[contains(@id,'_AMOUNT_value') and ./text()='{0}']", objectData.PaymentAmount), 15);
-            BaseComponent.GetEnabledElement(XpathHelper.xPath.VisiblePanel + string.Format("//span[contains(@id,'_DATE_value') and ./text()='{0}']", findDate.ToShortDateString()), 15);
+            RevenueTransactionSummary(table);
             BaseComponent.GetEnabledElement(XpathHelper.xPath.VisiblePanel + string.Format("//span[contains(@id,'_PAYMENTMETHOD_value') and ./text()='{0}']", paymentMethodType), 15);
             if (((IDictionary<String, object>)objectData).ContainsKey("Sold") &&
                 !string.IsNullOrEmpty(Convert.ToString(objectData.Sold)))
@@ -917,7 +910,7 @@ namespace SystemTest.Core.Steps
             }
             catch
             {
-                //if its not lest open it rather than fil the test
+                //if its not open, lets open it rather than fail the test
                 BaseComponent.WaitClick(XpathHelper.xPath.VisibleBlock + ("//button[text()='Add']"));
             }
             //Search and select sub Campaign
@@ -994,6 +987,107 @@ namespace SystemTest.Core.Steps
             BaseComponent.WaitClick("//button[text()='Campaign hierarchy']");
             //Verify Campaign Hierarchy data is as expected        
             BaseComponent.GetEnabledElement(string.Format("//a[contains(@class,'x-tree-node-anchor')]/span[text()='{0}']", objectData.Name + uniqueStamp));
+        }
+
+        [When(@"navigate to the revenue record for ""(.*)""")]
+        public void WhenNavigateToTheRevenueRecordFor(string constituent)
+        {
+            constituent += uniqueStamp;
+            BBCRMHomePage.OpenRevenueFA();
+            RevenueFunctionalArea.TransactionSearchByConstituent(constituent);
+        }
+
+        [Given(@"I add a Recurring gift to constituent ""(.*)""")]
+        [When(@"I add a Recurring gift to constituent ""(.*)""")]
+        public void WhenIAddARecurringGiftToConstituent(string ConstituentName, Table table)
+        {
+            //handle date defensively before we supply table to the other methods
+            StepHelper.SetTodayDateInTableRow("Date", table);
+            StepHelper.SetTodayDateInTableRow("Installment schedule begins", table);
+            StepHelper.SetTodayDateInTableRow("End date (optional)", table);
+            //Search and select constituent
+            StepHelper.SearchAndSelectConstituent(ConstituentName);
+            //click Add Recurring Gift
+            BaseComponent.WaitClick(string.Format(XpathHelper.xPath.Button, XpathHelper.PaymentAddActions.RecurringGift));
+            //check is visible
+            BaseComponent.GetEnabledElement(XpathHelper.xPath.ConstituentCaption);
+            //set fields
+            RecurringGiftDialog.SetRecurringGiftFields(table);
+            //Save dialog
+            Dialog.Save();
+        }
+
+        [When(@"I navigate to pledge")]
+        public void WhenINavigateToPledge(Table table)
+        {
+            dynamic objectData = table.CreateDynamicInstance();
+            var dialogId = "TransactionSearch";
+            //declared variables
+            string groupCaption = "Transactions";
+            string taskCaption = "Transaction search";
+            //lets set the thread culture to get the correct date for the browser
+            StepHelper.SetCurrentThreadCultureToConfigValue();
+            if (((IDictionary<String, object>)objectData).ContainsKey("Date") &&
+              !string.IsNullOrEmpty(Convert.ToString(objectData.Date)) &&
+              Convert.ToString(objectData.Date).ToLower() == "today")
+            {
+                objectData.Date = DateTime.Now.ToShortDateString();
+            }
+
+            //set fields for Transaction search fields on form
+            IDictionary<string, CrmField> SupportedFields = new Dictionary<string, CrmField>
+            {
+                {"Last/Org/Group name", new CrmField("_KEYNAME_value", FieldType.TextInput)},
+                {"Transaction type", new CrmField("_TRANSACTIONTYPE_value", FieldType.Dropdown)}
+                
+            };
+            //search for pledge transaction
+            objectData.LastName += uniqueStamp;
+            BBCRMHomePage.OpenRevenueFA();
+            RevenueFunctionalArea.OpenLink(groupCaption, taskCaption);
+            //Set search fields
+            Dialog.SetField(dialogId, "Last/Org/Group name", objectData.LastName, SupportedFields);
+            Dialog.SetField(dialogId, "Transaction type", objectData.TransactionType, SupportedFields);
+            //Click Search and select first result
+            SearchDialog.Search();
+            SearchDialog.SelectFirstResult();
+            //Confirm pledge is displaying
+            string pledgeName = string.Format("{0} Pledge: {1}", objectData.Date, objectData.Amount);
+            BaseComponent.GetEnabledElement(XpathHelper.xPath.VisiblePanel + string.Format("//span[./text()='{0}']", pledgeName), 60);
+        }
+
+        [Then(@"the transaction summary shows")]
+        public void ThenTheTransactionSummaryShows(Table pledgeDetails)
+        {
+            if (pledgeDetails.RowCount != 1) throw new ArgumentException("Only provide one row to evaluate.");
+
+            TableRow pledgeDetailsRow = pledgeDetails.Rows[0];
+            foreach (string fieldName in pledgeDetails.Header)
+            {
+                switch (fieldName)
+                {
+                    case "Constituent":
+                        if (pledgeDetailsRow["Constituent"] != string.Empty) pledgeDetailsRow["Constituent"] += uniqueStamp;
+                        Panel.GetEnabledElement(string.Format("//button[./text()='{0}']", pledgeDetailsRow["Constituent"]));
+                        break;
+                    default:
+                        if (!TransactionSummaryPanel.SpanContains(fieldName, pledgeDetailsRow[fieldName]))
+                            throw new ArgumentException(String.Format("Transaction summary label '{0}' does not equal '{1}'", fieldName, pledgeDetailsRow[fieldName]));
+                        break;
+                }
+            }
+        }
+
+        public void RevenueTransactionSummary(Table table)
+        {
+            //setup date field.  StepHelper for date must come before dynamic objects
+            StepHelper.SetTodayDateInTableRow("Date", table);
+            dynamic objectData = table.CreateDynamicInstance();
+            //sorts out date format due to datetime adding 00:00:00
+            DateTime findDate = objectData.Date;
+            //check fields
+            BaseComponent.GetEnabledElement(XpathHelper.xPath.VisiblePanel + string.Format("//span[contains(@id,'_AMOUNT_value') and ./text()='{0}']", objectData.PaymentAmount), 15);
+            BaseComponent.GetEnabledElement(XpathHelper.xPath.VisiblePanel + string.Format("//span[contains(@id,'_DATE_value') and ./text()='{0}']", findDate.ToShortDateString()), 15);
         }
     }
 }

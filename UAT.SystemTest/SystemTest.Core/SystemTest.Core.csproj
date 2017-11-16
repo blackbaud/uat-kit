@@ -40,8 +40,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Blackbaud.UAT.Core, Version=1.0.1304.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Blackbaud.UAT.Core.1.0.1304.1\lib\net45\Blackbaud.UAT.Core.dll</HintPath>
+    <Reference Include="Blackbaud.UAT.Core, Version=1.0.1429.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Blackbaud.UAT.Core.1.0.1429.1\lib\net45\Blackbaud.UAT.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Blackbaud.UAT.SpecFlow.Selenium.SpecFlowPlugin, Version=1.0.1235.1, Culture=neutral, processorArchitecture=MSIL">
@@ -98,11 +98,15 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Crm\Dialogs\ExportDefinitionDialog.cs" />
     <Compile Include="Features\AppealMailing.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>AppealMailing.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Features\Batch.feature.cs">
+      <DependentUpon>Batch.feature</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Features\Events.feature.cs">
       <AutoGen>True</AutoGen>
@@ -142,6 +146,10 @@
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>AppealMailing.feature.cs</LastGenOutput>
     </None>
+    <None Include="Features\Batch.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>Batch.feature.cs</LastGenOutput>
+    </None>
     <None Include="Features\Events.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>Events.feature.cs</LastGenOutput>
@@ -167,7 +175,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Crm\Dialogs\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SystemTest.Common\SystemTest.Common.csproj">
       <Project>{41947abe-6db8-436b-82d0-c3a89986d3c1}</Project>
@@ -194,6 +204,10 @@
   </Choose>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

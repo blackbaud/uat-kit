@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+    <appSettings>
+        <!-- Start Chrome Maximised - true or false -->
+        <add key="ChromeDriver.Maximise" value="false" />
+        <!-- Use a RemoteDriver - false or RemoteDriver location e.g. "http://10.10.122.86:9515" -->
+        <!-- <add key="RemoteDriver" value="http://10.10.122.86:9515" /> -->
+        <add key="RemoteDriver" value="false" />
+        <!-- Start chrome with specified language e.g. en-GB-->
+        <!-- You should manually un-comment this and set to your required value to avoid unexpected consequences on nuget upgrade -->
+        <!-- <add key="ChromeDriver.language" value="en-US" /> -->
+        <!-- Webdriver (feature) logging - false, true or verbose-->
+        <add key="ChromeDriver.Logging" value="false" />
+        <!-- Chromedriver performance logging - true or false-->
+        <add key="ChromeDriver.PerfLogging" value="false" />
+        <!-- Capture screen at end of test - false, true (always) or fail (on failure only) -->
+        <add key="ChromeDriver.Screenshot" value="fail" />
+        <!-- Fallback location for server / TFS agent runs of the tests -->
+        <add key="ChromeDriver.Screenshot.ServerPath" value="C:\Screenshots\" />
+        <!-- Url to upload performance log to - false or a Url e.g "https://s01t2wptsvr001.blackbaudqa.net" -->
+        <!-- Note that Setting a WebPageTestUrl will implicitly set Performance logging and Screenshot to true -->
+        <add key="ChromeDriver.WebPageTestUrl" value="false" />
+        <!-- Credentials for performance log upload - "domain\usernamme:password" or empty for no authentication -->
+        <add key="ChromeDriver.WebPageTestCredentials" value="" />
+        <!-- Chromedriver Mobile emulation https://developer.chrome.com/devtools/docs/device-mode - false or device to emulate e.g."Apple iPhone 6" -->
+        <add key="ChromeDriver.MobileEmulationDevice" value="false" />
+    </appSettings>
+    <specFlow>
+        <unitTestProvider name="BBTest" />
+        <plugins>
+        </plugins>
+    </specFlow>
+</configuration>

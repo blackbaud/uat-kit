@@ -1,16 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using Blackbaud.UAT.Base;
-using Blackbaud.UAT.Core.Base;
-using Blackbaud.UAT.Core.Crm;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
-//using Oxford.UAT.Crm;
 using TechTalk.SpecFlow;
-using System.Configuration;
-using System.Globalization;
-using System.Threading;
-using TechTalk.SpecFlow.Assist;
 using System.Linq;
 
 namespace SystemTest.Common.Bbis

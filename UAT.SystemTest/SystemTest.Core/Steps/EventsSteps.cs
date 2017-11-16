@@ -2,10 +2,8 @@
 using Blackbaud.UAT.Base;
 using Blackbaud.UAT.Core.Base;
 using Blackbaud.UAT.Core.Crm;
-using OpenQA.Selenium;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
-using SpecFlow.Assist.Dynamic;
 using SystemTest.Common;
 using System.Collections.Generic;
 using System.Linq;
@@ -62,7 +60,7 @@ namespace SystemTest.Core.Steps
                 }
                 catch
                 {
-                    //eat and move on
+                    //eat exception
                 }
                 //check is visible
                 BaseComponent.GetEnabledElement(XpathHelper.xPath.VisibleBlock + "//span[text()='Add an event']");
@@ -439,7 +437,7 @@ namespace SystemTest.Core.Steps
             BBCRMHomePage.OpenEventsFA();
             try
             {
-                Panel.WaitClick("//input[@placeholder='Enter the name of an event']/../span/img", 5); //use this for the timeout
+                Panel.WaitClick(XpathHelper.xPath.VisiblePanel + "//input[@placeholder='Enter the name of an event']/../span/img", 5); //use this for the timeout
             }
             catch
             {
@@ -452,6 +450,7 @@ namespace SystemTest.Core.Steps
                 FunctionalArea.OpenLink("Fundraising events", "Event search");
             }
 
+            //GetEventPanel(EventName);
             BaseComponent.SetTextField("//div[contains(@style,'visible')]//input[contains(@id,'_NAME_value')]", EventName);
             SearchDialog.Search();
             SearchDialog.SelectFirstResult();
@@ -569,6 +568,7 @@ namespace SystemTest.Core.Steps
                 BBCRMHomePage.OpenEventsFA();
                 //Panel.CollapseSection("Event calendar", "CalendarViewForm"); // this causes an issues sometimes?
                 FunctionalArea.OpenLink("Fundraising events", "Event search");
+                //Panel.WaitClick("//button[not(contains(@class,'actiongroup-tooltip-header'))]/div[./text()='Event search']");
                 BaseComponent.SetTextField("//div[contains(@style,'visible')]//input[contains(@id,'_NAME_value')]", eventName);
                 SearchDialog.Search();
                 SearchDialog.SelectFirstResult();
