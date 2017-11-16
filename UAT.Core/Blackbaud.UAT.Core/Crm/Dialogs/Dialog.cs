@@ -484,7 +484,7 @@ namespace Blackbaud.UAT.Core.Crm.Dialogs
         /// <param name="value">The value to set the dropdown to.</param>
         public static void SetDropDown(string xPath, string value = "")
         {
-            WaitClick(xPath); 
+            WaitClick(xPath);
 
             var waiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(TimeoutSecs));
             waiter.IgnoreExceptionTypes(typeof(InvalidOperationException), typeof(StaleElementReferenceException));
@@ -575,7 +575,8 @@ namespace Blackbaud.UAT.Core.Crm.Dialogs
         /// <param name="xPath">The xPath of the grid cell TD element.</param>
         /// <param name="searchDialogxPath">The xPath of the search dialog's field to set.</param>
         /// <param name="value">The value to set and use as search criteria in the specified search dialog field.</param>
-        public static void SetGridSearchList(string xPath, string searchDialogxPath, string value){
+        public static void SetGridSearchList(string xPath, string searchDialogxPath, string value)
+        {
             var clickedWaiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(TimeoutSecs));
             clickedWaiter.IgnoreExceptionTypes(typeof(StaleElementReferenceException));
             clickedWaiter.Until(d1 =>
@@ -626,7 +627,7 @@ namespace Blackbaud.UAT.Core.Crm.Dialogs
                 //The value you search for may not be the associated display value of the selected item...
                 var originalField = d.FindElement(By.XPath(xPath));
                 if (originalField.Displayed &&
-                    (!String.IsNullOrWhiteSpace(originalField.Text) || !String.IsNullOrWhiteSpace(originalField.GetAttribute("value")))) 
+                    (!String.IsNullOrWhiteSpace(originalField.Text) || !String.IsNullOrWhiteSpace(originalField.GetAttribute("value"))))
                     return true;
 
                 try
@@ -776,7 +777,22 @@ namespace Blackbaud.UAT.Core.Crm.Dialogs
         /// <param name="value">The value to set the cell to.</param>
         public static void SetGridTextField(string xPath, string value = "")
         {
-            if (value == null) return;
+            SetGridField(xPath, value, false);
+        }
+
+        /// <summary>
+        /// Set a Grid cell's value for a Code Table field.
+        /// </summary>
+        /// <param name="xPath">The xPath of the grid cell TD element.</param>
+        /// <param name="value">The value to set the cell to.</param>
+        public static void SetGridCodeTableField(string xPath, string value = "")
+        {
+            SetGridField(xPath, value, true);
+        }
+
+        private static void SetGridField(string xPath, string value, bool isCodeTableField)
+        {
+            if (string.IsNullOrEmpty(value)) return;
 
             var setWaiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(TimeoutSecs));
             setWaiter.Until(d =>
@@ -827,7 +843,7 @@ namespace Blackbaud.UAT.Core.Crm.Dialogs
                     {
                         var element = d3.FindElement(By.XPath(getXGridEditCell));
                         if (element != null && element.Displayed && element.Enabled
-                            && ((element.Text != null && element.Text.Contains(value)) || (element.GetAttribute("value") != null && element.GetAttribute("value").Contains(value)) ))
+                            && ((element.Text != null && element.Text.Contains(value)) || (element.GetAttribute("value") != null && element.GetAttribute("value").Contains(value))))
                         {
                             element.SendKeys(Keys.Return);
                             return true;
@@ -835,7 +851,18 @@ namespace Blackbaud.UAT.Core.Crm.Dialogs
                         return false;
                     });
 
-                    //ensure the original grid value has been set before continuing
+
+                    if (isCodeTableField)
+                    {
+                        // if this is a code table entry we need to (possibly) deal with the yes/no popup
+                        try
+                        {
+                            Dialog.WaitClick("//button[./text()='Yes']", 5);
+                        }
+                        catch {/* nothing means pop up not spawned */}
+                    }
+
+                    // ensure the original grid value has been set before continuing
                     ElementValueIsSet(xPath, value);
                 }
                 catch (WebDriverTimeoutException) { return false; }
@@ -1045,7 +1072,7 @@ namespace Blackbaud.UAT.Core.Crm.Dialogs
         /// needed to set the field's value.</param>
         /// <param name="customSupportedFields">Mapping of field captions to to a CrmField oject encapsulating
         /// all relevant variables.  Field in the supportedFields mapping can be overridden by including them in this mapping.</param>
-        public static void SetFields(string dialogId, TableRow fields, IDictionary<string, CrmField> supportedFields, 
+        public static void SetFields(string dialogId, TableRow fields, IDictionary<string, CrmField> supportedFields,
             IDictionary<string, CrmField> customSupportedFields)
         {
             foreach (var caption in fields.Keys)
@@ -1091,7 +1118,7 @@ namespace Blackbaud.UAT.Core.Crm.Dialogs
                         SetGridDropDown(cellxPath, value);
                         break;
                     case FieldType.Searchlist:
-                        SetGridSearchList(cellxPath, getXInput(crmField.SearchDialogId,crmField.SearchDialogFieldId), value);
+                        SetGridSearchList(cellxPath, getXInput(crmField.SearchDialogId, crmField.SearchDialogFieldId), value);
                         break;
                     case FieldType.TextInput:
                         SetGridTextField(cellxPath, value);
@@ -1116,7 +1143,7 @@ namespace Blackbaud.UAT.Core.Crm.Dialogs
         /// <param name="customSupportedFields">Mapping of field captions to a CrmField oject encapsulating
         /// all relevant variables.  Field in the supportedFields mapping can be overridden by including them in this mapping.</param>
         public static void SetGridRow(string dialogId, string gridId, TableRow row, int rowIndex,
-            IDictionary<string, int> columnCaptionToIndex, IDictionary<string, CrmField> supportedFields, 
+            IDictionary<string, int> columnCaptionToIndex, IDictionary<string, CrmField> supportedFields,
             IDictionary<string, CrmField> customSupportedFields)
         {
             foreach (var caption in row.Keys)

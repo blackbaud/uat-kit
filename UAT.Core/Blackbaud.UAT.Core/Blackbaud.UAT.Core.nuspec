@@ -1,30 +1,30 @@
 ﻿<?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
-  <metadata>
-    <id>Blackbaud.UAT.Core</id>
-    <version>1.0.0</version>
-    <title>Blackbaud UAT Core Classes</title>
-    <authors>Blackbaud</authors>
-    <owners>Blackbaud</owners>
-    <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <licenseUrl>http://developer.blackbaud.com/LICENSE/</licenseUrl>
-    <iconUrl>https://avatars2.githubusercontent.com/u/1738029?v=3&amp;s=200</iconUrl>
-    <summary>Library providing gui access methods for automated web ui tests of BBCRM and BBIS using Selenium and SpecFlow</summary>
-    <description>
-      Blackbaud UAT KIT Core SDK Classes.
-    </description>
-    <tags>Blackbaud UAT Selenium MSTest NUnit SpecFlow Gherkin </tags>
-    <frameworkAssemblies>
-      <frameworkAssembly assemblyName="System.Configuration"  /> 
-    </frameworkAssemblies>
-    <dependencies>
-      <dependency id="SpecFlow" version="2.0.0" />
-      <dependency id="Selenium.Support" version="2.53.1" />
-    </dependencies>
-  </metadata>
-  <files>
-    <file src="Blackbaud.UAT.Core.dll" target="lib\net45" />
-    <file src="Blackbaud.UAT.Core.XML" target="lib\net45"/>
-    <file src="License.txt" target="lib\net45"/>
-  </files>
+    <metadata>
+        <id>Blackbaud.UAT.Core</id>
+        <version>1.0.0</version>
+        <title>Blackbaud UAT Core Classes</title>
+        <authors>Blackbaud</authors>
+        <owners>Blackbaud</owners>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <licenseUrl>http://developer.blackbaud.com/LICENSE/</licenseUrl>
+        <iconUrl>https://avatars2.githubusercontent.com/u/1738029?v=3&amp;s=200</iconUrl>
+        <summary>Library providing gui access methods for automated web ui tests of BBCRM and BBIS using Selenium and SpecFlow</summary>
+        <description>
+            Blackbaud UAT KIT Core SDK Classes.
+        </description>
+        <tags>Blackbaud UAT Selenium MSTest NUnit SpecFlow Gherkin</tags>
+        <frameworkAssemblies>
+            <frameworkAssembly assemblyName="System.Configuration"  />
+        </frameworkAssemblies>
+        <dependencies>
+            <dependency id="SpecFlow" version="2.0.0" />
+            <dependency id="Selenium.Support" version="2.53.1" />
+        </dependencies>
+    </metadata>
+    <files>
+        <file src="bin\Blackbaud.UAT.Core.dll" target="lib\net45" />
+        <file src="bin\Blackbaud.UAT.Core.XML" target="lib\net45"/>
+        <file src="License.txt" target="lib\net45"/>
+    </files>
 </package>

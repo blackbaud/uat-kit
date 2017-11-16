@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Blackbaud.UAT.Core</RootNamespace>
     <AssemblyName>Blackbaud.UAT.Core</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
@@ -34,12 +34,12 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\release\</OutputPath>
+    <OutputPath>bin\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
-    <DocumentationFile>bin\release\Blackbaud.UAT.Core.XML</DocumentationFile>
+    <DocumentationFile>bin\Blackbaud.UAT.Core.XML</DocumentationFile>
     <NoWarn>CS1591</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
@@ -95,9 +95,13 @@
   <ItemGroup>
     <Compile Include="Base\BaseComponent.cs" />
     <Compile Include="Base\BaseSteps.cs" />
+    <Compile Include="Crm\Dialogs\Batch\ConstituentBatchDialog.cs" />
+    <Compile Include="Crm\Dialogs\Batch\ConstituentUpdateBatchDialog.cs" />
+    <Compile Include="Crm\Dialogs\Batch\GenericBatchFunctions.cs" />
     <Compile Include="Crm\Dialogs\CommitmentsDialog.cs" />
     <Compile Include="Crm\Dialogs\DesignationsDialog.cs" />
     <Compile Include="Crm\Dialogs\EventDialog.cs" />
+    <Compile Include="Crm\Dialogs\ExportDefinitionDialog.cs" />
     <Compile Include="Crm\Dialogs\PledgeDialog.cs" />
     <Compile Include="Crm\Dialogs\AddMembershipProgramDialog.cs" />
     <Compile Include="Crm\Dialogs\Batch\BatchDialog.cs" />
@@ -160,7 +164,9 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Blackbaud.UAT.Core.nuspec" />
+    <None Include="Blackbaud.UAT.Core.nuspec">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
@@ -190,7 +196,8 @@
   </Target>
   -->
   <PropertyGroup>
-    <PreBuildEvent>$(SolutionDir).nuget\nuget.exe restore $(SolutionPath) -source "http://tfs-sym.blackbaud.com/nuget;https://www.nuget.org/api/v2"</PreBuildEvent>
+    <PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

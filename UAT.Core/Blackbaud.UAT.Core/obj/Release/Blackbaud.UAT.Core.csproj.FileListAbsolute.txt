@@ -1,0 +1,16 @@
+C:\Users\Ross.Thomson\Source\Repos\uat-kit\UAT.Core\Blackbaud.UAT.Core\bin\License.txt
+C:\Users\Ross.Thomson\Source\Repos\uat-kit\UAT.Core\Blackbaud.UAT.Core\bin\Blackbaud.UAT.Core.dll.config
+C:\Users\Ross.Thomson\Source\Repos\uat-kit\UAT.Core\Blackbaud.UAT.Core\bin\Blackbaud.UAT.Core.XML
+C:\Users\Ross.Thomson\Source\Repos\uat-kit\UAT.Core\Blackbaud.UAT.Core\bin\Blackbaud.UAT.Core.dll
+C:\Users\Ross.Thomson\Source\Repos\uat-kit\UAT.Core\Blackbaud.UAT.Core\bin\Blackbaud.UAT.Core.pdb
+C:\Users\Ross.Thomson\Source\Repos\uat-kit\UAT.Core\Blackbaud.UAT.Core\bin\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
+C:\Users\Ross.Thomson\Source\Repos\uat-kit\UAT.Core\Blackbaud.UAT.Core\bin\Newtonsoft.Json.dll
+C:\Users\Ross.Thomson\Source\Repos\uat-kit\UAT.Core\Blackbaud.UAT.Core\bin\TechTalk.SpecFlow.dll
+C:\Users\Ross.Thomson\Source\Repos\uat-kit\UAT.Core\Blackbaud.UAT.Core\bin\WebDriver.dll
+C:\Users\Ross.Thomson\Source\Repos\uat-kit\UAT.Core\Blackbaud.UAT.Core\bin\WebDriver.Support.dll
+C:\Users\Ross.Thomson\Source\Repos\uat-kit\UAT.Core\Blackbaud.UAT.Core\bin\Newtonsoft.Json.xml
+C:\Users\Ross.Thomson\Source\Repos\uat-kit\UAT.Core\Blackbaud.UAT.Core\bin\WebDriver.xml
+C:\Users\Ross.Thomson\Source\Repos\uat-kit\UAT.Core\Blackbaud.UAT.Core\bin\WebDriver.Support.xml
+C:\Users\Ross.Thomson\Source\Repos\uat-kit\UAT.Core\Blackbaud.UAT.Core\obj\Release\Blackbaud.UAT.Core.csprojResolveAssemblyReference.cache
+C:\Users\Ross.Thomson\Source\Repos\uat-kit\UAT.Core\Blackbaud.UAT.Core\obj\Release\Blackbaud.UAT.Core.dll
+C:\Users\Ross.Thomson\Source\Repos\uat-kit\UAT.Core\Blackbaud.UAT.Core\obj\Release\Blackbaud.UAT.Core.pdb
