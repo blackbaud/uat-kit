@@ -1,0 +1,5 @@
+Tested with:
+
+BBCRM 4.0 SP12
+Chrome 56.0.2924.87 (64-bit)
+ChromeDriver 2.24.417431

@@ -49,7 +49,7 @@ namespace BlackbaudDemo40.CRMSteps
         public void WhenEditTheSelectedConstituent(Table fieldMappings)
         {
             if (fieldMappings.RowCount != 1) throw new ArgumentException("Only provide 1 row of field values");
-            BatchDialog.EditConstituent(fieldMappings.Rows[0]);
+            EnhancedRevenueBatchDialog.EditConstituent(fieldMappings.Rows[0]);
             IndividualDialog.Save();
         }
 

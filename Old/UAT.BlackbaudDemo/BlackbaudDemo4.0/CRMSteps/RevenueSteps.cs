@@ -104,7 +104,7 @@ namespace BlackbaudDemo40.CRMSteps
                     batchRow["Constituent"] != string.Empty)
                     batchRow["Constituent"] += uniqueStamp;
             }
-            BatchDialog.SetGridRows(batchRows);
+            EnhancedRevenueBatchDialog.SetGridRows(batchRows);
             Dialog.WaitClick("//button[./text()='Update projected totals']");
             Dialog.WaitClick("//button[./text()='OK']");
             BatchDialog.Validate();
@@ -164,7 +164,7 @@ namespace BlackbaudDemo40.CRMSteps
                     batchRow["Constituent"] != string.Empty)
                     batchRow["Constituent"] += uniqueStamp;
             }
-            BatchDialog.SetGridRows(batchRows);
+            EnhancedRevenueBatchDialog.SetGridRows(batchRows);
             EnhancedRevenueBatchDialog.UpdateProjectedTotals();
         }
 
@@ -177,7 +177,7 @@ namespace BlackbaudDemo40.CRMSteps
         [Then(@"the '(.*)' cell value is '(.*)' for row (.*)")]
         public void ThenTheCellValueIsForRow(string caption, string value, int rowNumber)
         {
-            if (BatchDialog.GetGridCellValue(caption, rowNumber) != value)
+            if (EnhancedRevenueBatchDialog.GetGridCellValue(caption, rowNumber) != value)
                 throw new Exception(String.Format("Row '{0}', column '{1}' does not have the value '{2}'",
                     rowNumber, caption, value));
         }
@@ -285,7 +285,7 @@ namespace BlackbaudDemo40.CRMSteps
         [When(@"set the revenue type for row (.*) to ""(.*)""")]
         public void WhenSetTheRevenueTypeForRowTo(int rowIndex, string paymentMethod)
         {
-            BatchDialog.SetGridCell("Revenue type", paymentMethod, rowIndex);
+            EnhancedRevenueBatchDialog.SetGridCell("Revenue type", paymentMethod, rowIndex);
         }
 
         [When(@"auto apply the payment")]
