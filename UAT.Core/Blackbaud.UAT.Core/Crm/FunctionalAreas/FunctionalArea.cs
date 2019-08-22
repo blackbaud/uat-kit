@@ -85,7 +85,7 @@ namespace Blackbaud.UAT.Core.Crm
         public static void OpenLinkToPanel(string groupCaption, string linkCaption, string headerText)
         {
             var navigateWaiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(TimeoutSecs));
-            navigateWaiter.IgnoreExceptionTypes(typeof(InvalidOperationException), typeof(StaleElementReferenceException));
+            navigateWaiter.IgnoreExceptionTypes(typeof(InvalidOperationException), typeof(StaleElementReferenceException), typeof(ElementClickInterceptedException));
             navigateWaiter.Until(d =>
             {
                 var panelHeader = d.FindElement(By.XPath(Panel.getXPanelHeader()));

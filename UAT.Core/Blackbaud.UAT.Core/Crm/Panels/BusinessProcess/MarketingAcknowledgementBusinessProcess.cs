@@ -36,7 +36,7 @@ namespace Blackbaud.UAT.Core.Crm
             /*
              * Could also do...
             WebDriverWait waiter = new WebDriverWait(driver, TimeSpan.FromSeconds(timeout_secs));
-            waiter.IgnoreExceptionTypes(typeof(InvalidOperationException), typeof(StaleElementReferenceException));
+            waiter.IgnoreExceptionTypes(typeof(InvalidOperationException), typeof(StaleElementReferenceException), typeof(ElementClickInterceptedException));
             try
             {
                 waiter.Until(d =>

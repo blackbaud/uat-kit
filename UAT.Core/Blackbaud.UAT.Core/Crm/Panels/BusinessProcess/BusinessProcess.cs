@@ -39,7 +39,7 @@ namespace Blackbaud.UAT.Core.Crm
         public static bool IsCompleted(int timeout)
         {
             WebDriverWait waiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(TimeoutSecs));
-            waiter.IgnoreExceptionTypes(typeof(InvalidOperationException), typeof(StaleElementReferenceException));
+            waiter.IgnoreExceptionTypes(typeof(InvalidOperationException), typeof(StaleElementReferenceException), typeof(ElementClickInterceptedException));
             try
             {
                 waiter.Until(d =>

@@ -109,7 +109,7 @@ namespace Blackbaud.UAT.Base
         {
             if ((int)secondsToWait == -1) secondsToWait = TimeoutSecs;
             var waiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(secondsToWait));
-            waiter.IgnoreExceptionTypes(typeof(InvalidOperationException), typeof(StaleElementReferenceException));
+            waiter.IgnoreExceptionTypes(typeof(InvalidOperationException), typeof(StaleElementReferenceException), typeof(ElementClickInterceptedException));
             waiter.Until(d =>
             {
                 var element = d.FindElement(By.XPath(xPath));
@@ -130,7 +130,7 @@ namespace Blackbaud.UAT.Base
             if ((int)secondsToWait == -1) secondsToWait = TimeoutSecs;
 
             var waiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(secondsToWait));
-            waiter.IgnoreExceptionTypes(typeof(InvalidOperationException), typeof(StaleElementReferenceException));
+            waiter.IgnoreExceptionTypes(typeof(InvalidOperationException), typeof(StaleElementReferenceException), typeof(ElementClickInterceptedException));
             waiter.Until(d =>
             {
                 var element = d.FindElement(By.XPath(xPath));
@@ -171,7 +171,7 @@ namespace Blackbaud.UAT.Base
         {
             if ((int)secondsToWait == -1) secondsToWait = TimeoutSecs;
             var waiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(secondsToWait));
-            waiter.IgnoreExceptionTypes(typeof(InvalidOperationException), typeof(StaleElementReferenceException));
+            waiter.IgnoreExceptionTypes(typeof(InvalidOperationException), typeof(StaleElementReferenceException), typeof(ElementClickInterceptedException));
             try
             {
                 return waiter.Until(d =>
@@ -196,8 +196,7 @@ namespace Blackbaud.UAT.Base
         {
             if ((int)waitTime == -1) waitTime = TimeoutSecs;
             var waiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(waitTime));
-            waiter.IgnoreExceptionTypes(typeof(InvalidOperationException));
-            waiter.IgnoreExceptionTypes(typeof(StaleElementReferenceException));
+            waiter.IgnoreExceptionTypes(typeof(InvalidOperationException), typeof(StaleElementReferenceException), typeof(ElementClickInterceptedException));
             IWebElement currentElement = null;
             try
             {
@@ -246,8 +245,7 @@ namespace Blackbaud.UAT.Base
         public static int GetDatalistColumnIndex(string headersxPath, string columnCaption)
         {
             var waiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(TimeoutSecs));
-            waiter.IgnoreExceptionTypes(typeof(InvalidOperationException));
-            waiter.IgnoreExceptionTypes(typeof(StaleElementReferenceException));
+            waiter.IgnoreExceptionTypes(typeof(InvalidOperationException), typeof(StaleElementReferenceException), typeof(ElementClickInterceptedException));
             var columnIndex = -1;
 
             waiter.Until(d =>
@@ -283,7 +281,7 @@ namespace Blackbaud.UAT.Base
         {
             if ((int)waitTime == -1) waitTime = TimeoutSecs;
             var waiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(waitTime));
-            waiter.IgnoreExceptionTypes(typeof(InvalidOperationException), typeof(StaleElementReferenceException));
+            waiter.IgnoreExceptionTypes(typeof(InvalidOperationException), typeof(StaleElementReferenceException), typeof(ElementClickInterceptedException));
             IWebElement currentElement = null;
             try
             {
@@ -327,7 +325,7 @@ namespace Blackbaud.UAT.Base
         public static void WaitClick(string xPath, double timeout)
         {
             var waiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(timeout));
-            waiter.IgnoreExceptionTypes(typeof(InvalidOperationException), typeof(StaleElementReferenceException));
+            waiter.IgnoreExceptionTypes(typeof(InvalidOperationException), typeof(StaleElementReferenceException), typeof(ElementClickInterceptedException));
             waiter.Until(d =>
             {
                 var element = Driver.FindElement(By.XPath(xPath));
@@ -349,7 +347,7 @@ namespace Blackbaud.UAT.Base
         {
             Actions act = new Actions(Driver);
             var waiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(timeout));
-            waiter.IgnoreExceptionTypes(typeof(InvalidOperationException), typeof(StaleElementReferenceException));
+            waiter.IgnoreExceptionTypes(typeof(InvalidOperationException), typeof(StaleElementReferenceException), typeof(ElementClickInterceptedException));
             waiter.Until(d =>
             {
                 var element = Driver.FindElement(By.XPath(xPath));
@@ -374,7 +372,7 @@ namespace Blackbaud.UAT.Base
         {
             Actions act = new Actions(Driver);
             var waiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(timeout));
-            waiter.IgnoreExceptionTypes(typeof(InvalidOperationException), typeof(StaleElementReferenceException));
+            waiter.IgnoreExceptionTypes(typeof(InvalidOperationException), typeof(StaleElementReferenceException), typeof(ElementClickInterceptedException));
             waiter.Until(d =>
             {
                 var element = Driver.FindElement(By.XPath(xPath));
@@ -440,7 +438,7 @@ namespace Blackbaud.UAT.Base
             if (value == null) return;
 
             var waiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(TimeoutSecs));
-            waiter.IgnoreExceptionTypes(typeof(InvalidOperationException));
+            waiter.IgnoreExceptionTypes(typeof(InvalidOperationException), typeof(ElementClickInterceptedException));
             //removed element from being a public field and moved to scope of method
             waiter.Until(d =>
             {
@@ -453,7 +451,7 @@ namespace Blackbaud.UAT.Base
                 fieldElement.Click();
 
                 var innerwaiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(10));
-                innerwaiter.IgnoreExceptionTypes(typeof(InvalidOperationException));
+                innerwaiter.IgnoreExceptionTypes(typeof(InvalidOperationException), typeof(ElementClickInterceptedException));
                 try
                 {
                     innerwaiter.Until(dd =>
@@ -505,7 +503,7 @@ namespace Blackbaud.UAT.Base
             if (value == null) return;
 
             var waiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(TimeoutSecs));
-            waiter.IgnoreExceptionTypes(typeof(InvalidOperationException));
+            waiter.IgnoreExceptionTypes(typeof(InvalidOperationException), typeof(ElementClickInterceptedException));
 
             waiter.Until(d =>
             {
@@ -518,7 +516,7 @@ namespace Blackbaud.UAT.Base
                 fieldElement.Click();
 
                 var innerwaiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(10));
-                innerwaiter.IgnoreExceptionTypes(typeof(InvalidOperationException));
+                innerwaiter.IgnoreExceptionTypes(typeof(InvalidOperationException), typeof(ElementClickInterceptedException));
 
                 fieldElement.SendKeys(Keys.Control + "a");
 

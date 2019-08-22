@@ -663,7 +663,7 @@ namespace Blackbaud.UAT.Core.Crm.Panels
                 //retry logic.  wait until the clicked tab is actually selected.
                 //can sometimes click it too fast and then no tab load occurs
                 WebDriverWait waiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(TimeoutSecs));
-                waiter.IgnoreExceptionTypes(typeof(InvalidOperationException));
+                waiter.IgnoreExceptionTypes(typeof(InvalidOperationException), typeof(ElementClickInterceptedException));
                 waiter.Until(d =>
                 {
                     WaitClick(getXTab(caption));
@@ -754,7 +754,7 @@ namespace Blackbaud.UAT.Core.Crm.Panels
         public static void WaitForPanelHeaderNotContain(string header)
         {
             var waiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(TimeoutSecs));
-            waiter.IgnoreExceptionTypes(typeof(InvalidOperationException), typeof(StaleElementReferenceException));
+            waiter.IgnoreExceptionTypes(typeof(InvalidOperationException), typeof(StaleElementReferenceException), typeof(ElementClickInterceptedException));
             waiter.Until(d =>
             {
                 var panelHeader = GetDisplayedElement(getXPanelHeader());
@@ -768,7 +768,7 @@ namespace Blackbaud.UAT.Core.Crm.Panels
         public static void ExpandRow(string XPath)
         {
             var waiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(TimeoutSecs));
-            waiter.IgnoreExceptionTypes(typeof(InvalidOperationException), typeof(StaleElementReferenceException));
+            waiter.IgnoreExceptionTypes(typeof(InvalidOperationException), typeof(StaleElementReferenceException), typeof(ElementClickInterceptedException));
             waiter.Until(d =>
             {
                 var expandButton = GetEnabledElement(XPath + "//button[contains(@class,'bbui-pages-section-expandbutton')]");
@@ -788,7 +788,7 @@ namespace Blackbaud.UAT.Core.Crm.Panels
         public static bool AdditionalDatalistPagesExist(string sectionCaption)
         {
             WebDriverWait waiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(1));
-            waiter.IgnoreExceptionTypes(typeof(InvalidOperationException), typeof(StaleElementReferenceException));
+            waiter.IgnoreExceptionTypes(typeof(InvalidOperationException), typeof(StaleElementReferenceException), typeof(ElementClickInterceptedException));
             bool additionalPage = false;
 
             //get current datalist page number
@@ -827,7 +827,7 @@ namespace Blackbaud.UAT.Core.Crm.Panels
                             button.Click();
                             //wait until the current page index is the next page
                             WebDriverWait innerWaiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(TimeoutSecs));
-                            innerWaiter.IgnoreExceptionTypes(typeof(InvalidOperationException), typeof(StaleElementReferenceException));
+                            innerWaiter.IgnoreExceptionTypes(typeof(InvalidOperationException), typeof(StaleElementReferenceException), typeof(ElementClickInterceptedException));
                             innerWaiter.Until(dd =>
                             {
                                 IWebElement currentIndex = d.FindElement(By.XPath(getXSectionDatalistCurrentPageIndex(sectionCaption)));
@@ -874,7 +874,7 @@ namespace Blackbaud.UAT.Core.Crm.Panels
         public static void CheckGridResultsContain(string expected, string XnameField = getXEventSearchResultsGridNameFields, string XresultsBar = getxEventSearchResultsBar,string resultsBarText = "found", string XresultsGrid = getXSearchResultsGrid)
         {
             var waiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(20));
-            waiter.IgnoreExceptionTypes(typeof(InvalidOperationException));
+            waiter.IgnoreExceptionTypes(typeof(InvalidOperationException), typeof(ElementClickInterceptedException));
             ICollection<IWebElement> nameFieldElements = new Collection<IWebElement>();
             waiter.Until(d =>
             {

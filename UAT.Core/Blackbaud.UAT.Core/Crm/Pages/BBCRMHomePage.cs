@@ -185,7 +185,7 @@ namespace Blackbaud.UAT.Core.Crm
         public static void OpenFunctionalArea(string caption, string imageName)
         {
             WebDriverWait navigateWaiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(TimeoutSecs));
-            navigateWaiter.IgnoreExceptionTypes(typeof(InvalidOperationException));
+            navigateWaiter.IgnoreExceptionTypes(typeof(InvalidOperationException), typeof(ElementClickInterceptedException));
             navigateWaiter.Until(d =>
             {
                 try
@@ -218,12 +218,12 @@ namespace Blackbaud.UAT.Core.Crm
             else
             {
                 WebDriverWait navigateWaiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(TimeoutSecs));
-                navigateWaiter.IgnoreExceptionTypes(typeof(InvalidOperationException));
+                navigateWaiter.IgnoreExceptionTypes(typeof(InvalidOperationException), typeof(ElementClickInterceptedException));
                 //retry logic
                 navigateWaiter.Until(d1 =>
                 {
                     WebDriverWait clickWaiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(10));
-                    clickWaiter.IgnoreExceptionTypes(typeof(InvalidOperationException));
+                    clickWaiter.IgnoreExceptionTypes(typeof(InvalidOperationException), typeof(ElementClickInterceptedException));
                     try
                     {
                         clickWaiter.Until(d2 =>

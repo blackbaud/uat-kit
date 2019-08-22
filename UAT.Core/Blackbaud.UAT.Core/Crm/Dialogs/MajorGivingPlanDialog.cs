@@ -203,14 +203,14 @@ namespace Blackbaud.UAT.Core.Crm.Dialogs
             if (value == null) return;
 
             var waiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(TimeoutSecs));
-            waiter.IgnoreExceptionTypes(typeof(InvalidOperationException));
+            waiter.IgnoreExceptionTypes(typeof(InvalidOperationException), typeof(ElementClickInterceptedException));
             //removed element from being a public field and moved to scope of method
             waiter.Until(d =>
             {
                 CopyToClipBoard(value);
 
                 var innerwaiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(10));
-                innerwaiter.IgnoreExceptionTypes(typeof(InvalidOperationException));
+                innerwaiter.IgnoreExceptionTypes(typeof(InvalidOperationException), typeof(ElementClickInterceptedException));
                 try
                 {
                     innerwaiter.Until(d1 =>

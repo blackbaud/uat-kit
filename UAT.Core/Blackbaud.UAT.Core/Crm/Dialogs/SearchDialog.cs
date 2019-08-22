@@ -131,7 +131,7 @@ namespace Blackbaud.UAT.Core.Crm.Dialogs
         public static void SelectFirstResult()
         {
             var waiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(TimeoutSecs));
-            waiter.IgnoreExceptionTypes(typeof(InvalidOperationException), typeof(StaleElementReferenceException));
+            waiter.IgnoreExceptionTypes(typeof(InvalidOperationException), typeof(StaleElementReferenceException), typeof(ElementClickInterceptedException));
             try
             {
                 waiter.Until(d =>
@@ -174,7 +174,7 @@ namespace Blackbaud.UAT.Core.Crm.Dialogs
         public static void CheckConstituentSearchResultsContain(string expected)
         {
             var waiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(TimeoutSecs));
-            waiter.IgnoreExceptionTypes(typeof(InvalidOperationException));
+            waiter.IgnoreExceptionTypes(typeof(InvalidOperationException), typeof(ElementClickInterceptedException));
             ICollection<IWebElement> nameFieldElements = new Collection<IWebElement>();
             waiter.Until(d => 
                 {

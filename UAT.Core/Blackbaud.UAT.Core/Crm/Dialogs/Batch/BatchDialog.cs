@@ -39,7 +39,7 @@ namespace Blackbaud.UAT.Core.Crm.Dialogs
             int columnIndex = -1;
 
             var waiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(TimeoutSecs));
-            waiter.IgnoreExceptionTypes(typeof(InvalidOperationException), typeof(StaleElementReferenceException));
+            waiter.IgnoreExceptionTypes(typeof(InvalidOperationException), typeof(StaleElementReferenceException), typeof(ElementClickInterceptedException));
             waiter.Until(d =>
             {
                 IWebElement headersRow = GetDisplayedElement(getXBatchGridHeaders, TimeoutSecs);

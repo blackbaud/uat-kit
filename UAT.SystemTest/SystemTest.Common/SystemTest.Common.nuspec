@@ -1,22 +1,23 @@
 <?xml version="1.0"?>
 <package >
-    <metadata>
-        <id>SystemTest.Common</id>
-        <version>1.0.0</version>
-        <title>Blackbaud UAT Kit Common Helpers</title>
-        <authors>Blackbaud</authors>
-        <owners>Blackbaud</owners>
-        <requireLicenseAcceptance>false</requireLicenseAcceptance>
-        <licenseUrl>http://developer.blackbaud.com/LICENSE/</licenseUrl>
-        <iconUrl>https://avatars2.githubusercontent.com/u/1738029?v=3&amp;s=200</iconUrl>
-        <description>Common system testing functionality for the Blackbaud UAT Kit</description>
-        <copyright>Blackbaud</copyright>
-        <tags>Blackbaud UAT Selenium MSTest NUnit SpecFlow Gherkin</tags>
-        <dependencies>
-            <dependency id="SpecFlow" version="2.0.0" />
-            <dependency id="Selenium.Support" version="2.53.1" />
-            <dependency id="Blackbaud.UAT.Core" version="1.0.1304.1" />
-            <dependency id="SpecFlow.Assist.Dynamic" version="1.1.0" />
-        </dependencies>
-    </metadata>
+  <metadata>
+    <id>SystemTest.Common</id>
+    <version>1.0.0</version>
+    <title>Blackbaud UAT Kit Common Helpers</title>
+    <authors>Blackbaud</authors>
+    <owners>Blackbaud</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <licenseUrl>http://developer.blackbaud.com/LICENSE/</licenseUrl>
+    <iconUrl>https://avatars2.githubusercontent.com/u/1738029?v=3&amp;s=200</iconUrl>
+    <description>Common system testing functionality for the Blackbaud UAT Kit</description>
+    <copyright>Blackbaud</copyright>
+    <tags>Blackbaud UAT Selenium MSTest NUnit SpecFlow Gherkin</tags>
+    <dependencies>
+      <dependency id="SpecFlow" version="2.4.1" />
+      <dependency id="Selenium.WebDriver" version="3.141.0" />
+      <dependency id="Selenium.Support" version="3.141.0" />
+      <dependency id="Blackbaud.UAT.Core" version="1.0.20190821.1" />
+      <dependency id="SpecFlow.Assist.Dynamic" version="1.3.1" />
+    </dependencies>
+  </metadata>
 </package>

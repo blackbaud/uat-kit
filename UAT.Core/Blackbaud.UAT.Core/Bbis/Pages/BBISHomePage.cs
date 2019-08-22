@@ -119,7 +119,7 @@ namespace Blackbaud.UAT.Core.Bbis.Pages
             IWebElement filterByNameFieldElement = Driver.FindElement(By.XPath(getXFilterByNameField));
 
             WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(TimeoutSecs));
-            wait.IgnoreExceptionTypes(typeof(InvalidOperationException), typeof(StaleElementReferenceException));
+            wait.IgnoreExceptionTypes(typeof(InvalidOperationException), typeof(StaleElementReferenceException), typeof(ElementClickInterceptedException));
             wait.Until(d =>
             {
                 if (filterByNameFieldElement == null) return false;
@@ -182,7 +182,7 @@ namespace Blackbaud.UAT.Core.Bbis.Pages
 
 
             WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(TimeoutSecs));
-            wait.IgnoreExceptionTypes(typeof(InvalidOperationException), typeof(StaleElementReferenceException));
+            wait.IgnoreExceptionTypes(typeof(InvalidOperationException), typeof(StaleElementReferenceException), typeof(ElementClickInterceptedException));
 
             wait.Until(d => (layoutGridNameFieldElements != null &&
                  layoutSearchResultsLineElement.Displayed != false &&
@@ -243,7 +243,7 @@ namespace Blackbaud.UAT.Core.Bbis.Pages
             // back on the main Layout page.
 
             wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(TimeoutSecs));
-            wait.IgnoreExceptionTypes(typeof(InvalidOperationException), typeof(StaleElementReferenceException));
+            wait.IgnoreExceptionTypes(typeof(InvalidOperationException), typeof(StaleElementReferenceException), typeof(ElementClickInterceptedException));
             wait.Until(d =>
             {
                 IWebElement FilterByNameFieldElement = d.FindElement(By.XPath(getXFilterByNameField));
@@ -308,7 +308,7 @@ namespace Blackbaud.UAT.Core.Bbis.Pages
             if (value == null) return;
 
             var waiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(TimeoutSecs));
-            waiter.IgnoreExceptionTypes(typeof(InvalidOperationException));
+            waiter.IgnoreExceptionTypes(typeof(InvalidOperationException), typeof(ElementClickInterceptedException));
             //removed element from being a public field and moved to scope of method
             waiter.Until(d =>
             {
@@ -325,7 +325,7 @@ namespace Blackbaud.UAT.Core.Bbis.Pages
                 fieldElement.SendKeys(Keys.Control + "v");
 
                 var innerwaiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(10));
-                innerwaiter.IgnoreExceptionTypes(typeof(InvalidOperationException));
+                innerwaiter.IgnoreExceptionTypes(typeof(InvalidOperationException), typeof(ElementClickInterceptedException));
 
                 try
                 {

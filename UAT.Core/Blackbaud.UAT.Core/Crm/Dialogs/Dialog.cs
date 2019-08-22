@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using Blackbaud.UAT.Base;
-using Blackbaud.UAT.Core.Base;
+﻿using Blackbaud.UAT.Base;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
+using System;
+using System.Collections.Generic;
 using TechTalk.SpecFlow;
 
 namespace Blackbaud.UAT.Core.Crm.Dialogs
@@ -401,7 +400,7 @@ namespace Blackbaud.UAT.Core.Crm.Dialogs
         public static bool DropdownValueExists(string xPath, string value)
         {
             WebDriverWait waiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(TimeoutSecs));
-            waiter.IgnoreExceptionTypes(typeof(InvalidOperationException), typeof(StaleElementReferenceException));
+            waiter.IgnoreExceptionTypes(typeof(InvalidOperationException), typeof(StaleElementReferenceException), typeof(ElementClickInterceptedException));
             //click the arrow
             waiter.Until(d =>
             {
@@ -418,19 +417,29 @@ namespace Blackbaud.UAT.Core.Crm.Dialogs
             waiter.Until(d =>
             {
                 IWebElement dropdownList = d.FindElement(By.XPath(getXDropdownListItems));
-                if (dropdownList == null || !dropdownList.Displayed) return false;
+                if (dropdownList == null || !dropdownList.Displayed)
+                {
+                    return false;
+                }
+
                 return true;
             });
 
             //see if value exists in list.  instead of iterating through all items, I could format an xPath and use the driver
             //without a waiter to find the element.  if found, return true.  if nosuchelement thrown, return false.
             ICollection<IWebElement> dropdownListItems = Driver.FindElements(By.XPath(getXDropdownListItems));
-            if (dropdownListItems.Count == 0) return false;
+            if (dropdownListItems.Count == 0)
+            {
+                return false;
+            }
             else
             {
                 foreach (IWebElement item in dropdownListItems)
                 {
-                    if (item.Enabled && item.Text == value) return true;
+                    if (item.Enabled && item.Text == value)
+                    {
+                        return true;
+                    }
                 }
             }
             return false;
@@ -443,16 +452,23 @@ namespace Blackbaud.UAT.Core.Crm.Dialogs
         /// <param name="value">The value to set in the HTML body of the IFrame.</param>
         public static void SetHtmlField(string xPath, string value = "")
         {
-            if (value == null) return;
+            if (value == null)
+            {
+                return;
+            }
+
             CopyToClipBoard(value);
 
             var waiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(TimeoutSecs));
-            waiter.IgnoreExceptionTypes(typeof(InvalidOperationException));
+            waiter.IgnoreExceptionTypes(typeof(InvalidOperationException), typeof(ElementClickInterceptedException));
             waiter.Until(d =>
             {
                 var iframeElement = d.FindElement(By.XPath(xPath));
                 if (iframeElement == null
-                    || !iframeElement.Displayed || !iframeElement.Enabled) return false;
+                    || !iframeElement.Displayed || !iframeElement.Enabled)
+                {
+                    return false;
+                }
 
                 iframeElement.Click();
                 iframeElement.SendKeys(Keys.Control + "a");
@@ -487,11 +503,11 @@ namespace Blackbaud.UAT.Core.Crm.Dialogs
             WaitClick(xPath);
 
             var waiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(TimeoutSecs));
-            waiter.IgnoreExceptionTypes(typeof(InvalidOperationException), typeof(StaleElementReferenceException));
+            waiter.IgnoreExceptionTypes(typeof(InvalidOperationException), typeof(StaleElementReferenceException), typeof(ElementClickInterceptedException));
             waiter.Until(d =>
             {
                 var innerWaiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(10));
-                innerWaiter.IgnoreExceptionTypes(typeof(InvalidOperationException), typeof(StaleElementReferenceException));
+                innerWaiter.IgnoreExceptionTypes(typeof(InvalidOperationException), typeof(StaleElementReferenceException), typeof(ElementClickInterceptedException));
 
                 try
                 {
@@ -499,7 +515,11 @@ namespace Blackbaud.UAT.Core.Crm.Dialogs
                     waiter.Until(d1 =>
                     {
                         var dropdownArrow = d.FindElement(By.XPath(getXDropdownArrow(xPath)));
-                        if (dropdownArrow == null || !dropdownArrow.Displayed || !dropdownArrow.Enabled) return false;
+                        if (dropdownArrow == null || !dropdownArrow.Displayed || !dropdownArrow.Enabled)
+                        {
+                            return false;
+                        }
+
                         dropdownArrow.Click();
                         return true;
                     });
@@ -529,7 +549,11 @@ namespace Blackbaud.UAT.Core.Crm.Dialogs
                     waiter.Until(d3 =>
                     {
                         var dropdownItem = d.FindElement(By.XPath(getXDropdownItem(value)));
-                        if (dropdownItem == null || !dropdownItem.Displayed || !dropdownItem.Enabled) return false;
+                        if (dropdownItem == null || !dropdownItem.Displayed || !dropdownItem.Enabled)
+                        {
+                            return false;
+                        }
+
                         dropdownItem.Click();
                         return true;
                     });
@@ -545,7 +569,11 @@ namespace Blackbaud.UAT.Core.Crm.Dialogs
                     waiter.Until(d4 =>
                     {
                         var field = d.FindElement(By.XPath(xPath));
-                        if (field == null || !field.Displayed) return false;
+                        if (field == null || !field.Displayed)
+                        {
+                            return false;
+                        }
+
                         field.SendKeys(Keys.Tab);
                         return true;
                     });
@@ -578,7 +606,7 @@ namespace Blackbaud.UAT.Core.Crm.Dialogs
         public static void SetGridSearchList(string xPath, string searchDialogxPath, string value)
         {
             var clickedWaiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(TimeoutSecs));
-            clickedWaiter.IgnoreExceptionTypes(typeof(StaleElementReferenceException));
+            clickedWaiter.IgnoreExceptionTypes(typeof(StaleElementReferenceException), typeof(ElementClickInterceptedException));
             clickedWaiter.Until(d1 =>
             {
                 try
@@ -589,31 +617,16 @@ namespace Blackbaud.UAT.Core.Crm.Dialogs
                 }
                 catch (InvalidOperationException)
                 {
-                    try
-                    {
-                        var innerWaiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(5));
-                        innerWaiter.IgnoreExceptionTypes(typeof(InvalidOperationException),
-                            typeof(StaleElementReferenceException));
-
-                        //click the searchlist
-                        innerWaiter.Until(d =>
-                        {
-                            var searchIcon = d.FindElement(By.XPath(getXGridEditCellSearchlist));
-                            if (searchIcon == null || !searchIcon.Displayed || !searchIcon.Enabled) return false;
-                            searchIcon.Click();
-                            return true;
-                        });
-                    }
-                    catch (WebDriverTimeoutException)
-                    {
-                        return false;
-                    }
-                    return true;
+                    return SetGridSearchListFallback();
+                }
+                catch (ElementClickInterceptedException)
+                {
+                    return SetGridSearchListFallback();
                 }
             });
 
             var waiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(TimeoutSecs));
-            waiter.IgnoreExceptionTypes(typeof(InvalidOperationException), typeof(StaleElementReferenceException));
+            waiter.IgnoreExceptionTypes(typeof(InvalidOperationException), typeof(StaleElementReferenceException), typeof(ElementClickInterceptedException));
 
             //search and select
             SetTextField(searchDialogxPath, value);
@@ -628,12 +641,18 @@ namespace Blackbaud.UAT.Core.Crm.Dialogs
                 var originalField = d.FindElement(By.XPath(xPath));
                 if (originalField.Displayed &&
                     (!String.IsNullOrWhiteSpace(originalField.Text) || !String.IsNullOrWhiteSpace(originalField.GetAttribute("value"))))
+                {
                     return true;
+                }
 
                 try
                 {
                     IWebElement editField = d.FindElement(By.XPath(getXGridEditCell));
-                    if (editField == null || !editField.Displayed) return false;
+                    if (editField == null || !editField.Displayed)
+                    {
+                        return false;
+                    }
+
                     editField.SendKeys(Keys.Return);
                     return true;
                 }
@@ -645,6 +664,33 @@ namespace Blackbaud.UAT.Core.Crm.Dialogs
 
             //ensure the original grid value is not an empty string
             ElementValueIsNotNullOrEmpty(xPath);
+        }
+
+        private static bool SetGridSearchListFallback()
+        {
+            try
+            {
+                var innerWaiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(5));
+                innerWaiter.IgnoreExceptionTypes(typeof(InvalidOperationException), typeof(StaleElementReferenceException), typeof(ElementClickInterceptedException));
+
+                //click the searchlist
+                innerWaiter.Until(d =>
+                {
+                    var searchIcon = d.FindElement(By.XPath(getXGridEditCellSearchlist));
+                    if (searchIcon == null || !searchIcon.Displayed || !searchIcon.Enabled)
+                    {
+                        return false;
+                    }
+
+                    searchIcon.Click();
+                    return true;
+                });
+            }
+            catch (WebDriverTimeoutException)
+            {
+                return false;
+            }
+            return true;
         }
 
         /// <summary>
@@ -660,7 +706,7 @@ namespace Blackbaud.UAT.Core.Crm.Dialogs
                 try
                 {
                     var clickedWaiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(5));
-                    clickedWaiter.IgnoreExceptionTypes(typeof(StaleElementReferenceException));
+                    clickedWaiter.IgnoreExceptionTypes(typeof(StaleElementReferenceException), typeof(ElementClickInterceptedException));
                     clickedWaiter.Until(d1 =>
                     {
                         try
@@ -673,6 +719,10 @@ namespace Blackbaud.UAT.Core.Crm.Dialogs
                         {
                             return true;
                         }
+                        catch (ElementNotInteractableException)
+                        {
+                            return true;
+                        }
                     });
                 }
                 catch (WebDriverTimeoutException)
@@ -681,7 +731,7 @@ namespace Blackbaud.UAT.Core.Crm.Dialogs
                 }
 
                 var waiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(10));
-                waiter.IgnoreExceptionTypes(typeof(InvalidOperationException), typeof(StaleElementReferenceException));
+                waiter.IgnoreExceptionTypes(typeof(InvalidOperationException), typeof(StaleElementReferenceException), typeof(ElementClickInterceptedException));
 
                 //click the dropdown arrow
                 try
@@ -689,7 +739,11 @@ namespace Blackbaud.UAT.Core.Crm.Dialogs
                     waiter.Until(d1 =>
                     {
                         var dropdownArrow = d1.FindElement(By.XPath(getXGridEditCellDropdownArrow));
-                        if (dropdownArrow == null || !dropdownArrow.Displayed || !dropdownArrow.Enabled) return false;
+                        if (dropdownArrow == null || !dropdownArrow.Displayed || !dropdownArrow.Enabled)
+                        {
+                            return false;
+                        }
+
                         dropdownArrow.Click();
                         return true;
                     });
@@ -719,7 +773,11 @@ namespace Blackbaud.UAT.Core.Crm.Dialogs
                     waiter.Until(d3 =>
                     {
                         var dropdownItem = d3.FindElement(By.XPath(getXDropdownItem(value)));
-                        if (dropdownItem == null || !dropdownItem.Displayed || !dropdownItem.Enabled) return false;
+                        if (dropdownItem == null || !dropdownItem.Displayed || !dropdownItem.Enabled)
+                        {
+                            return false;
+                        }
+
                         dropdownItem.Click();
                         return true;
                     });
@@ -745,7 +803,11 @@ namespace Blackbaud.UAT.Core.Crm.Dialogs
                     waiter.Until(d4 =>
                     {
                         var editField = d4.FindElement(By.XPath(getXGridEditCell));
-                        if (editField == null || !editField.Displayed) return false;
+                        if (editField == null || !editField.Displayed)
+                        {
+                            return false;
+                        }
+
                         editField.SendKeys(Keys.Return);
                         return true;
                     });
@@ -792,7 +854,10 @@ namespace Blackbaud.UAT.Core.Crm.Dialogs
 
         private static void SetGridField(string xPath, string value, bool isCodeTableField)
         {
-            if (string.IsNullOrEmpty(value)) return;
+            if (string.IsNullOrEmpty(value))
+            {
+                return;
+            }
 
             var setWaiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(TimeoutSecs));
             setWaiter.Until(d =>
@@ -802,7 +867,7 @@ namespace Blackbaud.UAT.Core.Crm.Dialogs
                 try
                 {
                     var clickedWaiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(5));
-                    clickedWaiter.IgnoreExceptionTypes(typeof(StaleElementReferenceException));
+                    clickedWaiter.IgnoreExceptionTypes(typeof(StaleElementReferenceException), typeof(ElementClickInterceptedException));
                     clickedWaiter.Until(d1 =>
                     {
                         try
@@ -812,6 +877,10 @@ namespace Blackbaud.UAT.Core.Crm.Dialogs
                             return false;
                         }
                         catch (InvalidOperationException)
+                        {
+                            return true;
+                        }
+                        catch (ElementNotInteractableException)
                         {
                             return true;
                         }
@@ -827,12 +896,16 @@ namespace Blackbaud.UAT.Core.Crm.Dialogs
                 try
                 {
                     var setValueWaiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(5));
-                    setValueWaiter.IgnoreExceptionTypes(typeof(InvalidOperationException));
+                    setValueWaiter.IgnoreExceptionTypes(typeof(InvalidOperationException), typeof(ElementClickInterceptedException));
                     setValueWaiter.Until(d2 =>
                     {
                         var element = d2.FindElement(By.XPath(getXGridEditCell));
                         if (element == null
-                            || !element.Displayed || !element.Enabled) return false;
+                            || !element.Displayed || !element.Enabled)
+                        {
+                            return false;
+                        }
+
                         element.SendKeys(Keys.Control + "a");
                         element.SendKeys(Keys.Control + "v");
                         return true;
@@ -892,13 +965,17 @@ namespace Blackbaud.UAT.Core.Crm.Dialogs
              */
 
             var waiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(TimeoutSecs));
-            waiter.IgnoreExceptionTypes(typeof(InvalidOperationException));
+            waiter.IgnoreExceptionTypes(typeof(InvalidOperationException), typeof(ElementClickInterceptedException));
 
             waiter.Until(d =>
             {
                 IWebElement searchField = GetEnabledElement(xPath);
                 if (searchField == null
-                    || searchField.Displayed == false || searchField.Enabled == false) return false;
+                    || searchField.Displayed == false || searchField.Enabled == false)
+                {
+                    return false;
+                }
+
                 return true;
             });
 
@@ -929,7 +1006,7 @@ namespace Blackbaud.UAT.Core.Crm.Dialogs
         public static void ClickButton(string caption, string dialogId)
         {
             var waiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(TimeoutSecs));
-            waiter.IgnoreExceptionTypes(typeof(InvalidOperationException), typeof(StaleElementReferenceException));
+            waiter.IgnoreExceptionTypes(typeof(InvalidOperationException), typeof(StaleElementReferenceException), typeof(ElementClickInterceptedException));
             waiter.Until(d =>
             {
                 ClickButton(caption);
@@ -984,7 +1061,7 @@ namespace Blackbaud.UAT.Core.Crm.Dialogs
         public static string GetDialogId(IEnumerable<string> supportedIds)
         {
             var waiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(TimeoutSecs));
-            waiter.IgnoreExceptionTypes(typeof(InvalidOperationException), typeof(StaleElementReferenceException));
+            waiter.IgnoreExceptionTypes(typeof(InvalidOperationException), typeof(StaleElementReferenceException), typeof(ElementClickInterceptedException));
 
             string returnDialogId = String.Empty;
             waiter.Until(d =>
@@ -994,7 +1071,11 @@ namespace Blackbaud.UAT.Core.Crm.Dialogs
                     try
                     {
                         var dialog = d.FindElement(By.XPath(getXDialogById(dialogId)));
-                        if (dialog == null || !dialog.Displayed) continue;
+                        if (dialog == null || !dialog.Displayed)
+                        {
+                            continue;
+                        }
+
                         returnDialogId = dialogId;
                         return true;
                     }
@@ -1003,7 +1084,10 @@ namespace Blackbaud.UAT.Core.Crm.Dialogs
                 return false;
             });
 
-            if (returnDialogId == String.Empty) throw new WebDriverTimeoutException("No supported dialogId found.");
+            if (returnDialogId == String.Empty)
+            {
+                throw new WebDriverTimeoutException("No supported dialogId found.");
+            }
 
             return returnDialogId;
         }
@@ -1018,7 +1102,11 @@ namespace Blackbaud.UAT.Core.Crm.Dialogs
         /// needed to set the field's value.</param>
         public static void SetField(string dialogId, string caption, string value, IDictionary<string, CrmField> supportedFields)
         {
-            if (!supportedFields.ContainsKey(caption)) throw new NotImplementedException(String.Format("Field '{0}' is not implemented.", caption));
+            if (!supportedFields.ContainsKey(caption))
+            {
+                throw new NotImplementedException(String.Format("Field '{0}' is not implemented.", caption));
+            }
+
             var crmField = supportedFields[caption];
             switch (crmField.CellType)
             {
@@ -1057,7 +1145,11 @@ namespace Blackbaud.UAT.Core.Crm.Dialogs
         {
             foreach (var caption in fields.Keys)
             {
-                if (fields[caption] == null) continue;
+                if (fields[caption] == null)
+                {
+                    continue;
+                }
+
                 var value = fields[caption];
                 SetField(dialogId, caption, value, supportedFields);
             }
@@ -1077,7 +1169,11 @@ namespace Blackbaud.UAT.Core.Crm.Dialogs
         {
             foreach (var caption in fields.Keys)
             {
-                if (fields[caption] == null) continue;
+                if (fields[caption] == null)
+                {
+                    continue;
+                }
+
                 var value = fields[caption];
 
                 SetField(dialogId, caption, value,
@@ -1102,12 +1198,20 @@ namespace Blackbaud.UAT.Core.Crm.Dialogs
             foreach (var caption in row.Keys)
             {
                 //Add if value provided using appropriate field set.  Use rowCount and column caption mapping when making xPath
-                if (row[caption] == null) continue;
+                if (row[caption] == null)
+                {
+                    continue;
+                }
+
                 var value = row[caption];
                 var cellxPath = getXGridCell(dialogId, gridId, rowIndex,
                     columnCaptionToIndex[caption]);
 
-                if (!supportedFields.ContainsKey(caption)) throw new NotImplementedException(String.Format("Field '{0}' is not implemented.", caption));
+                if (!supportedFields.ContainsKey(caption))
+                {
+                    throw new NotImplementedException(String.Format("Field '{0}' is not implemented.", caption));
+                }
+
                 var crmField = supportedFields[caption];
 
                 switch (crmField.CellType)
@@ -1149,15 +1253,28 @@ namespace Blackbaud.UAT.Core.Crm.Dialogs
             foreach (var caption in row.Keys)
             {
                 //Add if value provided using appropriate field set.  Use rowCount and column caption mapping when making xPath
-                if (row[caption] == null) continue;
+                if (row[caption] == null)
+                {
+                    continue;
+                }
+
                 var value = row[caption];
                 var cellxPath = getXGridCell(dialogId, gridId, rowIndex,
                     columnCaptionToIndex[caption]);
 
                 CrmField crmField;
-                if (customSupportedFields.ContainsKey(caption)) crmField = customSupportedFields[caption];
-                else if (supportedFields.ContainsKey(caption)) crmField = supportedFields[caption];
-                else throw new NotImplementedException(String.Format("Field '{0}' is not implemented.", caption));
+                if (customSupportedFields.ContainsKey(caption))
+                {
+                    crmField = customSupportedFields[caption];
+                }
+                else if (supportedFields.ContainsKey(caption))
+                {
+                    crmField = supportedFields[caption];
+                }
+                else
+                {
+                    throw new NotImplementedException(String.Format("Field '{0}' is not implemented.", caption));
+                }
 
                 switch (crmField.CellType)
                 {
@@ -1193,7 +1310,10 @@ namespace Blackbaud.UAT.Core.Crm.Dialogs
         public static void SetGridRows(string dialogId, string gridId, Table rows, int startingRowIndex,
             IDictionary<string, int> columnCaptionToIndex, IDictionary<string, CrmField> supportedFields)
         {
-            if (startingRowIndex < 1) throw new ArgumentException(String.Format("Starting row index for SetGridFields must be greater then or equal to 1.  Given '{0}'", startingRowIndex));
+            if (startingRowIndex < 1)
+            {
+                throw new ArgumentException(String.Format("Starting row index for SetGridFields must be greater then or equal to 1.  Given '{0}'", startingRowIndex));
+            }
 
             //add the rows
             foreach (var row in rows.Rows)
@@ -1221,7 +1341,10 @@ namespace Blackbaud.UAT.Core.Crm.Dialogs
             IDictionary<string, int> columnCaptionToIndex, IDictionary<string, CrmField> supportedFields,
             IDictionary<string, CrmField> customSupportedFields)
         {
-            if (startingRowIndex < 1) throw new ArgumentException(String.Format("Starting row index for SetGridFields must be greater then or equal to 1.  Given '{0}'", startingRowIndex));
+            if (startingRowIndex < 1)
+            {
+                throw new ArgumentException(String.Format("Starting row index for SetGridFields must be greater then or equal to 1.  Given '{0}'", startingRowIndex));
+            }
 
             //add the rows
             foreach (var row in rows.Rows)

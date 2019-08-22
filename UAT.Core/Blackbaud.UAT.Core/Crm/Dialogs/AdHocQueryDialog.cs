@@ -95,7 +95,7 @@ namespace Blackbaud.UAT.Core.Crm.Dialogs
         public static void ExpandNode(string xPath)
         {
             var waiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(TimeoutSecs));
-            waiter.IgnoreExceptionTypes(typeof(InvalidOperationException));
+            waiter.IgnoreExceptionTypes(typeof(InvalidOperationException), typeof(ElementClickInterceptedException));
             waiter.Until(d =>
             {
                 var node = GetEnabledElement(xPath);
