@@ -20,7 +20,8 @@ namespace Blackbaud.UAT.Core.Crm
         /// <returns></returns>
         public static string getXFaLink(string linkText)
         {
-            return String.Format("//div[contains(@class,'bbui-pages-contentcontainer') and not(contains(@class,'hide'))]//button[contains(@class,'linkbutton')]//div[text()='{0}']	", linkText);
+            //not(contains(@class,'bbui-pages-actiongroup-tooltip-header')) - don't select popup button
+            return String.Format("//div[contains(@class,'bbui-pages-contentcontainer') and not(contains(@class,'hide'))]//button[contains(@class,'linkbutton') and not(contains(@class,'actiongroup-tooltip-header'))]//div[text()='{0}']", linkText);
         }
 
 

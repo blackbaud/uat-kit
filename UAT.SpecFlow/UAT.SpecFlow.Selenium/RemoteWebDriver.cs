@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.SqlServer.Server;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Remote;
 
 namespace Blackbaud.UAT.SpecFlow.Selenium
@@ -12,18 +13,34 @@ namespace Blackbaud.UAT.SpecFlow.Selenium
     public class RemoteWebDriver : OpenQA.Selenium.Remote.RemoteWebDriver
     {
         /// <summary>
-        /// Initializes a new instance of the RemoteWebDriver class
+        /// Initializes a new instance of the RemoteWebDriver class - this interface is here for backwards compatibility only
         /// </summary>
         /// <param name="remoteAddress">URI containing the address of the WebDriver remote server (e.g. http://127.0.0.1:4444/wd/hub).</param>
         /// <param name="desiredCapabilities">An <see cref="ICapabilities"/> object containing the desired capabilities of the browser.</param>
-        public RemoteWebDriver(Uri remoteAddress, ICapabilities desiredCapabilities, String stoopid="WTF")
+        public RemoteWebDriver(Uri remoteAddress, ICapabilities desiredCapabilities, String stoopid = "WTF")
             : this(remoteAddress, desiredCapabilities)
-        { 
+        {
         }
 
 
         private RemoteWebDriver(Uri remoteAddress, ICapabilities desiredCapabilities)
             : base(remoteAddress, desiredCapabilities)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the RemoteWebDriver class - these interfaces are here for backwards compatibility only
+        /// </summary>
+        /// <param name="remoteAddress">URI containing the address of the WebDriver remote server (e.g. http://127.0.0.1:4444/wd/hub).</param>
+        /// <param name="options">An <see cref="DriverOptions"/> object containing the desired capabilities of the browser.</param>
+        public RemoteWebDriver(Uri remoteAddress, DriverOptions options, String stoopid = "WTF")
+            : this(remoteAddress, options)
+        {
+        }
+
+
+        private RemoteWebDriver(Uri remoteAddress, DriverOptions options)
+            : base(remoteAddress, options)
         {
         }
 

@@ -106,6 +106,14 @@ namespace Blackbaud.UAT.Core.Crm
         }
 
         /// <summary>
+        /// Navigate to the 'Administration' functional area.
+        /// </summary>
+        public static void OpenAdministrationFA()
+        {
+            OpenFunctionalArea("Administration", "fa_administration");
+        }
+
+        /// <summary>
         /// Navigate to the 'Constituents' functional area.
         /// </summary>
         public static void OpenConstituentsFA()

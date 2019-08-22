@@ -269,5 +269,10 @@ namespace Blackbaud.UAT.SpecFlow.Selenium
         public void SetTestMethodAsRow(TestClassGenerationContext generationContext, CodeMemberMethod testMethod, string scenarioTitle, string exampleSetName, string variantName, IEnumerable<KeyValuePair<string, string>> arguments)
         {
         }
+
+        public void SetTestClassParallelize(TestClassGenerationContext generationContext)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -111,12 +111,12 @@ namespace SystemTest.Common.Crm
             {"Reference date", new CrmField("_REFERENCEDATE_value", FieldType.TextInput)},
             {"Reference number", new CrmField("_REFERENCENUMBER_value", FieldType.TextInput)}
         };
-        public static void SetPaymentFields(Table AddPayment)
+        public static void SetPaymentFields(Table addPayment)
         {
-            dynamic objectData = AddPayment.CreateDynamicInstance();
+            dynamic objectData = addPayment.CreateDynamicInstance();
             
             // set default inherited dialog fields
-            SetFields(GetDialogId(DialogIds()), AddPayment.Rows[0], SupportedFields);
+            SetFields(GetDialogId(DialogIds()), addPayment.Rows[0], SupportedFields);
             // handle various payment method types
             string paymentMethod = Convert.ToString(objectData.PaymentMethod);
             switch (paymentMethod.ToLower())
@@ -128,19 +128,19 @@ namespace SystemTest.Common.Crm
                 case "check":
                     break;
                 case "credit card - pay installments automatically":
-                    SetFields(GetDialogId(DialogIds()), AddPayment.Rows[0], CCPayInstallmentsSupportedFields);
+                    SetFields(GetDialogId(DialogIds()), addPayment.Rows[0], CCPayInstallmentsSupportedFields);
                     break;
                 case "credit card - store last 4 digits for reference":
-                    SetFields(GetDialogId(DialogIds()), AddPayment.Rows[0], CCStoreSupportedFields);
+                    SetFields(GetDialogId(DialogIds()), addPayment.Rows[0], CCStoreSupportedFields);
                     break;
                 case "direct debit - pay installments automatically":
-                    SetFields(GetDialogId(DialogIds()), AddPayment.Rows[0], DDPayInstallmentsSupportedFields);
+                    SetFields(GetDialogId(DialogIds()), addPayment.Rows[0], DDPayInstallmentsSupportedFields);
                     break;
                 case "standing order":
-                    SetFields(GetDialogId(DialogIds()), AddPayment.Rows[0], StandingOrderSupportedFields);
+                    SetFields(GetDialogId(DialogIds()), addPayment.Rows[0], StandingOrderSupportedFields);
                     break;
                 case "other":
-                    SetFields(GetDialogId(DialogIds()), AddPayment.Rows[0], OtherSupportedFields);
+                    SetFields(GetDialogId(DialogIds()), addPayment.Rows[0], OtherSupportedFields);
                     break;
                 default:
                     throw new NotImplementedException(string.Format("Test failed. Payment method {0} not implemented.", paymentMethod));

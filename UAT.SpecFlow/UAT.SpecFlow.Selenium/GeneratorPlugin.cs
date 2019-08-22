@@ -11,25 +11,20 @@ namespace Blackbaud.UAT.SpecFlow.Selenium
 {
     public class GeneratorPlugin : IGeneratorPlugin
     {
-        public void RegisterConfigurationDefaults(TechTalk.SpecFlow.Generator.Configuration.SpecFlowProjectConfiguration specFlowConfiguration)
+        public void Initialize(GeneratorPluginEvents generatorPluginEvents, GeneratorPluginParameters generatorPluginParameters)
         {
-            
+            generatorPluginEvents.RegisterDependencies += RegisterDependencies;
         }
 
-        public void RegisterCustomizations(BoDi.ObjectContainer container, TechTalk.SpecFlow.Generator.Configuration.SpecFlowProjectConfiguration generatorConfiguration)
+        public void RegisterDependencies(object sender, RegisterDependenciesEventArgs eventArgs)
         {
-            
-        }
+            var projectSettings = eventArgs.ObjectContainer.Resolve<ProjectSettings>();
 
-        public void RegisterDependencies(BoDi.ObjectContainer container)
-        {
-            var projectSettings = container.Resolve<ProjectSettings>();
-
-            var codeDomHelper = container.Resolve<CodeDomHelper>(projectSettings.ProjectPlatformSettings.Language);
+            var codeDomHelper = eventArgs.ObjectContainer.Resolve<CodeDomHelper>(projectSettings.ProjectPlatformSettings.Language);
 
             var generatorProvider = new BlueTestGeneratorProvider(codeDomHelper);
 
-            container.RegisterInstanceAs<IUnitTestGeneratorProvider>(generatorProvider, "BBTest");
+            eventArgs.ObjectContainer.RegisterInstanceAs<IUnitTestGeneratorProvider>(generatorProvider, "BBTest");
         }
     }
 }

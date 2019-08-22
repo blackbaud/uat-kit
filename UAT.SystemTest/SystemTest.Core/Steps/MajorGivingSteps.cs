@@ -185,7 +185,7 @@ namespace SystemTest.Core.Steps
         }
 
         [Given(@"Prospect ""(.*)"" has an individual relationship with constituent ""(.*)""")]
-        public void GivenProspectHasAnIndividualRelationshipWithConstituent(string Prospect, string RelationshipName)
+        public void GivenProspectHasAnIndividualRelationshipWithConstituent(string prospect, string relationshipName)
         {
             //select relationship tab
             Panel.WaitClick("//span[contains(@class,'x-tab-strip-text ') and ./text()='Relationships']");
@@ -195,7 +195,7 @@ namespace SystemTest.Core.Steps
             //Select Related individual search
             BaseComponent.WaitClick("//div[contains(@id,'dataformdialog') and contains(@style,'block')]//img[contains(@class,'x-form-trigger x-form-search-trigger')]");
             //Must use split for search
-            string[] names = RelationshipName.Split(' ');
+            string[] names = relationshipName.Split(' ');
             BaseComponent.SetTextField("//div[contains(@id,'searchdialog') and contains(@style,'block')]//input[contains(@id,'_KEYNAME_value')]", names[1] + uniqueStamp);
             BaseComponent.SetTextField("//div[contains(@id,'searchdialog') and contains(@style,'block')]//input[contains(@id,'_FIRSTNAME_value')]", names[0]);
             //Click search and select
@@ -210,12 +210,12 @@ namespace SystemTest.Core.Steps
         }
 
         [When(@"I add a Planned Gift to Prospect ""(.*)""")]
-        public void WhenIAddAPlannedGiftToProspect(string ProspectName, Table table)
+        public void WhenIAddAPlannedGiftToProspect(string prospectName, Table table)
         {
             dynamic objectData = table.CreateDynamicInstance();
-            ProspectName += uniqueStamp;
+            prospectName += uniqueStamp;
             //move to prospect tab
-            Panel.GetEnabledElement(XpathHelper.xPath.VisiblePanel + string.Format("//h2[contains(.,'{0}')]", ProspectName), 120);
+            Panel.GetEnabledElement(XpathHelper.xPath.VisiblePanel + string.Format("//h2[contains(.,'{0}')]", prospectName));
             Panel.SelectTab("Prospect");
             //select plnned gift sub tab
             Panel.SelectInnerTab("Planned Gifts");
@@ -338,14 +338,14 @@ namespace SystemTest.Core.Steps
         }
 
         [Then(@"an Opportunity is associated with the Major Giving Plan called ""(.*)""")]
-        public void ThenAnOpportunityIsAssociatedWithTheMajorGivingPlanCalled(string MajorGivingPlan, Table table)
+        public void ThenAnOpportunityIsAssociatedWithTheMajorGivingPlanCalled(string majorGivingPlan, Table table)
         {
             //lets set the thread culture to get the correct date for the browser
             StepHelper.SetCurrentThreadCultureToConfigValue();
             dynamic objectData = table.CreateDynamicInstance();
             var date90Days = DateTime.Now.AddDays(Convert.ToInt32(objectData.ExpectedAskDateFromNow)).ToShortDateString();
             //check the plan matches
-            BaseComponent.GetEnabledElement(XpathHelper.xPath.VisiblePanel + string.Format("//h2[contains(@class, 'bbui-pages-header')]//span[./text()='Major giving - {0}']", MajorGivingPlan + uniqueStamp));
+            BaseComponent.GetEnabledElement(XpathHelper.xPath.VisiblePanel + string.Format("//h2[contains(@class, 'bbui-pages-header')]//span[./text()='Major giving - {0}']", majorGivingPlan + uniqueStamp));
             //check there is an opportunity
             BaseComponent.GetEnabledElement(XpathHelper.xPath.VisiblePanel + "//button[contains(@class, 'x-btn-text') and ./text()='Go to opportunity']");
             //check values that were entered in the previous step are actually displayed
@@ -353,6 +353,58 @@ namespace SystemTest.Core.Steps
             BaseComponent.GetEnabledElement(XpathHelper.xPath.VisiblePanel + string.Format("//span[contains(@id, '_EXPECTEDASKAMOUNT_value') and ./text()='{0}']", objectData.ExpectedAskAmount));
             BaseComponent.GetEnabledElement(XpathHelper.xPath.VisiblePanel + string.Format("//span[contains(@id, '_EXPECTEDASKDATE_value') and ./text()='{0}']", date90Days));
 
+        }
+
+        [When(@"I edit the planned steps")]
+        public void WhenIEditThePlannedSteps(Table table)
+        {
+            StepHelper.SetTodayDateInTableRow("Actual date", table);
+            IList<dynamic> objectData = table.CreateDynamicSet().ToList();
+            string dialogId = "ProspectPlanEditForm2";
+            string gridId = "STEPS";
+            int i = 1;
+            Panel.ClickButton("Edit steps");
+            foreach (dynamic steps in objectData)
+            {
+                DateTime actualDate = steps.ActualDate;
+                //check objective in row entry
+                string gridXPath = Dialog.getXGridCell(dialogId, gridId, i, BaseComponent.GetDatalistColumnIndex(Dialog.getXGridHeaders(dialogId, gridId), "Objective"));
+                BaseComponent.GetEnabledElement(string.Format(gridXPath + string.Format("//div[text()='{0}']", steps.Objective)), 5);
+                //change status
+                gridXPath = Dialog.getXGridCell(dialogId, gridId, i, BaseComponent.GetDatalistColumnIndex(Dialog.getXGridHeaders(dialogId, gridId), "Status"));
+                Dialog.SetGridDropDown(gridXPath, steps.Status);
+                //change status                
+                gridXPath = Dialog.getXGridCell(dialogId, gridId, i, BaseComponent.GetDatalistColumnIndex(Dialog.getXGridHeaders(dialogId, gridId), "Actual date"));
+                Dialog.SetGridTextField(gridXPath, actualDate.ToShortDateString());
+                i++;
+            }
+            Dialog.Save();
+        }
+
+        [Then(@"Completed steps displays")]
+        public void ThenCompletedStepsDisplays(Table table)
+        {
+            StepHelper.SetTodayDateInTableRow("Date", table);
+            IList<dynamic> objectData = table.CreateDynamicSet().ToList();
+            string sectionCaption = "Completed steps"; 
+            foreach (dynamic completedSteps in objectData)
+            {
+                DateTime findDate = Convert.ToDateTime(completedSteps.Date);
+               IDictionary <string, string> rowValues = new Dictionary<string, string>();
+                rowValues.Add("Status", completedSteps.Status);
+                rowValues.Add("Date", findDate.ToShortDateString());
+                rowValues.Add("Objective", completedSteps.Objective);
+                rowValues.Add("Stage", completedSteps.Stage);
+                if(!string.IsNullOrEmpty(completedSteps.Owner))
+                {
+                    rowValues.Add("Owner", completedSteps.Owner + uniqueStamp);
+                }
+                //check rows
+                if(!Panel.SectionDatalistRowExists(rowValues, sectionCaption))
+                {
+                    throw new Exception(string.Format("Expected values not in the grid for completed step {0}.", completedSteps.Objective));
+                }
+            }
         }
 
         private void GetConstituentPanel(string lastName)

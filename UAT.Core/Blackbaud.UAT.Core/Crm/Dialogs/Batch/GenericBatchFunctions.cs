@@ -16,6 +16,7 @@ namespace Blackbaud.UAT.Core.Crm.Dialogs
         /// <param name="caption">The caption of the column.</param>
         /// <param name="value">The desired value of the row.</param>
         /// <param name="row">The index of the row.  The first row's index is 1.</param>
+        /// <param name="ColumnToBatchColumn">Dictionary mapping the column to the batch columns</param>
         public static void SetGridCell(string caption, string value, int row, Dictionary<string, CrmField> ColumnToBatchColumn)
         {
             int columnIndex = GetColumnIndexByCaption(caption, ColumnToBatchColumn);
@@ -46,6 +47,7 @@ namespace Blackbaud.UAT.Core.Crm.Dialogs
         /// Get the index of the column in the batch grid.
         /// </summary>
         /// <param name="caption">The caption of the column.</param>
+        /// <param name="ColumnToBatchColumn">Dictionary mapping the column to the batch columns</param>
         /// <returns>The index of the TD column element within the TR headers.</returns>
         public static int GetColumnIndexByCaption(string caption, Dictionary<string, CrmField> ColumnToBatchColumn)
         {
@@ -58,6 +60,7 @@ namespace Blackbaud.UAT.Core.Crm.Dialogs
         /// </summary>
         /// <param name="caption">The column caption of the cell.</param>
         /// <param name="row">The row index of the cell.  The first row is index 1.</param>
+        /// <param name="ColumnToBatchColumn">Dictionary mapping the column to the batch columns</param>
         /// <returns>The value of the cell.</returns>
         public static string GetGridCellValue(string caption, int row, Dictionary<string, CrmField> ColumnToBatchColumn)
         {
@@ -76,6 +79,7 @@ namespace Blackbaud.UAT.Core.Crm.Dialogs
         /// </summary>
         /// <param name="batchRow">Mapping of the batch column captions to a single row's desired values.</param>
         /// <param name="row">The index of the row.  The first row starts at index 1.</param>
+        /// <param name="ColumnToBatchColumn">Dictionary mapping the column to the batch columns</param>
         public static void SetGridRow(TableRow batchRow, int row, Dictionary<string, CrmField> ColumnToBatchColumn)
         {
             foreach (string caption in batchRow.Keys)
@@ -91,6 +95,7 @@ namespace Blackbaud.UAT.Core.Crm.Dialogs
         /// Set the rows of a batch grid starting with the first row.
         /// </summary>
         /// <param name="batchRows">Table where each TableRow represents a grid row to set.
+        /// <param name="ColumnToBatchColumn">Dictionary mapping the column to the batch columns</param>
         /// A TableRow is a mapping of the batch column captions to a single row's desired values.</param>
         public static void SetGridRows(Table batchRows, Dictionary<string, CrmField> ColumnToBatchColumn)
         {

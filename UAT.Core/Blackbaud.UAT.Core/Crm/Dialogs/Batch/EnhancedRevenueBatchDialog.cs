@@ -36,7 +36,9 @@ namespace Blackbaud.UAT.Core.Crm.Dialogs
             {"Other type",new CrmField("OTHERTYPECODEID", FieldType.TextInput)},
             {"Given anonymously",new CrmField("GIVENANONYMOUSLY", FieldType.Checkbox)},
             {"Pledge subtype", new CrmField("PLEDGESUBTYPEID", FieldType.Dropdown)},
-            {"Reference", new CrmField("REFERENCE", FieldType.TextInput)}
+            {"Reference", new CrmField("REFERENCE", FieldType.TextInput)},
+            {"Other method", new CrmField("OTHERPAYMENTMETHODCODEID", FieldType.Dropdown)},
+            {"GL post date",new CrmField("td-POSTDATE", FieldType.TextInput)}
         };
 
         /// <summary>

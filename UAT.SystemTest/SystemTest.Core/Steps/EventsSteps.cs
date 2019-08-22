@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Blackbaud.UAT.Core.Crm.Dialogs;
 using Blackbaud.UAT.Core.Crm.Panels;
+using OpenQA.Selenium;
 
 namespace SystemTest.Core.Steps
 {
@@ -21,7 +22,7 @@ namespace SystemTest.Core.Steps
             GivenAnEventExists(eventName, DateTime.Now);
         }
 
-        public void GivenAnEventExists(string eventName, DateTime StartDate)
+        public void GivenAnEventExists(string eventName, DateTime startDate)
         {
             StepHelper.SetCurrentThreadCultureToConfigValue();
             if (eventName == string.Empty)
@@ -31,7 +32,7 @@ namespace SystemTest.Core.Steps
 
             BBCRMHomePage.OpenEventsFA();
             var headers = new string[3] { "Name", "Start date", "Category" };
-            var firstRow = new string[3] { eventName, StartDate.ToShortDateString(), "Sport" };
+            var firstRow = new string[3] { eventName, startDate.ToShortDateString(), "Sport" };
 
             var events = new Table(headers);
             events.AddRow(firstRow);
@@ -140,11 +141,11 @@ namespace SystemTest.Core.Steps
         }
 
         [Given(@"an invitation ""(.*)"" exists")]
-        public void GivenAnInvitationExists(string InvitationName)
+        public void GivenAnInvitationExists(string invitationName)
         {
             try
             {
-                this.AddInvitations(InvitationName);
+                this.AddInvitations(invitationName);
             }
             catch (ApplicationException Ex)
             {
@@ -154,11 +155,11 @@ namespace SystemTest.Core.Steps
         }
 
         [Given(@"Constituent ""(.*)"" is marked as deceased with source of ""(.*)""")]
-        public void GivenConstituentIsMarkedAsDeceasedWithSourceOf(string ConstituentName, string source)
+        public void GivenConstituentIsMarkedAsDeceasedWithSourceOf(string constituentName, string source)
         {
             //lets set the thread culture to get the correct date for the browser
             StepHelper.SetCurrentThreadCultureToConfigValue();
-            SearchAndSelectConstituent(ConstituentName);
+            SearchAndSelectConstituent(constituentName);
             //select personal info
             Panel.SelectTab("Personal Info");
             //select "mark deceased"
@@ -170,27 +171,27 @@ namespace SystemTest.Core.Steps
         }
 
         [Given(@"I select event ""(.*)""")]
-        public void GivenISelectEvent(string TargetEvent)
+        public void GivenISelectEvent(string targetEvent)
         {
             BBCRMHomePage.OpenEventsFA();
-            EventsFunctionalArea.EventSearch(TargetEvent += uniqueStamp);
+            EventsFunctionalArea.EventSearch(targetEvent += uniqueStamp);
         }
 
         [When(@"I Add multiple invitees to invitation ""(.*)"" from selection ""(.*)""")]
-        public void WhenIAddMultipleInviteesToInvitationFromSelection(string InviteName, string SelectionName)
+        public void WhenIAddMultipleInviteesToInvitationFromSelection(string inviteName, string selectionName)
         {
             //select Invitations tab
             Panel.SelectTab("Invitations");
-            BaseComponent.WaitClick(string.Format("//a[contains(@title,'{0}') and ./text()='{0}']", InviteName));
+            BaseComponent.WaitClick(string.Format("//a[contains(@title,'{0}') and ./text()='{0}']", inviteName));
             //select add button
             Panel.ClickSectionAddButton("Invitees");
             //select Constituent dropdown
             BaseComponent.WaitClick("//span[contains(@class,'x-menu-item-text') and ./text()='Multiple constituents']");
             //enter selection
             BaseComponent.WaitClick(XpathHelper.xPath.VisibleDialog + "//img[contains(@class,'x-form-trigger x-form-search-trigger')]");
-            Dialog.SetTextField("//div[contains(@class,'x-window bbui-dialog-search bbui-dialog x-resizable-pinned') and contains(@style,'visible')]//input[contains(@id,'NAME_value')]", SelectionName + uniqueStamp);
+            Dialog.SetTextField("//div[contains(@class,'x-window bbui-dialog-search bbui-dialog x-resizable-pinned') and contains(@style,'visible')]//input[contains(@id,'NAME_value')]", selectionName + uniqueStamp);
             Dialog.ClickButton("Search");
-            BaseComponent.WaitClick(string.Format("//span[contains(@title,'{0}') and ./text()='{0} (Ad-hoc Query)']", SelectionName + uniqueStamp));
+            BaseComponent.WaitClick(string.Format("//span[contains(@title,'{0}') and ./text()='{0} (Ad-hoc Query)']", selectionName + uniqueStamp));
             //save
             Dialog.Save();
         }
@@ -214,9 +215,9 @@ namespace SystemTest.Core.Steps
         }
 
         [Given(@"Event ""(.*)"" exists with Registration Option and start date ""(.*)""")]
-        public void GivenEventExistsWithRegistrationOption(string eventName, string StartDate, Table options)
+        public void GivenEventExistsWithRegistrationOption(string eventName, string startDate, Table options)
         {
-            DateTime actualStartDate = StepHelper.SetTodayDateForVariable(StartDate);
+            DateTime actualStartDate = StepHelper.SetTodayDateForVariable(startDate);
 
             eventName += uniqueStamp;
             //navigate to event and add event
@@ -261,28 +262,28 @@ namespace SystemTest.Core.Steps
         }
 
         [Given(@"Constituent ""(.*)"" is registered for event named ""(.*)"" with ""(.*)"" registration option")]
-        public void GivenConstituentIsRegisteredForEventNamedWithRegistrationOption(string ConstituentName, string EventName, string RegistrationType)
+        public void GivenConstituentIsRegisteredForEventNamedWithRegistrationOption(string constituentName, string eventName, string registrationType)
         {
             //var sectionCaption = "Registrants";
             var sectionCaption = "Registrations";
             var caption = "Registration option";
             var dialogId = "RegistrantUnifiedAddForm";
             var gridId = "_EVENTREGISTRANTS";
-            ConstituentName += uniqueStamp;
+            constituentName += uniqueStamp;
             //click Registrations tab
             Panel.SelectTab(sectionCaption);
             //select Add
             Panel.ClickSectionAddButton(sectionCaption);
-            Dialog.SetTextField("//input[contains(@id,'_CONSTITUENTID_value')]", ConstituentName);
+            Dialog.SetTextField("//input[contains(@id,'_CONSTITUENTID_value')]", constituentName);
             //set grid         
             string gridXPath = Dialog.getXGridCell(dialogId, gridId, 1, BaseComponent.GetDatalistColumnIndex(Dialog.getXGridHeaders(dialogId, gridId), caption));
-            Dialog.SetGridDropDown(gridXPath, RegistrationType);
+            Dialog.SetGridDropDown(gridXPath, registrationType);
             //save
             Dialog.Save();
         }
 
         [Given(@"Invitation to the event ""(.*)"" includes a mail package")]
-        public void GivenInvitationToTheEventIncludesAMailPackage(string EventName, Table table)
+        public void GivenInvitationToTheEventIncludesAMailPackage(string eventName, Table table)
         {
             #region data setup
             //setup date field.  StepHelper for date must come before dynamic objects
@@ -291,7 +292,7 @@ namespace SystemTest.Core.Steps
             var dialogId = "InvitationAddForm";
             string sendType = objectData.HowToSendInvitation;
             string dateValue = string.Empty;
-            EventName += uniqueStamp;
+            eventName += uniqueStamp;
             objectData.Name += uniqueStamp;
             //sorts out date format due to datetime adding 00:00:00
             DateTime findDate = objectData.MailDate;
@@ -308,7 +309,7 @@ namespace SystemTest.Core.Steps
             };
             #endregion
             //navigation
-            GetEventPanel(EventName);
+            GetEventPanel(eventName);
             Panel.SelectTab("Invitations");
             Panel.ClickSectionAddButton("Invitations");
             //tab 1
@@ -342,9 +343,9 @@ namespace SystemTest.Core.Steps
         }
 
         [Given(@"I add Invitees to invitation ""(.*)""")]
-        public void WhenIAddAnInviteeToAnInvitation(string InviteName, Table Invitees)
+        public void WhenIAddAnInviteeToAnInvitation(string inviteName, Table invitees)
         {
-            this.AddInvitees(InviteName, Invitees);
+            this.AddInvitees(inviteName, invitees);
         }
 
         [Given(@"I send the invitation")]
@@ -428,11 +429,11 @@ namespace SystemTest.Core.Steps
         }
 
         [Then(@"Event ""(.*)"" displays registrant\(s\) on Registrations tab")]
-        public void ThenEventDisplaysRegistrantSOnRegistrationsTab(string EventName, Table table)
+        public void ThenEventDisplaysRegistrantSOnRegistrationsTab(string eventName, Table table)
         {
             IList<dynamic> registrants = table.CreateDynamicSet().ToList();
             //navigate to Event 
-            EventName += uniqueStamp;
+            eventName += uniqueStamp;
 
             BBCRMHomePage.OpenEventsFA();
             try
@@ -451,7 +452,7 @@ namespace SystemTest.Core.Steps
             }
 
             //GetEventPanel(EventName);
-            BaseComponent.SetTextField("//div[contains(@style,'visible')]//input[contains(@id,'_NAME_value')]", EventName);
+            BaseComponent.SetTextField("//div[contains(@style,'visible')]//input[contains(@id,'_NAME_value')]", eventName);
             SearchDialog.Search();
             SearchDialog.SelectFirstResult();
 
@@ -491,7 +492,7 @@ namespace SystemTest.Core.Steps
         }
 
         [Then(@"Invitees list displays where Declined is ""(.*)""")]
-        public void ThenInviteesListDisplaysWhereDeclinedIs(string Declined, Table table)
+        public void ThenInviteesListDisplaysWhereDeclinedIs(string declined, Table table)
         {
             string sectionCaption = "Invitees";
             StepHelper.SetTodayDateInTableRow("Invitation sent on", table);
@@ -506,7 +507,7 @@ namespace SystemTest.Core.Steps
             {
                 throw new Exception("Data for " + invitee + " was not displayed as expected!");
             }
-            if (Convert.ToBoolean(Declined) != false)
+            if (Convert.ToBoolean(declined) != false)
             {
                 //check box is class driven by the style "bbui-pages-datalistgrid-check"
                 //so we need to find the declined and then nav to the check
@@ -526,7 +527,7 @@ namespace SystemTest.Core.Steps
             DateTime findDate = objectData.Date;
             string eventAmount = string.Format("{0} on {1}", objectData.PaymentAmount, findDate.ToShortDateString());
             string constit = objectData.Surname + uniqueStamp + ", " + objectData.FirstName;
-            string regXPath = XpathHelper.xPath.VisiblePanel + string.Format("//a[./text()='{0}' and contains(@title,'{0}')]", constit);
+            string regXPath = XpathHelper.xPath.VisiblePanel + string.Format("//div[contains(@title,'{0}')]", constit);
             #endregion
             //check is visible
             BaseComponent.GetEnabledElement(XpathHelper.xPath.VisiblePanel + string.Format("//div[contains(@class, 'xtb-text bbui-pages-section-tbarcaption') and ./text()='{0}']", sectionCaption));
@@ -536,28 +537,17 @@ namespace SystemTest.Core.Steps
                 Panel.WaitClick(XpathHelper.xPath.VisiblePanel + "//button[./text()='Reset']", 5);
             }
             catch { }
-            //try
-            //{
-            //Click Go to registrant
-            BaseComponent.GetEnabledElement(regXPath);
-            BaseComponent.WaitClick(regXPath, 20);
-            //}
-            //catch (WebDriverTimeoutException ex)
-            //{
-            //    //lets try that again if the first time fails
-            //    BaseComponent.GetEnabledElement(regXPath);
-            //    BaseComponent.WaitClick(regXPath, 30);
-            //}
 
-            //Click payment history link          
-            try
-            {
-                BaseComponent.WaitClick(XpathHelper.xPath.VisiblePanel + string.Format("//tr[contains(@id,'_PAYMENT1TEXT_container')]/td/a[./text()='{0}']", eventAmount));
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(eventAmount + " does not display", ex);
-            }
+            // Click Go to registrant
+            BaseComponent.GetEnabledElement(regXPath);
+            BaseComponent.WaitClick(regXPath);
+
+            // Click payment history link          
+            // BaseComponent.WaitClick(XpathHelper.xPath.VisiblePanel + string.Format("//a[contains(@id,'_PAYMENT1TEXT_value') and ./text()='{0}']", eventAmount));
+            // should be unique
+            string linkXpath = string.Format("//a[contains(@id,'_PAYMENT1TEXT_value') and ./text()='{0}']", eventAmount);
+            BaseComponent.GetEnabledElement(linkXpath);
+            BaseComponent.WaitClick(linkXpath);
         }
 
         #region Private

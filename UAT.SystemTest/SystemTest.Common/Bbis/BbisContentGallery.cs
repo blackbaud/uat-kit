@@ -178,7 +178,20 @@ namespace SystemTest.Common.Bbis
         // TODO - move Search into a Generic Gallery Parent Class (and others that use this standard layout)
         public static void SearchPartsByName(string name)
         {
-            BBISHomePageCustom.WaitClick("//div[contains(@class,'ExplorerTabs')]//td[./text()='Search']", 15);
+            try
+            {
+                // Added another waitclick to allow time for page to load
+                BaseComponent.WaitClick("//div[contains(@id,'tabExplorerTabs_div0') and contains(@style,'block')]//span[text()='Site Content']", 160);
+                BBISHomePageCustom.GetEnabledElement("//div[contains(@class,'ExplorerTabs')]//td[./text()='Search']", 160);
+                BBISHomePageCustom.WaitClick("//div[contains(@class,'ExplorerTabs')]//td[./text()='Search']", 160);
+            }
+            catch
+            {
+                // Added another waitclick to allow time for page to load
+                BaseComponent.WaitClick("//div[contains(@id,'tabExplorerTabs_div0') and contains(@style,'block')]//span[text()='Site Content']", 160);
+                BBISHomePageCustom.GetEnabledElement("//div[contains(@class,'ExplorerTabs')]//td[./text()='Search']", 160);
+                BBISHomePageCustom.WaitClick("//div[contains(@class,'ExplorerTabs')]//td[./text()='Search']", 160);
+            }
 
             const string getXfilterByNameField = "//input[contains(@id,'_txtName')]";
 

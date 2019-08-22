@@ -18,11 +18,11 @@ namespace SystemTest.Core.Steps
         RevenueSteps RevenueSteps = new RevenueSteps();
 
         [Then(@"the batch commits without errors or exceptions and (.*) record processed")]
-        public void ThenTheBatchCommitsWithoutErrorsOrExceptionsAndRecordProcessed(int numRecords)
+        public void ThenTheBatchCommitsWithoutErrorsOrExceptionsAndRecordProcessed(int numberOfRecords)
         {
             if (!BusinessProcess.IsCompleted()) throw new Exception("Batch committed with exceptions or errors.");
-            if (!BusinessProcess.IsNumRecordsProcessed(numRecords))
-                throw new Exception(String.Format("'{0}' was not the number of records processed.", numRecords));
+            if (!BusinessProcess.IsNumRecordsProcessed(numberOfRecords))
+                throw new Exception(String.Format("'{0}' was not the number of records processed.", numberOfRecords));
         }
 
         [When(@"I add a batch with template ""(.*)"" and description ""(.*)""")]

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Drawing.Imaging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using OpenQA.Selenium;
@@ -72,8 +71,7 @@ namespace Blackbaud.UAT.SpecFlow.Selenium
                     if ("true" == grab.ToLower() || ("fail" == grab.ToLower() && !pass))
                     {
                         ((ITakesScreenshot)Test.driver).GetScreenshot().SaveAsFile(
-                            HandleServerPath() + TechTalk.SpecFlow.ScenarioContext.Current.ScenarioInfo.Title.Replace(" ", "_") + ".png",
-                            ImageFormat.Png);
+                            HandleServerPath() + TechTalk.SpecFlow.ScenarioContext.Current.ScenarioInfo.Title.Replace(" ", "_") + ".png", ScreenshotImageFormat.Png);
                     }
                 }
             }
@@ -163,11 +161,11 @@ namespace Blackbaud.UAT.SpecFlow.Selenium
                 {
                     service = BaseTest.InitializeChromeService();
                     Test.service = service;
-                    driver = new RemoteWebDriver(service.ServiceUrl, getCapabilities());
+                    driver = new RemoteWebDriver(service.ServiceUrl, getOptions());
                 }
                 else
                 {
-                    driver = new RemoteWebDriver(new Uri(remoteUrl), getCapabilities());
+                    driver = new RemoteWebDriver(new Uri(remoteUrl), getOptions());
                 }
 
                 Test.driver = driver;
@@ -238,12 +236,12 @@ namespace Blackbaud.UAT.SpecFlow.Selenium
             return service;
         }
 
-        public static DesiredCapabilities getCapabilities()
+        public static ChromeOptions getOptions()
         {
 
             ChromeOptions options = new ChromeOptions();
-            // timeline is deprecated
-            var perfLoggingPrefs = new Dictionary<string, object> { { "enableNetwork", true }, { "enablePage", true } };//, { "enableTimeline", false } };
+            
+            var perfLoggingPrefs = new Dictionary<string, object> { { "enableNetwork", true }, { "enablePage", true } };//, { "enableTimeline", false } };// timeline is deprecated
             try
             {
                 string perf = ConfigurationManager.AppSettings["ChromeDriver.PerfLogging"];
@@ -303,6 +301,22 @@ namespace Blackbaud.UAT.SpecFlow.Selenium
 
             try
             {
+                string resolution = ConfigurationManager.AppSettings["ChromeDriver.Resolution"];
+                if (!string.IsNullOrEmpty(resolution))
+                {
+                    options.AddArgument(string.Format("--window-size={0}", resolution));
+                }
+            }
+            catch (Exception e)
+            {
+                // Swallow non-existent Configurations
+                Console.WriteLine(e.Message);
+                // default to 1920*1080
+                options.AddArgument("--window-size=1920,1080");
+            }
+
+            try
+            {
                 string maximise = ConfigurationManager.AppSettings["ChromeDriver.Maximise"];
                 if ("false" != maximise.ToLower())
                 {
@@ -315,14 +329,13 @@ namespace Blackbaud.UAT.SpecFlow.Selenium
                 // Swallow non-existent Configurations
             }
 
-            DesiredCapabilities capabilities = options.ToCapabilities() as DesiredCapabilities;
             var loggingPrefs = new Dictionary<string, object> { { "performance", "ALL" }, { "browser", "ALL" } };
             try
             {
                 string perf = ConfigurationManager.AppSettings["ChromeDriver.PerfLogging"];
                 if ("false" != perf.ToLower())
                 {
-                    capabilities.SetCapability("loggingPrefs", loggingPrefs);
+                    options.AddAdditionalCapability("goog:loggingPrefs", loggingPrefs);
                 }
             }
             catch (Exception e)
@@ -331,7 +344,7 @@ namespace Blackbaud.UAT.SpecFlow.Selenium
                 // Swallow non-existent Configurations
             }
 
-            return capabilities;
+            return options;
         }
     }
 }

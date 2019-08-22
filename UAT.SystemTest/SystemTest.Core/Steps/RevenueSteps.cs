@@ -26,7 +26,7 @@ namespace SystemTest.Core.Steps
 
         [Given(@"I add a Payment to constituent ""(.*)"" with account system ""(.*)""")]
         [When(@"I add a Payment to constituent ""(.*)"" with account system ""(.*)""")]
-        public void WhenIAddAPaymentToConstituentWithAccountSystem(string ConstituentName, string AccountSystem, Table table)
+        public void WhenIAddAPaymentToConstituentWithAccountSystem(string constituentName, string accountSystem, Table table)
         {
             dynamic objectData = table.CreateDynamicInstance();
             var anon = false;
@@ -39,13 +39,13 @@ namespace SystemTest.Core.Steps
                 DeclinesGiftAid = true;
             }
             //search and select constituent
-            StepHelper.SearchAndSelectConstituent(ConstituentName);
+            StepHelper.SearchAndSelectConstituent(constituentName);
             //click add payment
             BaseComponent.WaitClick(string.Format(XpathHelper.xPath.Button, XpathHelper.PaymentAddActions.Payment));
             //check is visible
             BaseComponent.GetEnabledElement(XpathHelper.xPath.ConstituentCaption);
             //set fields
-            StepHelper.SetAccountSystem(AccountSystem);
+            StepHelper.SetAccountSystem(accountSystem);
             StepHelper.SetCurrentThreadCultureToConfigValue();
             switch ((string)(objectData.Application).ToLower())
             {
@@ -123,7 +123,7 @@ namespace SystemTest.Core.Steps
             }
         }
 
-        private void PaymentDonation(dynamic objectData, Boolean DeclinesGiftAid, Boolean Anon)
+        private void PaymentDonation(dynamic objectData, Boolean declinesGiftAid, Boolean anon)
         {
             string paymentMethod = Convert.ToString(objectData.PaymentMethod);
             //set fields
@@ -159,14 +159,14 @@ namespace SystemTest.Core.Steps
             {
                 //Consituent Declines Gift Aid for this application can be disabled - let's get it and bail if it is
                 Dialog.GetEnabledElement("//input[contains(@id,'DONATIONDECLINESGIFTAID_value')]", 5);
-                Dialog.SetCheckbox("//input[contains(@id,'DONATIONDECLINESGIFTAID_value')]", DeclinesGiftAid.ToString());
+                Dialog.SetCheckbox("//input[contains(@id,'DONATIONDECLINESGIFTAID_value')]", declinesGiftAid.ToString());
             }
             catch
             {
                 //eat as "Consituent Declines Gift Aid for this application can be disabled" is not enabled
             }
 
-            if (Anon)
+            if (anon)
             {
                 Dialog.SetCheckbox("//input[contains(@id,'_GIVENANONYMOUSLY_value')]", "true");
             }
@@ -182,11 +182,11 @@ namespace SystemTest.Core.Steps
             Dialog.GetEnabledElement(string.Format("//div[contains(@class,'x-grid3-cell-inner x-grid3-col-APPLICATIONCODE') and ./text()='{0}']", objectData.Application));
         }
 
-        private void SetDesignation(string xpath, string Designation)
+        private void SetDesignation(string xpath, string designation)
         {
             //popup and search for the Designation
             Dialog.WaitClick(string.Format("//input[contains(@id,'{0}')]/../span/img[contains(@class,'x-form-search-trigger')]", xpath));
-            Dialog.SetTextField("//input[contains(@id,'_COMBINEDSEARCH_value')]", Designation);
+            Dialog.SetTextField("//input[contains(@id,'_COMBINEDSEARCH_value')]", designation);
             SearchDialog.Search();
             SearchDialog.SelectFirstResult();
         }
@@ -198,20 +198,20 @@ namespace SystemTest.Core.Steps
         }
 
         [Given(@"A Pledge has been submitted today for the Constituent ""(.*)"" with account system ""(.*)""")]
-        public void GivenAPledgeHasBeenSubmittedTodayForTheConstituent(string ConstituentName, string AccountSystem, Table table)
+        public void GivenAPledgeHasBeenSubmittedTodayForTheConstituent(string constituentName, string accountSystem, Table table)
         {
             //lets set the thread culture to get the correct date for the browser
             StepHelper.SetTodayDateInTableRow("Start date", table);
             dynamic objectData = table.CreateDynamicInstance();
             DateTime startDate = objectData.StartDate;
             //search and select constituent
-            StepHelper.SearchAndSelectConstituent(ConstituentName);
+            StepHelper.SearchAndSelectConstituent(constituentName);
             //click add payment
             BaseComponent.WaitClick(string.Format(XpathHelper.xPath.Button, XpathHelper.PaymentAddActions.Pledge));
             //check for is visible
             BaseComponent.GetEnabledElement(XpathHelper.xPath.ConstituentCaption);
             //set the account system
-            StepHelper.SetAccountSystem(AccountSystem);
+            StepHelper.SetAccountSystem(accountSystem);
             //set fields - general
             Dialog.SetTextField("//input[contains(@id,'_AMOUNT_value')]", Convert.ToString(objectData.Amount));
             Dialog.SetTextField("//input[contains(@id,'_DATE_value')]", startDate.ToShortDateString());
@@ -246,13 +246,13 @@ namespace SystemTest.Core.Steps
         }
 
         [Then(@"the Pledge record balance is reduced by the payment amount value for constituent ""(.*)""")]
-        public void ThenThePledgeRecordBalanceIsReducedByThePaymentAmountValue(string ConstituentName)
+        public void ThenThePledgeRecordBalanceIsReducedByThePaymentAmountValue(string constituentName)
         {
             var sectionCaption = "Designations";
             //lets set the thread culture to get the correct date for the browser
             StepHelper.SetCurrentThreadCultureToConfigValue();
             //navigate link "<date> Pledge for <Constituent>"
-            var linkLabel = DateTime.Now.ToShortDateString() + " Pledge for " + ConstituentName + uniqueStamp;
+            var linkLabel = DateTime.Now.ToShortDateString() + " Pledge for " + constituentName + uniqueStamp;
             BaseComponent.WaitClick(string.Format("//a[contains(@id,'_APPLIEDNAME_value') and ./text()='{0}']", linkLabel));
             //check amount
             IDictionary<string, string> rowValues = new Dictionary<string, string>();
@@ -291,10 +291,10 @@ namespace SystemTest.Core.Steps
         }
 
         [Then(@"the revenue record is presented on the constituent ""(.*)"" as Applied to Event Registration for ""(.*)""")]
-        public void ThenTheRevenueRecordIsPresentedOnTheConstituentAsAppliedToEventRegistrationFor(string ConstituentName, string EventName)
+        public void ThenTheRevenueRecordIsPresentedOnTheConstituentAsAppliedToEventRegistrationFor(string constituentName, string eventName)
         {
             //check event link is there correctly
-            var linkText = string.Format("Event registration for {0}: {1}", ConstituentName + uniqueStamp, EventName + uniqueStamp);
+            var linkText = string.Format("Event registration for {0}: {1}", constituentName + uniqueStamp, eventName + uniqueStamp);
             try
             {
                 BaseComponent.GetEnabledElement(string.Format("//a[contains(@id,'_APPLIEDNAME_value') and ./text()='{0}']", linkText));
@@ -306,19 +306,19 @@ namespace SystemTest.Core.Steps
         }
 
         [Then(@"Balance on Registration fee is ""(.*)"" for constituent ""(.*)"" as Applied to Event Registration for ""(.*)""")]
-        public void ThenBalanceOnRegistrationFeeIsForConstituentAsAppliedToEventRegistrationFor(string Balance, string ConstituentName, string EventName)
+        public void ThenBalanceOnRegistrationFeeIsForConstituentAsAppliedToEventRegistrationFor(string balance, string constituentName, string eventName)
         {
             //click link
-            var linkText = string.Format("Event registration for {0}: {1}", ConstituentName + uniqueStamp, EventName + uniqueStamp);
+            var linkText = string.Format("Event registration for {0}: {1}", constituentName + uniqueStamp, eventName + uniqueStamp);
             BaseComponent.WaitClick(string.Format("//a[contains(@id,'_APPLIEDNAME_value') and ./text()='{0}']", linkText));
             //check balance
             try
             {
-                BaseComponent.GetEnabledElement(string.Format("//span[contains(@id,'_FEEBALANCE_value') and ./text()='{0}']", Balance));
+                BaseComponent.GetEnabledElement(string.Format("//span[contains(@id,'_FEEBALANCE_value') and ./text()='{0}']", balance));
             }
             catch (Exception ex)
             {
-                throw new Exception(string.Format("Balance not {0} as expected!", Balance), ex);
+                throw new Exception(string.Format("Balance not {0} as expected!", balance), ex);
             }
         }
 
@@ -367,16 +367,16 @@ namespace SystemTest.Core.Steps
         }
 
         [Given(@"a revenue type selection exists for the constituent ""(.*)"" donation payment called ""(.*)""")]
-        public void GivenARevenueTypeSelectionExistsForTheConstituentDonationPaymentCalled(string ConstituentName, string SelectionName)
+        public void GivenARevenueTypeSelectionExistsForTheConstituentDonationPaymentCalled(string constituentName, string selectionName)
         {
-            ConstituentName += uniqueStamp;
+            constituentName += uniqueStamp;
             //create ad-hoc query for ConstituentName
             AdHocSteps adhocSteps = new AdHocSteps();
             adhocSteps.WhenIAddAAd_HocQuery("Revenue");
 
             string[] headers = new string[2] { "field", "value" };
             string[] FirstRow = new string[2] { "FILTEROPERATOR", "Equal to" };
-            string[] SecondRow = new string[2] { "VALUE1", ConstituentName };
+            string[] SecondRow = new string[2] { "VALUE1", constituentName };
 
             Table table = new Table(headers);
             table.AddRow(FirstRow);
@@ -387,8 +387,8 @@ namespace SystemTest.Core.Steps
 
             //save as static selection
             headers = new string[2] { "field", "value" };
-            FirstRow = new string[2] { "Name", SelectionName };
-            SecondRow = new string[2] { "Description", SelectionName };
+            FirstRow = new string[2] { "Name", selectionName };
+            SecondRow = new string[2] { "Description", selectionName };
 
             table = new Table(headers);
             table.AddRow(FirstRow);
@@ -437,11 +437,11 @@ namespace SystemTest.Core.Steps
 
         [Given(@"I Start the ""(.*)""")]
         [When(@"I Start the ""(.*)""")]
-        public void WhenIStartThe(string ProcessName)
+        public void WhenIStartThe(string processName)
         {
             var caption = "Name";
             var sectionCaption = "Post to GL processes";
-            ProcessName += uniqueStamp;
+            processName += uniqueStamp;
 
             string numberOfItems =
                 BaseComponent.GetEnabledElement(XpathHelper.xPath.VisiblePanel +
@@ -462,7 +462,7 @@ namespace SystemTest.Core.Steps
             try
             {
                 BaseComponent.WaitClick(string.Format(XpathHelper.xPath.VisiblePanel + "//button[contains(@data-pagenumber, '{0}')]", actualNumberOfPages.ToString()), 5);
-                RunGLProcess(ProcessName, caption, sectionCaption, 60.00d);
+                RunGLProcess(processName, caption, sectionCaption, 60.00d);
             }
             catch
             {
@@ -477,7 +477,7 @@ namespace SystemTest.Core.Steps
                 {
                     try
                     {
-                        RunGLProcess(ProcessName, caption, sectionCaption, 15.00d);
+                        RunGLProcess(processName, caption, sectionCaption, 15.00d);
                         break;
                     }
                     catch //(Exception Ex)
@@ -499,43 +499,41 @@ namespace SystemTest.Core.Steps
             }
             catch (Exception ex)
             {
-                throw new Exception(string.Format("Process 'Completed' screen not rendered - Process ({0}) failed to run!", ProcessName), ex);
+                throw new Exception(string.Format("Process 'Completed' screen not rendered - Process ({0}) failed to run!", processName), ex);
             }
         }
 
-        private void RunGLProcess(string ProcessName, string Caption, string SectionCaption, double TimeToWait)
+        private void RunGLProcess(string processName, string caption, string sectionCaption, double timeToWait)
         {
-            if (BaseComponent.GetEnabledElement(string.Format(XpathHelper.xPath.VisiblePanel + "//a[contains(@title,'{0}') and ./text()='{0}']", ProcessName), TimeToWait) != null)
+            if (BaseComponent.GetEnabledElement(string.Format(XpathHelper.xPath.VisiblePanel + "//a[contains(@title,'{0}') and ./text()='{0}']", processName), timeToWait) != null)
             {
                 //expand mail package
                 IDictionary<string, string> rowValues = new Dictionary<string, string>();
-                rowValues.Add(Caption, ProcessName);
+                rowValues.Add(caption, processName);
 
                 IDictionary<string, int> columnIndex = new Dictionary<string, int>();
-                columnIndex.Add(Caption,
-                    Panel.GetDatalistColumnIndex(Panel.getXSectionDatalistColumnHeaders(SectionCaption), Caption));
+                columnIndex.Add(caption, Panel.GetDatalistColumnIndex(Panel.getXSectionDatalistColumnHeaders(sectionCaption), caption));
                 //expand row
-                Panel.ExpandRow(Panel.getXSectionDatalistRow(SectionCaption, columnIndex, rowValues));
+                Panel.ExpandRow(Panel.getXSectionDatalistRow(sectionCaption, columnIndex, rowValues));
                 //click start process
-                BaseComponent.WaitClick(XpathHelper.xPath.VisiblePanel +
-                                        "//td[contains(@class,'x-toolbar-cell') and not(contains(@class,'x-hide-display'))]//button[./text()='Start process']");
+                BaseComponent.WaitClick(XpathHelper.xPath.VisiblePanel + "//td[contains(@class,'x-toolbar-cell') and not(contains(@class,'x-hide-display'))]//button[./text()='Start process']");
                 Dialog.ClickButton("Start");
             }
         }
 
         [Given(@"the process ""(.*)"" runs without error")]
         [Then(@"the process ""(.*)"" runs without error")]
-        public void ThenTheProcessRunsWithoutError(string ProcessName)
+        public void ThenTheProcessRunsWithoutError(string processName)
         {
-            ProcessName += uniqueStamp;
-            BaseComponent.GetEnabledElement(XpathHelper.xPath.VisiblePanel + string.Format("//h2/span[./text()='{0}']", ProcessName));
+            processName += uniqueStamp;
+            BaseComponent.GetEnabledElement(XpathHelper.xPath.VisiblePanel + string.Format("//h2/span[./text()='{0}']", processName));
             BaseComponent.GetEnabledElement(XpathHelper.xPath.VisiblePanel + "//span[contains(@id,'_STATUS_value') and ./text()='Completed']");
         }
 
         [When(@"I edit posted payment for constituent ""(.*)"" for type ""(.*)""")]
-        public void WhenIEditPostedPaymentForConstituent(string ConstituentName, string type)
+        public void WhenIEditPostedPaymentForConstituent(string constituentName, string type)
         {
-            StepHelper.SearchAndSelectConstituent(ConstituentName);
+            StepHelper.SearchAndSelectConstituent(constituentName);
             //select revenue tab
             Panel.SelectTab("Revenue");
             //select $100.00
@@ -579,16 +577,16 @@ namespace SystemTest.Core.Steps
         }
 
         [When(@"I change Application dropdown to ""(.*)""")]
-        public void WhenIChangeApplicationDropdownTo(string ApplicationType)
+        public void WhenIChangeApplicationDropdownTo(string applicationType)
         {
-            Dialog.SetDropDown(XpathHelper.xPath.VisibleDialog + "//input[contains(@id,'_APPLICATIONCODE_value')]", ApplicationType);
+            Dialog.SetDropDown(XpathHelper.xPath.VisibleDialog + "//input[contains(@id,'_APPLICATIONCODE_value')]", applicationType);
         }
 
         [When(@"I select the Pledge for ""(.*)""")]
-        public void WhenISelectThePledgeFor(string ConstituentName)
+        public void WhenISelectThePledgeFor(string constituentName)
         {
             StepHelper.SetCurrentThreadCultureToConfigValue();
-            string pledgeText = "Pledge: " + ConstituentName + uniqueStamp + " - " + DateTime.Now.ToShortDateString();
+            string pledgeText = "Pledge: " + constituentName + uniqueStamp + " - " + DateTime.Now.ToShortDateString();
             Dialog.WaitClick(string.Format("//td/div/b[./text()='{0}']", pledgeText));
         }
 
@@ -633,9 +631,9 @@ namespace SystemTest.Core.Steps
 
         [Then(@"the revenue record \(Amount\) is presented on the constituent ""(.*)"" for amount ""(.*)""")]
 
-        public void ThenTheRevenueRecordIsPresentedOnTheConstituent(string ConstituentName, string Amount)
+        public void ThenTheRevenueRecordIsPresentedOnTheConstituent(string constituentName, string amount)
         {
-            Panel.GetEnabledElement(string.Format("//span[./text()='{0}']", ConstituentName + uniqueStamp + " (" + Amount + ")"));
+            Panel.GetEnabledElement(string.Format("//span[./text()='{0}']", constituentName + uniqueStamp + " (" + amount + ")"));
         }
 
         [Then(@"Revenue Transaction Profile View Form displays")]
@@ -681,11 +679,11 @@ namespace SystemTest.Core.Steps
         }
 
         [Given(@"Allow direct posting of all payments has been set for account system ""(.*)""")]
-        public void GivenAllowDirectPostingOfAllPaymentsHasBeenSetForAccountSystem(string AccountSystem)
+        public void GivenAllowDirectPostingOfAllPaymentsHasBeenSetForAccountSystem(string accountSystem)
         {
             BBCRMHomePage.OpenFunctionalArea("Administration");
             BaseComponent.WaitClick("//li/button/div[./text()='General ledger setup']");
-            BaseComponent.WaitClick(string.Format("//a[contains(@title,'Go to account system: {0}') and ./text()='{0}']", AccountSystem));
+            BaseComponent.WaitClick(string.Format("//a[contains(@title,'Go to account system: {0}') and ./text()='{0}']", accountSystem));
             BaseComponent.WaitClick("//li/button/div[./text()='Payment posting options']");
             BaseComponent.SetCheckbox("//input[contains(@id,'_SETTING_NOTREQUIRE')]", true);
             Dialog.Save();
@@ -743,15 +741,15 @@ namespace SystemTest.Core.Steps
         }
 
         [Then(@"the revenue record is presented on the constituent with notification ""(.*)""")]
-        public void ThenTheRevenueRecordIsPresentedOnTheConstituentWithNotification(string AnonText)
+        public void ThenTheRevenueRecordIsPresentedOnTheConstituentWithNotification(string anonText)
         {
             try
             {
-                BaseComponent.GetEnabledElement(string.Format("//div[contains(@id,'_ANONYMOUSINFOBAR_caption') and ./text()='{0}']", AnonText));
+                BaseComponent.GetEnabledElement(string.Format("//div[contains(@id,'_ANONYMOUSINFOBAR_caption') and ./text()='{0}']", anonText));
             }
             catch (Exception ex)
             {
-                throw new Exception(string.Format("Anon text is not '{0}'", AnonText), ex);
+                throw new Exception(string.Format("Anon text is not '{0}'", anonText), ex);
             }
         }
 
@@ -889,19 +887,19 @@ namespace SystemTest.Core.Steps
         }
 
         [When(@"I add a campaign to the hierarchy for ""(.*)""")]
-        public void WhenIAddACampaignToTheHierarchyFor(string Campaign)
+        public void WhenIAddACampaignToTheHierarchyFor(string campaign)
         {
             //check is visible
             BaseComponent.GetEnabledElement(XpathHelper.xPath.VisibleBlock + ("//span[text()='Edit campaign hierarchy']"));
             //Select existing Campaign to enable Add 
-            BaseComponent.WaitClick(String.Format(XpathHelper.xPath.VisibleBlock + ("//span[text()='{0}']"), Campaign + uniqueStamp));
+            BaseComponent.WaitClick(String.Format(XpathHelper.xPath.VisibleBlock + ("//span[text()='{0}']"), campaign + uniqueStamp));
             BaseComponent.GetEnabledElement(XpathHelper.xPath.VisibleBlock + ("//button[text()='Add']"));
             //Click Add button
             BaseComponent.WaitClick(XpathHelper.xPath.VisibleBlock + ("//button[text()='Add']"));
         }
 
         [When(@"I use Campaign Search for ""(.*)""")]
-        public void WhenIUseCampaignSearchFor(string Campaign)
+        public void WhenIUseCampaignSearchFor(string campaign)
         {
             //lets check the form is open
             try
@@ -914,7 +912,7 @@ namespace SystemTest.Core.Steps
                 BaseComponent.WaitClick(XpathHelper.xPath.VisibleBlock + ("//button[text()='Add']"));
             }
             //Search and select sub Campaign
-            Dialog.SetTextField("//input[contains(@id,'_NAME_value')]", Campaign + uniqueStamp);
+            Dialog.SetTextField("//input[contains(@id,'_NAME_value')]", campaign + uniqueStamp);
             //click Search button
             Dialog.ClickButton("Search");
             //Select correct result in grid and save
@@ -923,7 +921,7 @@ namespace SystemTest.Core.Steps
         }
 
         [When(@"I add Campaign Goal\(s\) to ""(.*)""")]
-        public void WhenIAddCampaignGoalSTo(string Campaign, Table table)
+        public void WhenIAddCampaignGoalSTo(string campaign, Table table)
         {
             #region
             dynamic objectData = table.CreateDynamicInstance();
@@ -932,7 +930,7 @@ namespace SystemTest.Core.Steps
             BBCRMHomePage.OpenFundraisingFA();
             FundraisingFunctionalArea.OpenLink("Campaign search");
             //Search Campaign
-            Dialog.SetTextField("//input[contains(@id,'_NAME_value')]", Campaign + uniqueStamp);
+            Dialog.SetTextField("//input[contains(@id,'_NAME_value')]", campaign + uniqueStamp);
             //click Search button
             Dialog.ClickButton("Search");
             //Select correct result in grid
@@ -946,7 +944,7 @@ namespace SystemTest.Core.Steps
         }
 
         [Then(@"""(.*)"" Goal tab displays")]
-        public void ThenGoalTabDisplays(string Campaign, Table table)
+        public void ThenGoalTabDisplays(string campaign, Table table)
         {
             #region
             //Date helper
@@ -963,7 +961,7 @@ namespace SystemTest.Core.Steps
         }
 
         [Then(@"""(.*)"" Fundraisers tab displays")]
-        public void ThenFundraisersTabDisplays(string Campaign, Table table)
+        public void ThenFundraisersTabDisplays(string campaign, Table table)
         {
             #region
             //Date helper
@@ -980,7 +978,7 @@ namespace SystemTest.Core.Steps
         }
 
         [Then(@"""(.*)"" Campaign hierarchy displays")]
-        public void ThenCampaignHierarchyDisplays(string Name, Table table)
+        public void ThenCampaignHierarchyDisplays(string name, Table table)
         {
             dynamic objectData = table.CreateDynamicInstance();
             //Click campaign Hierarchy link
@@ -999,14 +997,14 @@ namespace SystemTest.Core.Steps
 
         [Given(@"I add a Recurring gift to constituent ""(.*)""")]
         [When(@"I add a Recurring gift to constituent ""(.*)""")]
-        public void WhenIAddARecurringGiftToConstituent(string ConstituentName, Table table)
+        public void WhenIAddARecurringGiftToConstituent(string constituentName, Table table)
         {
             //handle date defensively before we supply table to the other methods
             StepHelper.SetTodayDateInTableRow("Date", table);
             StepHelper.SetTodayDateInTableRow("Installment schedule begins", table);
             StepHelper.SetTodayDateInTableRow("End date (optional)", table);
             //Search and select constituent
-            StepHelper.SearchAndSelectConstituent(ConstituentName);
+            StepHelper.SearchAndSelectConstituent(constituentName);
             //click Add Recurring Gift
             BaseComponent.WaitClick(string.Format(XpathHelper.xPath.Button, XpathHelper.PaymentAddActions.RecurringGift));
             //check is visible

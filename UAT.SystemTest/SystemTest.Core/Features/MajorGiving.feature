@@ -132,3 +132,37 @@ Scenario: Major Giving: Add Opportunity to Major Giving Plan on Prospect
 	Then an Opportunity is associated with the Major Giving Plan called "UAT Test MG Plan"
 	| Status    | Expected Ask Amount | Expected Ask date from now |
 	| Qualified | $10,000.00          | 90                         |
+
+	Scenario: Major Giving: Update Step status on existing Major Giving prospect plan
+	Given I have logged into the BBCRM home page
+	And a constituent record exists
+	| Title | Nickname | Information source | Last name | First name |
+	| Mr.   | Mart     | Other              | Jones     | Martin     |
+	| Mr.   | Will     | Other              | Sanders   | William    |
+	And I add Constituencies to the following Constituents
+	| Surname | Date from | Date to       | Constituency          |
+	| Jones   | Today     | Today +1 year | Major giving prospect |
+	| Sanders | Today     | Today +1 year | Fundraiser            |
+	And I add Plan Outline "UAT Test Outline Three" to Major Giving Setup
+	| Objective                     | Fundraiser role  | Stage          | Days from start | Contact method |
+	| Clearance to Approach Client  | Prospect manager | Identification | 7               |                |
+	| Prepare Ask client            | Primary manager  | Cultivation    | 20              |                |
+	| Explore Inclination of client | Primary manager  | Cultivation    | 60              |                |
+	| Make Ask of client            | Primary manager  | Negotiation    | 90              |                |
+	And I start to add a major giving plan to 'Jones'
+	And set the details
+	| Plan name        | Plan type    | Start date | Primary manager | Secondary manager |
+	| UAT Test MG Plan | Major giving | Today      | Sanders         |                   |
+	And set the Steps with outline 'UAT Test Outline Three'
+	And save the plan
+	When I go to plan "UAT Test MG Plan" for prospect "Jones"
+	And I edit the planned steps
+	| Objective                     | Status    | Actual date    |
+	| Clearance to Approach Client  | Completed | today          |
+	| Prepare Ask client            | Completed | today +4 days  |
+	| Explore Inclination of client | Completed | today +2 weeks |
+	Then Completed steps displays
+	| Status    | Date           | Objective                     | Stage          | Owner           |
+	| Completed | Today          | Clearance to Approach Client  | Identification |                 |
+	| Completed | Today +4 Days  | Prepare Ask client            | Cultivation    | William Sanders |
+	| Completed | Today +2 Weeks | Explore Inclination of client | Cultivation    | William Sanders |

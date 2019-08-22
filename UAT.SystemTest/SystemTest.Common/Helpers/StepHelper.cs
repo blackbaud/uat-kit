@@ -40,57 +40,58 @@ namespace SystemTest.Common
             NotSet = 99
         }
 
-        public static void SearchAndSelectConstituent(string ConstituentName)
+        public static void SearchAndSelectConstituent(string constituentName)
         {
             bool splitName = false;
-            if (ConstituentName.IndexOf(" ") > 0)
+            if (constituentName.IndexOf(" ") > 0)
             {
                 splitName = true;
             }
-            SearchAndSelectConstituent(ConstituentName, splitName);
+            SearchAndSelectConstituent(constituentName, splitName);
         }
 
-        public static void SearchAndSelectConstituent(string ConstituentName, bool SplitName)
+        public static void SearchAndSelectConstituent(string constituentName, bool splitName)
         {
+            BaseComponent.GetEnabledElement("//button[./text()='Constituents']");
             BBCRMHomePage.OpenConstituentsFA();
             ConstituentsFunctionalArea.OpenConstituentSearchDialog();
 
-            if (SplitName)
+            if (splitName)
             {
                 var names = new string[2];
-                names = ConstituentName.Split(' ');
+                names = constituentName.Split(' ');
                 SearchDialog.SetFirstNameToSearch(names[0]);
                 SearchDialog.SetLastNameToSearch(names[1] + uniqueStamp);
             }
             else
             {
-                SearchDialog.SetLastNameToSearch(ConstituentName + uniqueStamp);
+                SearchDialog.SetLastNameToSearch(constituentName + uniqueStamp);
             }
             SearchDialog.Search();
             SearchDialog.SelectFirstResult();
         }
 
-        public static void SearchAndSelectConstituentNotUnique(string ConstituentName, bool SplitName)
+        public static void SearchAndSelectConstituentNotUnique(string constituentName, bool splitName)
         {
             BBCRMHomePage.OpenConstituentsFA();
             ConstituentsFunctionalArea.OpenConstituentSearchDialog();
 
-            if (SplitName)
+            if (splitName)
             {
                 var names = new string[2];
-                names = ConstituentName.Split(' ');
+                names = constituentName.Split(' ');
                 SearchDialog.SetFirstNameToSearch(names[0]);
                 SearchDialog.SetLastNameToSearch(names[1]);
             }
             else
             {
-                SearchDialog.SetLastNameToSearch(ConstituentName);
+                SearchDialog.SetLastNameToSearch(constituentName);
             }
             SearchDialog.Search();
             SearchDialog.SelectFirstResult();
         }
 
-        public static void SetAccountSystem(string AccountSystem)
+        public static void SetAccountSystem(string accountSystem)
         {
             BaseComponent.WaitClick("//a[contains(@id,'_SHOWSYSTEM_action')]"); //select correct account system
             BaseComponent.GetEnabledElement("//div[contains(@class, ' x-window  bbui-dialog') and contains(@style,'visible')]//span[./text()='Select an account system']");
@@ -98,22 +99,22 @@ namespace SystemTest.Common
             {
                 {"Account System", new CrmField("_PDACCOUNTSYSTEMID_value", FieldType.Dropdown)}
             };
-            Dialog.SetField("SelectAccountSystem", "Account System", AccountSystem, Supportedfields);
+            Dialog.SetField("SelectAccountSystem", "Account System", accountSystem, Supportedfields);
             // OK button
             BaseComponent.WaitClick("//div[contains(@class, 'x-window  bbui-dialog') and contains(@style,'visible')]//button[./text()='OK']");
         }
 
-        public static void SetBenefit(string BenefitName, bool IsPledge)
+        public static void SetBenefit(string benefitName, bool isPledge)
         {
             // setup
             var caption = "Benefit";
             var dialogId = "BenefitDetails";
             var gridId = "_BENEFITS_value";
             IDictionary<string, int> columnCaptionToIndex = new Dictionary<string, int>();
-            BenefitName += uniqueStamp;
+            benefitName += uniqueStamp;
 
             // click button for pop up
-            if (IsPledge)
+            if (isPledge)
             {
                 BaseComponent.WaitClick("//a[contains(@id,'_EDITBENEFITSACTION_action')]");
             }
@@ -127,7 +128,7 @@ namespace SystemTest.Common
                 BaseComponent.GetDatalistColumnIndex(Dialog.getXGridHeaders(dialogId, gridId), caption));
             string gridXPath = Dialog.getXGridCell(dialogId, gridId, 1, columnCaptionToIndex[caption]);
             string gridRowXPath = Dialog.getXGridRow(dialogId, gridId, 1);
-            Dialog.SetGridTextField(gridXPath, BenefitName);
+            Dialog.SetGridTextField(gridXPath, benefitName);
 
             // click OK
             BaseComponent.WaitClick(
@@ -140,68 +141,68 @@ namespace SystemTest.Common
             Thread.CurrentThread.CurrentCulture = new CultureInfo(ConfigurationManager.AppSettings["ChromeDriver.language"]);
         }
 
-        public static int DateIncrementAfterPlus(string DateString)
+        public static int DateIncrementAfterPlus(string dateString)
         {
-            return Convert.ToInt32(DateString.Substring(DateString.IndexOf(plus) + 1, 2).Trim());
+            return Convert.ToInt32(dateString.Substring(dateString.IndexOf(plus) + 1, 2).Trim());
         }
 
-        public static int DateIncrementAfterMinus(string DateString)
+        public static int DateIncrementAfterMinus(string dateString)
         {
-            return -1 * Convert.ToInt32(DateString.Substring(DateString.IndexOf(minus) + 1, 2).Trim());
+            return -1 * Convert.ToInt32(dateString.Substring(dateString.IndexOf(minus) + 1, 2).Trim());
         }
 
-        public static void SetTodayDateInTableRow(string CaptionKey, TableRow tableRow)
+        public static void SetTodayDateInTableRow(string captionKey, TableRow tableRow)
         {
             TimePeriod timePeriodToAdd = TimePeriod.NotSet;
             int i = 0;
 
             // set thread to correct culture
             SetCurrentThreadCultureToConfigValue();
-            if (tableRow.ContainsKey(CaptionKey) &&
-                !string.IsNullOrEmpty(tableRow[CaptionKey]) &&
-                tableRow[CaptionKey].ToLower().Contains(LowerCase.Today))
+            if (tableRow.ContainsKey(captionKey) &&
+                !string.IsNullOrEmpty(tableRow[captionKey]) &&
+                tableRow[captionKey].ToLower().Contains(LowerCase.Today))
             {
 
                 // get number to increase
-                if (tableRow[CaptionKey].Contains(plus))
+                if (tableRow[captionKey].Contains(plus))
                 {
-                    i = DateIncrementAfterPlus(tableRow[CaptionKey]);
+                    i = DateIncrementAfterPlus(tableRow[captionKey]);
                 }
-                else if (tableRow[CaptionKey].Contains(minus))
+                else if (tableRow[captionKey].Contains(minus))
                 {
-                    i = DateIncrementAfterMinus(tableRow[CaptionKey]);
+                    i = DateIncrementAfterMinus(tableRow[captionKey]);
                 }
 
                 // get time unit to increase
-                if (tableRow[CaptionKey].ToLower().Contains(LowerCase.Day) || tableRow[CaptionKey].ToLower().Contains(LowerCase.Days)) timePeriodToAdd = TimePeriod.Day;
-                if (tableRow[CaptionKey].ToLower().Contains(LowerCase.Week) || tableRow[CaptionKey].ToLower().Contains(LowerCase.Weeks)) timePeriodToAdd = TimePeriod.Week;
-                if (tableRow[CaptionKey].ToLower().Contains(LowerCase.Month) || tableRow[CaptionKey].ToLower().Contains(LowerCase.Months)) timePeriodToAdd = TimePeriod.Month;
-                if (tableRow[CaptionKey].ToLower().Contains(LowerCase.Year) || tableRow[CaptionKey].ToLower().Contains(LowerCase.Years)) timePeriodToAdd = TimePeriod.Year;
+                if (tableRow[captionKey].ToLower().Contains(LowerCase.Day) || tableRow[captionKey].ToLower().Contains(LowerCase.Days)) timePeriodToAdd = TimePeriod.Day;
+                if (tableRow[captionKey].ToLower().Contains(LowerCase.Week) || tableRow[captionKey].ToLower().Contains(LowerCase.Weeks)) timePeriodToAdd = TimePeriod.Week;
+                if (tableRow[captionKey].ToLower().Contains(LowerCase.Month) || tableRow[captionKey].ToLower().Contains(LowerCase.Months)) timePeriodToAdd = TimePeriod.Month;
+                if (tableRow[captionKey].ToLower().Contains(LowerCase.Year) || tableRow[captionKey].ToLower().Contains(LowerCase.Years)) timePeriodToAdd = TimePeriod.Year;
 
                 // actually increase
                 switch (timePeriodToAdd)
                 {
                     case TimePeriod.Day:
-                        tableRow[CaptionKey] = DateTime.Now.AddDays(i).ToShortDateString();
+                        tableRow[captionKey] = DateTime.Now.AddDays(i).ToShortDateString();
                         break;
                     case TimePeriod.Week:
-                        tableRow[CaptionKey] = DateTime.Now.AddDays(i * 7).ToShortDateString();
+                        tableRow[captionKey] = DateTime.Now.AddDays(i * 7).ToShortDateString();
                         break;
                     case TimePeriod.Month:
-                        tableRow[CaptionKey] = DateTime.Now.AddMonths(i).ToShortDateString();
+                        tableRow[captionKey] = DateTime.Now.AddMonths(i).ToShortDateString();
                         break;
                     case TimePeriod.Year:
-                        tableRow[CaptionKey] = DateTime.Now.AddYears(i).ToShortDateString();
+                        tableRow[captionKey] = DateTime.Now.AddYears(i).ToShortDateString();
                         break;
                     case TimePeriod.NotSet:
                         // handle nothing to add
-                        tableRow[CaptionKey] = DateTime.Now.ToShortDateString();
+                        tableRow[captionKey] = DateTime.Now.ToShortDateString();
                         break;
                 }
             }
         }
 
-        public static DateTime SetTodayDateForVariable(string DateToSet)
+        public static DateTime SetTodayDateForVariable(string dateToSet)
         {
             TimePeriod timePeriodToAdd = TimePeriod.NotSet;
             DateTime returnValue = DateTime.MinValue;
@@ -209,23 +210,23 @@ namespace SystemTest.Common
 
             // set thread to correct culture
             SetCurrentThreadCultureToConfigValue();
-            if (DateToSet.ToLower().Contains(LowerCase.Today))
+            if (dateToSet.ToLower().Contains(LowerCase.Today))
             {
                 // get number to increase
-                if (DateToSet.Contains(plus))
+                if (dateToSet.Contains(plus))
                 {
-                    i = DateIncrementAfterPlus(DateToSet);
+                    i = DateIncrementAfterPlus(dateToSet);
                 }
-                else if (DateToSet.Contains(minus))
+                else if (dateToSet.Contains(minus))
                 {
-                    i = DateIncrementAfterMinus(DateToSet);
+                    i = DateIncrementAfterMinus(dateToSet);
                 }
 
                 // get time unit to increase
-                if (DateToSet.ToLower().Contains(LowerCase.Day) || DateToSet.ToLower().Contains(LowerCase.Days)) timePeriodToAdd = TimePeriod.Day;
-                if (DateToSet.ToLower().Contains(LowerCase.Week) || DateToSet.ToLower().Contains(LowerCase.Weeks)) timePeriodToAdd = TimePeriod.Week;
-                if (DateToSet.ToLower().Contains(LowerCase.Month) || DateToSet.ToLower().Contains(LowerCase.Months)) timePeriodToAdd = TimePeriod.Month;
-                if (DateToSet.ToLower().Contains(LowerCase.Year) || DateToSet.ToLower().Contains(LowerCase.Years)) timePeriodToAdd = TimePeriod.Year;
+                if (dateToSet.ToLower().Contains(LowerCase.Day) || dateToSet.ToLower().Contains(LowerCase.Days)) timePeriodToAdd = TimePeriod.Day;
+                if (dateToSet.ToLower().Contains(LowerCase.Week) || dateToSet.ToLower().Contains(LowerCase.Weeks)) timePeriodToAdd = TimePeriod.Week;
+                if (dateToSet.ToLower().Contains(LowerCase.Month) || dateToSet.ToLower().Contains(LowerCase.Months)) timePeriodToAdd = TimePeriod.Month;
+                if (dateToSet.ToLower().Contains(LowerCase.Year) || dateToSet.ToLower().Contains(LowerCase.Years)) timePeriodToAdd = TimePeriod.Year;
 
                 // actually increase
                 switch (timePeriodToAdd)
@@ -251,11 +252,11 @@ namespace SystemTest.Common
             return returnValue;
         }
 
-        public static void SetTodayDateInTableRow(string CaptionKey, Table table)
+        public static void SetTodayDateInTableRow(string captionKey, Table table)
         {
             foreach (TableRow tableRow in table.Rows)
             {
-                SetTodayDateInTableRow(CaptionKey, tableRow);
+                SetTodayDateInTableRow(captionKey, tableRow);
             }
         }
 
@@ -288,35 +289,35 @@ namespace SystemTest.Common
                 throw new Exception("Error in SetActualNumberOfPages " + ex.Message);
             }
         }
-        public static void SearchByConstituentName(string ConstituentName, bool SplitName)
+        public static void SearchByConstituentName(string constituentName, bool splitName)
         {
-            if (SplitName)
+            if (splitName)
             {
                 var names = new string[2];
-                names = ConstituentName.Split(' ');
+                names = constituentName.Split(' ');
                 SearchDialog.SetFirstNameToSearch(names[0]);
                 SearchDialog.SetLastNameToSearch(names[1] + uniqueStamp);
             }
             else
             {
-                SearchDialog.SetLastNameToSearch(ConstituentName + uniqueStamp);
+                SearchDialog.SetLastNameToSearch(constituentName + uniqueStamp);
             }
             SearchDialog.Search();
             SearchDialog.SelectFirstResult();
         }
 
-        public static void SelectPageAndStartProcess(string Process)
+        public static void SelectPageAndStartProcess(string process)
         {
-            SelectPageAndStartProcess(Process, 0);
+            SelectPageAndStartProcess(process, 0);
         }
 
-        public static void SelectPageAndStartProcess(string Process, int ExpectedRecordCount)
+        public static void SelectPageAndStartProcess(string process, int expectedRecordCount)
         {
             try
             {
                 // check the page has rendered find the last > in the page control at the bottom of the page
                 // this does not appear if the page count is == 1
-                Panel.GetEnabledElement(XpathHelper.xPath.VisiblePanel + "//div[contains(@class,'x-panel-bbar')]//button[./text()='>']", 15);
+                Panel.GetEnabledElement(XpathHelper.xPath.VisiblePanel + "//div[contains(@class,'x-panel-bbar')]//button[./text()='>']", 10);
             }
             catch // (Exception ex)
             {
@@ -328,23 +329,17 @@ namespace SystemTest.Common
 
             try
             {
-                // lets try the last page first as it's normally here
-                if (actualNumberOfPages > 1)
-                {
-                    BaseComponent.WaitClick(string.Format(XpathHelper.xPath.VisiblePanel + "//button[contains(@data-pagenumber, '{0}')]", actualNumberOfPages), 15);
-                }
-                StartProcess(Process, ExpectedRecordCount);
+                StartProcess(process, expectedRecordCount);
                 return;
             }
             catch
             {
-                BaseComponent.WaitClick(string.Format(XpathHelper.xPath.VisiblePanel + "//button[contains(@data-pagenumber, '1')]"));
                 // check each page starting at one
                 for (var i = 0; i <= actualNumberOfPages; i++)
                 {
                     try
                     {
-                        StartProcess(Process, ExpectedRecordCount);
+                        StartProcess(process, expectedRecordCount);
                         break;
                     }
                     catch (Exception Ex)
@@ -365,39 +360,41 @@ namespace SystemTest.Common
             }
         }
 
-        private static void StartProcess(string Process, int ExpectedRecordCount)
+        private static void StartProcess(string process, int expectedRecordCount)
         {
             try
             {
                 //if we are not in the right pane this selection with throw an error
-                BaseComponent.GetEnabledElement(string.Format(XpathHelper.xPath.VisibleContainerBlock + "//a[text()='{0}']", Process), 15);
+                BaseComponent.GetEnabledElement(string.Format(XpathHelper.xPath.VisibleContainerBlock + "//a[text()='{0}']", process), 5);
             }
             catch (Exception ex)
             {
                 throw new Exception(startProcessSelectionException, ex);
             }
             // click process
-            BaseComponent.WaitClick(string.Format(XpathHelper.xPath.VisibleContainerBlock + "//a[text()='{0}']", Process), 15);
+            BaseComponent.WaitClick(string.Format(XpathHelper.xPath.VisibleContainerBlock + "//a[text()='{0}']", process));
 
             // Click start process
             BaseComponent.WaitClick("//div[text()='Start process']");
-            // click start
-            if (Process != "Update membership status" + uniqueStamp)
+            try
             {
-                BaseComponent.WaitClick(XpathHelper.xPath.VisibleBlock + "//button[text()='Start']");
+                // click start
+                if (process != "Update membership status" + uniqueStamp)
+                {
+                    BaseComponent.WaitClick(XpathHelper.xPath.VisibleBlock + "//button[text()='Start']", 5);
+                }
             }
-           
-
+            catch { }
 
             // process completes or throw error
             // decide validation based on if we know the actual number of results!
-            if (ExpectedRecordCount == 0)
+            if (expectedRecordCount == 0)
             {
                 WhenRecordsSuccessfullyProcessedIsGreaterThanZero();
             }
-            else if (ExpectedRecordCount > 0)
+            else if (expectedRecordCount > 0)
             {
-                WhenRecordsSuccessfullyProcessedIsEqual(ExpectedRecordCount);
+                WhenRecordsSuccessfullyProcessedIsEqual(expectedRecordCount);
             }
         }
 
@@ -438,7 +435,7 @@ namespace SystemTest.Common
             }
         }
 
-        public static void WhenRecordsSuccessfullyProcessedIsEqual(int ExpectedRecordCount)
+        public static void WhenRecordsSuccessfullyProcessedIsEqual(int expectedRecordCount)
         {
             try
             {
@@ -450,15 +447,15 @@ namespace SystemTest.Common
                 throw new Exception("Process 'Completed' screen not rendered - process failed to run!", ex);
             }
 
-            string xpath = string.Format("//div[contains(@class,'bbui-pages-contentcontainer') and not(contains(@class,'x-hide-display'))]//span[contains(@id,'_SUCCESSCOUNT_value') and ./text()='{0}']", ExpectedRecordCount.ToString());
+            string xpath = string.Format("//div[contains(@class,'bbui-pages-contentcontainer') and not(contains(@class,'x-hide-display'))]//span[contains(@id,'_SUCCESSCOUNT_value') and ./text()='{0}']", expectedRecordCount.ToString());
             // check it's there to get
             try
             {
-                BaseComponent.GetEnabledElement(xpath, 10);
+                BaseComponent.GetEnabledElement(xpath, 20);
             }
             catch (WebDriverTimeoutException wdEx)
             {
-                throw new Exception(string.Format("Unable to confirm success of Business Process with {0}", ExpectedRecordCount), wdEx);
+                throw new Exception(string.Format("Unable to confirm success of Business Process with {0}", expectedRecordCount), wdEx);
             }
         }
 
@@ -474,5 +471,71 @@ namespace SystemTest.Common
                 // nothing means pop up not spawned
             }
         }
+
+        public static void PageThrough(string pageName, string sectionCaption, string columnName)
+        {
+            IDictionary<string, string> rowValues = new Dictionary<string, string>();
+            rowValues.Add(columnName, pageName + uniqueStamp);
+            // get actual number of pages
+            int actualNumberOfPages = StepHelper.SetActualNumberOfPages();
+
+            //lets try the last page first and revert to looping through them if the process is not on the last one
+            if (actualNumberOfPages > 1)
+                {
+                BaseComponent.WaitClick(string.Format(XpathHelper.xPath.VisiblePanel + "//button[contains(@data-pagenumber, '{0}')]", actualNumberOfPages.ToString()), 5);
+                }
+
+            try
+            {
+
+                if (!Panel.SectionDatalistRowExists(rowValues, sectionCaption))
+                {
+                    throw new Exception
+                        (string.Format("Expected values not in the grid for Solicit code {0}.", pageName + uniqueStamp));
+                }
+
+            }
+
+            catch
+            {
+                //process was not on the last page lets loop through for it - move to the first page first if we are not there already
+                try
+                {
+                    BaseComponent.GetEnabledElement(XpathHelper.xPath.VisiblePanel + "//button[contains(@data-pagenumber, '1')]", 5);
+                    BaseComponent.WaitClick(XpathHelper.xPath.VisiblePanel + "//button[contains(@data-pagenumber, '1')]");
+                }
+                catch { }
+                // check each page - leaving this commented out as it is needed but does not need to be done right away
+                try
+                {
+                    for (var i = 1; i <= actualNumberOfPages; i++)
+                    {
+                        try
+                        {
+
+                            if (!Panel.SectionDatalistRowExists(rowValues, sectionCaption))
+                            {
+                                throw new Exception
+                                    (string.Format("Expected values not in the grid for Solicit code {0}.", pageName + uniqueStamp));
+                            }
+
+                            break;
+                        }
+                        catch // (Exception Ex)
+                        {
+                            // eat exception - should just mean it's not visisble on the page yet
+                        }
+                        // move to next page if not on the last page
+                        //if (i != actualNumberOfPages)
+                        //{
+                        //    // find page number and click next page
+                        //    BaseComponent.GetEnabledElement(string.Format(XpathHelper.xPath.VisiblePanel + "//button[contains(@data-pagenumber, '{0}')]", i + 2), 10).Click();
+                        //}
+                    }
+                }
+                catch { }
+            }
+        }
+
     }
 }

@@ -15,11 +15,11 @@ namespace SystemTest.Core.Steps
     public sealed class AppealMailingSteps : BaseSteps
     {
         [Given(@"Marketing Export Definitions ""(.*)"" exists")]
-        public void GivenMarketingExportDefinitionsExists(string ExportName)
+        public void GivenMarketingExportDefinitionsExists(string exportName)
         {
             //in this instance we cannot use the default XpathHelper one
             var visibleDialog = "//div[contains(@class,'x-window x-resizable-pinned') and contains(@style,'visible')]";
-            ExportName += uniqueStamp;
+            exportName += uniqueStamp;
             //navigate
             BBCRMHomePage.OpenMarketingAndCommunicationsFA();
             MarketingAndCommFunctionalArea.OpenLink("Packages", "Export definitions");
@@ -32,20 +32,20 @@ namespace SystemTest.Core.Steps
             //click save tab
             Dialog.WaitClick("//span[contains(@class,'x-tab-strip-text') and ./text()='Set save options']");
             //set name field
-            ExportDefinitionDialog.SetTextField(visibleDialog + "//input[contains(@id,'_NAME_value')]", ExportName);
+            ExportDefinitionDialog.SetTextField(visibleDialog + "//input[contains(@id,'_NAME_value')]", exportName);
             //give the "save and close" button validation time to catch up
-            ExportDefinitionDialog.SetTextField(visibleDialog + "//textarea[contains(@id,'_DESCRIPTION_value')]", ExportName);
-            ExportDefinitionDialog.SetTextField(visibleDialog + "//textarea[contains(@id,'_DESCRIPTION_value')]", ExportName);
-            ExportDefinitionDialog.SetTextField(visibleDialog + "//textarea[contains(@id,'_DESCRIPTION_value')]", ExportName);
+            ExportDefinitionDialog.SetTextField(visibleDialog + "//textarea[contains(@id,'_DESCRIPTION_value')]", exportName);
+            ExportDefinitionDialog.SetTextField(visibleDialog + "//textarea[contains(@id,'_DESCRIPTION_value')]", exportName);
+            ExportDefinitionDialog.SetTextField(visibleDialog + "//textarea[contains(@id,'_DESCRIPTION_value')]", exportName);
             ExportDefinitionDialog.SaveAndClose();
         }
 
         [Given(@"Mail Package record ""(.*)"" exists with Export Definition ""(.*)""")]
-        public void GivenMailPackageRecordExists(string MailPackageName, string ExportDefinition)
+        public void GivenMailPackageRecordExists(string mailPackageName, string exportDefinition)
         {
             const string dialogId = "PackageAddFormMailChannel";
-            MailPackageName += uniqueStamp;
-            ExportDefinition += uniqueStamp;
+            mailPackageName += uniqueStamp;
+            exportDefinition += uniqueStamp;
             IDictionary<string, CrmField> Supportedfields = new Dictionary<string, CrmField>
             {
                 {"Name", new CrmField("_NAME_value", FieldType.TextInput)},
@@ -54,22 +54,22 @@ namespace SystemTest.Core.Steps
             };
             NavMailPackage();
             //set fields on dialog
-            Dialog.SetField(dialogId, "Name", MailPackageName, Supportedfields);
+            Dialog.SetField(dialogId, "Name", mailPackageName, Supportedfields);
             Dialog.SetField(dialogId, "Description", "description: from a test", Supportedfields);
-            Dialog.SetField(dialogId, "Export definition", ExportDefinition, Supportedfields);
+            Dialog.SetField(dialogId, "Export definition", exportDefinition, Supportedfields);
             Dialog.Save();
         }
 
         [Given(@"Appeal ""(.*)"" exists")]
-        public void GivenAppealExists(string AppealName)
+        public void GivenAppealExists(string appealName)
         {
-            AppealName += uniqueStamp;
+            appealName += uniqueStamp;
             //Navigate to Marketing and Communication
             BBCRMHomePage.OpenMarketingAndCommunicationsFA();
             //Add Appeal
             MarketingAndCommFunctionalArea.OpenLink("Appeal", "Add an appeal");
-            Dialog.SetTextField(Dialog.getXInput("AppealAddForm", "NAME"), AppealName);
-            Dialog.SetTextField(Dialog.getXTextArea("AppealAddForm", "DESCRIPTION"), AppealName);
+            Dialog.SetTextField(Dialog.getXInput("AppealAddForm", "NAME"), appealName);
+            Dialog.SetTextField(Dialog.getXTextArea("AppealAddForm", "DESCRIPTION"), appealName);
             Dialog.Save();
         }
 
@@ -98,7 +98,7 @@ namespace SystemTest.Core.Steps
         }
 
         [When(@"I edit Appeal mailing ""(.*)""")]
-        public void WhenIEditAppealMailing(string AppealMailing)
+        public void WhenIEditAppealMailing(string appealMailing)
         {
             //Click Edit mailing task
             BaseComponent.WaitClick("//button[div[text () ='Edit mailing']]");
@@ -155,7 +155,7 @@ namespace SystemTest.Core.Steps
         }
 
         [Then(@"Appeal ""(.*)"" Mailings tab Appeal mailing List shows")]
-        public void ThenAppealMailingsTabAppealMailingListShows(string Appeal, Table table)
+        public void ThenAppealMailingsTabAppealMailingListShows(string appeal, Table table)
         {
             //Verify Appeal Mailing data displays correctly on Appeal
             //select M&C 
@@ -163,7 +163,7 @@ namespace SystemTest.Core.Steps
             //Open Appeal Search
             MarketingAndCommFunctionalArea.OpenLink("Appeal", "Appeal search");
             //search for Appeal in Name field
-            Dialog.SetTextField("//input[contains(@id,'_NAME_value')]", Appeal + uniqueStamp);
+            Dialog.SetTextField("//input[contains(@id,'_NAME_value')]", appeal + uniqueStamp);
             //click Search button
             Dialog.ClickButton("Search");
             //Select correct result in grid

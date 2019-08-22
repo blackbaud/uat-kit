@@ -3,6 +3,7 @@
 	As a BBCRM user
 	I want to manage batch records
 
+@Ready
 Scenario: Batch: Process Donation payment for existing constituent via Enhanced Revenue Batch
 	Given I have logged into the BBCRM home page
 	And I add individual(s)
@@ -25,6 +26,7 @@ Scenario: Batch: Process Donation payment for existing constituent via Enhanced 
     | Application | Amount  |
     | Donation    | $100.00 |
 
+@Ready
 Scenario: Batch: Split a pledge across 2 designations via Enhanced Revenue Batch
 	Given I have logged into the BBCRM home page
 	And I add individual
@@ -39,6 +41,7 @@ Scenario: Batch: Split a pledge across 2 designations via Enhanced Revenue Batch
 	| Library Fund |
 	Then the 'Designation' cell value is '<split>' for row 1
 
+@Ready
 Scenario: Batch: Add a payment record applied to the event registration using Enhanced Revenue Batch
     Given I have logged into the BBCRM home page
 	And I add individual(s)
@@ -59,6 +62,7 @@ Scenario: Batch: Add a payment record applied to the event registration using En
 	| Registrant First Name | Registrant Last Name | Balance | Extra |
     | Tom                   | Bradbury             | $0.00   |       |
 
+@Ready
 Scenario: Batch: Add a donation payment with multiple designations through a batch
 	Given I have logged into the BBCRM home page
 	And I add individual
@@ -81,6 +85,7 @@ Scenario: Batch: Add a donation payment with multiple designations through a bat
 	| Library Fund          | $50.00              |
 	| Botanical Garden Fund | $150.00             |
 
+@Ready
 Scenario: Batch: Add event payment via Enhanced revenue batch for registered attendee made by their organisation relationship/employer
     Given I have logged into the BBCRM home page
 	And I add individual(s)
@@ -108,14 +113,15 @@ Scenario: Batch: Add event payment via Enhanced revenue batch for registered att
 	| Registrant First Name | Registrant Last Name | Balance | Extra |
 	| Tom                   | Potter               | $0.00   |       |	 
 
+@Ready
 Scenario: Batch: Process payment for existing Pledge commitment on existing constituent via Enhanced Revenue Batch
 	Given I have logged into the BBCRM home page
 	And I add individual(s)
 	| Last name | First name | Title | Nickname | Information source |
 	| Jenkins   | Timothy    | Mr.   | Tim      | Other              |
 	And A Pledge has been submitted today for the Constituent "Timothy Jenkins" with account system "System Generated Account System"
-	| Amount   | Designation | Installments | Date  | Start date | Frequency | Installment amount | Number of Installments | Post Type   |
-	| $1200.00 | GARDEN      | Monthly      | Today | Today      | Monthly   | $100.00            | 12                     | Do not post |
+	| Amount    | Designation | Installments | Date  | Start date | Frequency | Installment amount | Number of Installments | Post Type   |
+	| $1,200.00 | GARDEN      | Monthly      | Today | Today      | Monthly   | $100.00            | 12                     | Do not post |
 	When I add a batch with template "Enhanced Revenue Batch" and description "ERB Event Payment"
     | Account system                  | Constituent | Amount  | Date  | Revenue type | Payment method | Application |
     | System Generated Account System | Jenkins     | $100.00 | Today | Payment      | Check          | Pledge for  |
@@ -133,6 +139,7 @@ Scenario: Batch: Process payment for existing Pledge commitment on existing cons
     | Application | Amount  |
     | Pledge      | $100.00 |
 
+@Ready
 Scenario: Batch: Process payment for existing Recurring Gift commitment on existing constituent via Enhanced Revenue Batch
 	Given I have logged into the BBCRM home page
 	And I add individual
@@ -158,6 +165,7 @@ Scenario: Batch: Process payment for existing Recurring Gift commitment on exist
 	| Application    | Amount  |
 	| Recurring gift | $100.00 |
 
+@Ready
 Scenario: Batch: Add a pledge with the GL post status "Do not post" via Enhanced Revenue Batch
 	Given I have logged into the BBCRM home page
 	And I add individual

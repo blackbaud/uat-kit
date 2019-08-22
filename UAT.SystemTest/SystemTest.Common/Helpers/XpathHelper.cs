@@ -10,6 +10,7 @@
             public const string VisiblePanel = "//div[contains(@class,'bbui-pages-contentcontainer') and not(contains(@class,'x-hide-display'))]";
             public const string VisibleBlock = "//div[contains(@id,'dataformdialog') and contains(@style,'block')]";
             public const string VisibleContainerBlock = "//div[contains(@class,'bbui-datalist-container') and contains(@style,'block')]";
+            public const string VisibleBatchDialog = "//div[contains(@id,'batchdialog') and contains(@style,'block')]";
         }
 
         public struct PaymentAddActions
@@ -31,6 +32,7 @@
             public const string ViewEditSoldProperty = "View/edit sold property information";
             public const string SellStock = "Sell stock";
             public const string WriteOff = "Write-off";
+            public const string EditPostedPayment = "Edit posted payment";
         }
 
         public struct PaymentDeleteActions

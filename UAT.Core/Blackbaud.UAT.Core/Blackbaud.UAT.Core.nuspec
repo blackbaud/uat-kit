@@ -18,8 +18,10 @@
             <frameworkAssembly assemblyName="System.Configuration"  />
         </frameworkAssemblies>
         <dependencies>
-            <dependency id="SpecFlow" version="2.0.0" />
-            <dependency id="Selenium.Support" version="2.53.1" />
+            <dependency id="SpecFlow" version="2.4.1" />
+            <dependency id="Selenium.WebDriver" version="3.141.0" />
+            <dependency id="Selenium.Support" version="3.141.0" />
+            <dependency id="Newtonsoft.Json" version="10.0.3" />
         </dependencies>
     </metadata>
     <files>

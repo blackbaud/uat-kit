@@ -27,7 +27,7 @@ namespace SystemTest.Core.Steps
             {
                 individual["Last name"] = individual["Last name"] + uniqueStamp;
                 BBCRMHomePage.OpenConstituentsFA();
-                ConstituentsFunctionalArea.AddAnIndividual(individual, timeout: 120);
+                ConstituentsFunctionalArea.AddAnIndividual(individual, timeout: 120, constituentMatching: false);
             }
         }
 
