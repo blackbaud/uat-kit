@@ -9,7 +9,8 @@ namespace SystemTest.Common.Crm
         private static readonly Dictionary<string, string> CustomSupportedSpans = new Dictionary<string, string>
         {
             {"Acknowledgements", getXSpan(null, "_PLEDGEACKNOWLEDGEMENTSTATUS_value")},
-            {"Post status", getXSpan(null, "_PLEDGEPOSTSTATUS_value")}
+            {"Post status", getXSpan(null, "_PLEDGEPOSTSTATUS_value")},
+            {"Past due", getXSpan(null, "_BADGEPASTDUE_value")}
         };
 
         public static bool SpanContains(string label, string value)

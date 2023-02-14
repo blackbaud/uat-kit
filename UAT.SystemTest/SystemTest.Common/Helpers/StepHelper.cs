@@ -10,6 +10,8 @@ using System.Globalization;
 using System.Threading;
 using Blackbaud.UAT.Core.Crm.Dialogs;
 using Blackbaud.UAT.Core.Crm.Panels;
+using System.Linq;
+using OpenQA.Selenium.Support.UI;
 
 namespace SystemTest.Common
 {
@@ -38,6 +40,23 @@ namespace SystemTest.Common
             Month = 2,
             Year = 3,
             NotSet = 99
+        }
+
+        public static int FindRowIndex(TableRow row, string dialogId, string gridId, string uniqueHeader)
+        {
+            // preprocessing
+            int rowIndex = 1;
+            string xPath = XpathHelper.xPath.VisibleDialog + $"//div[contains(@id,'{dialogId}')]//div[contains(@id, '{gridId}')]//div[@class='x-grid3-body']/div";
+            // wait
+            Dialog.GetDisplayedElement(xPath);
+            int rowCount = BaseComponent.Driver.FindElements(By.XPath(xPath)).Count();
+            // iterate through the rows until you find the row with the matching value in the identifying header
+            while (rowIndex <= rowCount && !String.Equals($"{row[uniqueHeader]}", Dialog.GetEnabledElement(Dialog.getXGridCell(dialogId, gridId, rowIndex, BaseComponent.GetDatalistColumnIndex(Dialog.getXGridHeaders(dialogId, gridId), uniqueHeader))).Text.ToString()))
+            {
+                rowIndex++;
+            }
+
+            return rowIndex;
         }
 
         public static void SearchAndSelectConstituent(string constituentName)
@@ -91,6 +110,91 @@ namespace SystemTest.Common
             SearchDialog.SelectFirstResult();
         }
 
+        public static void SelectPageAndExecuteAction(Action action, string ExceptionMessage = null, bool tryLastPageFirst = false)
+        {
+            try
+            {
+                // check the page has rendered find the last > in the page control at the bottom of the page
+                // this does not appear if the page count is == 1
+                Panel.GetEnabledElement(XpathHelper.xPath.VisiblePanel + "//div[contains(@class,'x-panel-bbar')]//button[text()='>']", 20);
+            }
+            catch
+            {
+                // let's fail fast and move on
+            }
+
+            // get actual number of pages
+            int actualNumberOfPages = SetActualNumberOfPages();
+
+            if (tryLastPageFirst)
+            {
+                // let's try the last page first and revert to looping through them if what we want is not found is not on the last page
+                if (actualNumberOfPages > 1)
+                {
+                    BaseComponent.WaitClick(XpathHelper.xPath.VisiblePanel + $"//button[contains(@data-pagenumber, '{actualNumberOfPages.ToString()}')]", 20);
+                }
+
+                try
+                {
+                    action();
+                    return;
+                }
+                catch (WebDriverTimeoutException)
+                {
+                    GoToFirstPage();
+                }
+                catch (Exception Ex)
+                {
+                    if (Ex.Message != ExceptionMessage)
+                    {
+                        throw Ex;
+                    }
+                    // else
+                    // eat exception - should just mean it's not visisble on the page yet, so move back to first page if not there already
+                    GoToFirstPage();
+
+                }
+
+            }
+
+            // check each page starting at one
+            for (int i = 0; i <= actualNumberOfPages; i++)
+            {
+                try
+                {
+                    action();
+                    break;
+                }
+                catch (Exception Ex)
+                {
+                    if (Ex.Message != ExceptionMessage)
+                    {
+                        throw Ex;
+                    }
+                    // else
+                    // eat exception - should just mean it's not visisble on the page yet
+                }
+                // move to next page if not on the last page
+                if (i != actualNumberOfPages)
+                {
+                    BaseComponent.WaitClick(XpathHelper.xPath.VisiblePanel + $"//button[contains(@data-pagenumber, '{i + 2}')]");
+                }
+            }
+        }
+
+        private static void GoToFirstPage()
+        {
+            try
+            {
+                BaseComponent.GetEnabledElement(XpathHelper.xPath.VisiblePanel + "//button[contains(@data-pagenumber, '1')]", 20);
+                BaseComponent.WaitClick(XpathHelper.xPath.VisiblePanel + "//button[contains(@data-pagenumber, '1')]");
+            }
+            catch
+            {
+                // eat exception
+            }
+        }
+
         public static void SetAccountSystem(string accountSystem)
         {
             BaseComponent.WaitClick("//a[contains(@id,'_SHOWSYSTEM_action')]"); //select correct account system
@@ -99,7 +203,15 @@ namespace SystemTest.Common
             {
                 {"Account System", new CrmField("_PDACCOUNTSYSTEMID_value", FieldType.Dropdown)}
             };
-            Dialog.SetField("SelectAccountSystem", "Account System", accountSystem, Supportedfields);
+            if (accountSystem == "System Generated Account System")
+            {
+                Dialog.SetField("SelectAccountSystem", "Account System", accountSystem, Supportedfields);
+            }
+            else
+            {
+                Dialog.SetField("SelectAccountSystem", "Account System", accountSystem + uniqueStamp, Supportedfields);
+            }
+
             // OK button
             BaseComponent.WaitClick("//div[contains(@class, 'x-window  bbui-dialog') and contains(@style,'visible')]//button[./text()='OK']");
         }
@@ -313,51 +425,12 @@ namespace SystemTest.Common
 
         public static void SelectPageAndStartProcess(string process, int expectedRecordCount)
         {
-            try
-            {
-                // check the page has rendered find the last > in the page control at the bottom of the page
-                // this does not appear if the page count is == 1
-                Panel.GetEnabledElement(XpathHelper.xPath.VisiblePanel + "//div[contains(@class,'x-panel-bbar')]//button[./text()='>']", 10);
-            }
-            catch // (Exception ex)
-            {
-                // lets fail fast and move on
-            }
-
-            // get actual number of pages
-            int actualNumberOfPages = StepHelper.SetActualNumberOfPages();
-
-            try
+            SelectPageAndExecuteAction(() =>
             {
                 StartProcess(process, expectedRecordCount);
-                return;
-            }
-            catch
-            {
-                // check each page starting at one
-                for (var i = 0; i <= actualNumberOfPages; i++)
-                {
-                    try
-                    {
-                        StartProcess(process, expectedRecordCount);
-                        break;
-                    }
-                    catch (Exception Ex)
-                    {
-                        if (Ex.Message != startProcessSelectionException)
-                        {
-                            throw Ex;
-                        }
-                        // else
-                        // eat exception - should just mean it's not visisble on the page yet
-                    }
-                    // move to next page if not on the last page
-                    if (i != actualNumberOfPages)
-                    {
-                        BaseComponent.WaitClick(string.Format(XpathHelper.xPath.VisiblePanel + "//button[contains(@data-pagenumber, '{0}')]", i + 2));
-                    }
-                }
-            }
+            }, startProcessSelectionException, true);
+
+
         }
 
         private static void StartProcess(string process, int expectedRecordCount)
@@ -365,14 +438,13 @@ namespace SystemTest.Common
             try
             {
                 //if we are not in the right pane this selection with throw an error
-                BaseComponent.GetEnabledElement(string.Format(XpathHelper.xPath.VisibleContainerBlock + "//a[text()='{0}']", process), 5);
+                BaseComponent.GetEnabledElement(string.Format(XpathHelper.xPath.VisibleContainerBlock + "//a[text()='{0}']", process), 20);
+                BaseComponent.WaitClick(string.Format(XpathHelper.xPath.VisibleContainerBlock + "//a[text()='{0}']", process, 20));
             }
             catch (Exception ex)
             {
                 throw new Exception(startProcessSelectionException, ex);
             }
-            // click process
-            BaseComponent.WaitClick(string.Format(XpathHelper.xPath.VisibleContainerBlock + "//a[text()='{0}']", process));
 
             // Click start process
             BaseComponent.WaitClick("//div[text()='Start process']");
@@ -381,7 +453,8 @@ namespace SystemTest.Common
                 // click start
                 if (process != "Update membership status" + uniqueStamp)
                 {
-                    BaseComponent.WaitClick(XpathHelper.xPath.VisibleBlock + "//button[text()='Start']", 5);
+                    BaseComponent.WaitClick(XpathHelper.xPath.VisibleBlock + "//button[text()='Start']", 20);
+
                 }
             }
             catch { }
@@ -400,16 +473,22 @@ namespace SystemTest.Common
 
         public static void WhenRecordsSuccessfullyProcessedIsGreaterThanZero()
         {
+            // different tabs display two different recent status spellings..accounting for that
+            BaseComponent.WaitClick(XpathHelper.xPath.VisiblePanel + "//span[contains(text(),'Recent Status') or contains(text(),'Recent status')]", 20);
+                       
+            // wait
+            BaseComponent.GetEnabledElement(XpathHelper.xPath.VisiblePanel + "//span[text()='Records successfully processed:']", 480);
+
             try
             {
                 // wait for completed screen
-                BaseComponent.GetEnabledElement(XpathHelper.xPath.VisiblePanel + "//span[contains(@id,'_STATUS_value') and ./text()='Completed']", 480);
+                BaseComponent.GetEnabledElement(XpathHelper.xPath.VisiblePanel + "//span[contains(@id,'_STATUS_caption')]/../..//span[contains(@id,'_STATUS_value') and ./text()='Completed']", 480);
+                BaseComponent.WaitClick(XpathHelper.xPath.VisiblePanel + "//span[contains(@id,'_STATUS_caption')]/../..//span[contains(@id,'_STATUS_value') and ./text()='Completed']", 480);
             }
             catch (Exception ex)
             {
                 throw new Exception("Process 'Completed' screen not rendered - process failed to run!", ex);
             }
-
             // check converts to int
             string xpath = "//div[contains(@class,'bbui-pages-contentcontainer') and not(contains(@class,'x-hide-display'))]//span[contains(@id,'_SUCCESSCOUNT_value')]";
             // check it's there to get
@@ -476,65 +555,63 @@ namespace SystemTest.Common
         {
             IDictionary<string, string> rowValues = new Dictionary<string, string>();
             rowValues.Add(columnName, pageName + uniqueStamp);
-            // get actual number of pages
-            int actualNumberOfPages = StepHelper.SetActualNumberOfPages();
 
-            //lets try the last page first and revert to looping through them if the process is not on the last one
-            if (actualNumberOfPages > 1)
-                {
-                BaseComponent.WaitClick(string.Format(XpathHelper.xPath.VisiblePanel + "//button[contains(@data-pagenumber, '{0}')]", actualNumberOfPages.ToString()), 5);
-                }
-
-            try
+            SelectPageAndExecuteAction(() =>
             {
-
                 if (!Panel.SectionDatalistRowExists(rowValues, sectionCaption))
                 {
                     throw new Exception
                         (string.Format("Expected values not in the grid for Solicit code {0}.", pageName + uniqueStamp));
                 }
+            }, tryLastPageFirst: true);
 
-            }
+        }
 
-            catch
+        public static void VerifyPanelXGridRows(string gridTitle, Table table)
+        {
+            // preprocessing
+            Dictionary<string, int> indices = new Dictionary<string, int>();
+            string panelXPath = XpathHelper.xPath.VisiblePanel + $"//div[text()='{gridTitle}']//ancestor::div[contains(@class,'bbui-pages-section-container')]";
+            // wait
+            Panel.GetEnabledElement(panelXPath + "//thead");
+            // find table cells with headers
+            IList<IWebElement> elements = BaseComponent.Driver.FindElements(By.XPath(panelXPath + "//thead/tr/td"));
+            // generate indices dict
+            foreach (var header in table.Header)
             {
-                //process was not on the last page lets loop through for it - move to the first page first if we are not there already
-                try
+                int index = 1;
+
+                foreach (var element in elements)
                 {
-                    BaseComponent.GetEnabledElement(XpathHelper.xPath.VisiblePanel + "//button[contains(@data-pagenumber, '1')]", 5);
-                    BaseComponent.WaitClick(XpathHelper.xPath.VisiblePanel + "//button[contains(@data-pagenumber, '1')]");
-                }
-                catch { }
-                // check each page - leaving this commented out as it is needed but does not need to be done right away
-                try
-                {
-                    for (var i = 1; i <= actualNumberOfPages; i++)
+                    if (string.Equals(element.Text.ToString(), header))
                     {
-                        try
-                        {
+                        indices.Add(header, index);
+                        break;
+                    }
+                    index++;
+                }
+            }
+            // verify values
+            foreach (TableRow row in table.Rows) // by row
+            {
+                string rowXPath = panelXPath;
 
-                            if (!Panel.SectionDatalistRowExists(rowValues, sectionCaption))
-                            {
-                                throw new Exception
-                                    (string.Format("Expected values not in the grid for Solicit code {0}.", pageName + uniqueStamp));
-                            }
-
-                            break;
-                        }
-                        catch // (Exception Ex)
-                        {
-                            // eat exception - should just mean it's not visisble on the page yet
-                        }
-                        // move to next page if not on the last page
-                        //if (i != actualNumberOfPages)
-                        //{
-                        //    // find page number and click next page
-                        //    BaseComponent.GetEnabledElement(string.Format(XpathHelper.xPath.VisiblePanel + "//button[contains(@data-pagenumber, '{0}')]", i + 2), 10).Click();
-                        //}
+                foreach (var header in table.Header) // by column
+                {
+                    // for each non-empty column, check that the table row includes its value
+                    if (!String.IsNullOrEmpty(Convert.ToString(row[header])))
+                    {
+                        rowXPath += $"//td[{indices[header]}]//*[text()='{row[header]}']//ancestor::tr[1]";
                     }
                 }
-                catch { }
+                Panel.GetDisplayedElement(rowXPath, 15);
             }
+        }
+
+        public static string SetXGridHeader(string dialogId, string gridId)
+        {
+            // this is to take place of Dialog.getXGridHeaders when the visible block that it uses is not needed
+            return String.Format("//div[contains(@id,'{0}')]//div[contains(@id, '{1}')]//div[@class='x-grid3-header']//tr", dialogId, gridId);
         }
 
     }

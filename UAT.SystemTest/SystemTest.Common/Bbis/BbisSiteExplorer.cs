@@ -124,6 +124,9 @@ namespace SystemTest.Common.Bbis
             string handle = Driver.CurrentWindowHandle;
             string template = "QA template";
 
+            // Adding a check to give more time to click button
+            BBISHomePageCustom.GetEnabledElement("//span[contains(text(), 'meet selected criteria')]");
+            BBISHomePageCustom.WaitClick("//td[contains(text(), 'Folders')]");
             WaitClick(getXNewPageButton);
             waiter.Until(d => d.WindowHandles.Count == 2);
             Driver.SwitchTo().Window(Driver.WindowHandles.Last());
