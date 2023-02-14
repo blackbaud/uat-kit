@@ -26,12 +26,12 @@
             <dependency id="NUnit" version="2.6" />
             <dependency id="SharpZipLib" version="0.86.0"/>
             <dependency id="Selenium.WebDriver" version="3.141.0" />
-            <dependency id="Newtonsoft.Json" version="10.0.3" />
+            <dependency id="Newtonsoft.Json" version="13.0.1" />
         </dependencies>
     </metadata>
     <files>
-        <file src="Install.ps1" target="tools\net45" />
-        <file src="bin\Release\Blackbaud.UAT.SpecFlow.Selenium.SpecFlowPlugin.dll" target="lib\net45" />
+        <file src="Install.ps1" target="tools\net48" />
+        <file src="bin\Release\Blackbaud.UAT.SpecFlow.Selenium.SpecFlowPlugin.dll" target="lib\net48" />
         <file src="App.config.transform" target="content" />
     </files>
 </package>
