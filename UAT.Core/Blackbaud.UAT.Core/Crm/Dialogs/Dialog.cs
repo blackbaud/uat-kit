@@ -506,7 +506,7 @@ namespace Blackbaud.UAT.Core.Crm.Dialogs
             waiter.IgnoreExceptionTypes(typeof(InvalidOperationException), typeof(StaleElementReferenceException), typeof(ElementClickInterceptedException));
             waiter.Until(d =>
             {
-                var innerWaiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(10));
+                var innerWaiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(20));
                 innerWaiter.IgnoreExceptionTypes(typeof(InvalidOperationException), typeof(StaleElementReferenceException), typeof(ElementClickInterceptedException));
 
                 try
@@ -670,7 +670,7 @@ namespace Blackbaud.UAT.Core.Crm.Dialogs
         {
             try
             {
-                var innerWaiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(5));
+                var innerWaiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(20));
                 innerWaiter.IgnoreExceptionTypes(typeof(InvalidOperationException), typeof(StaleElementReferenceException), typeof(ElementClickInterceptedException));
 
                 //click the searchlist
@@ -705,7 +705,7 @@ namespace Blackbaud.UAT.Core.Crm.Dialogs
             {
                 try
                 {
-                    var clickedWaiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(5));
+                    var clickedWaiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(20));
                     clickedWaiter.IgnoreExceptionTypes(typeof(StaleElementReferenceException), typeof(ElementClickInterceptedException));
                     clickedWaiter.Until(d1 =>
                     {
@@ -730,7 +730,7 @@ namespace Blackbaud.UAT.Core.Crm.Dialogs
                     return false;
                 }
 
-                var waiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(10));
+                var waiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(20));
                 waiter.IgnoreExceptionTypes(typeof(InvalidOperationException), typeof(StaleElementReferenceException), typeof(ElementClickInterceptedException));
 
                 //click the dropdown arrow
@@ -866,7 +866,7 @@ namespace Blackbaud.UAT.Core.Crm.Dialogs
                 //row when trying to click the first row.
                 try
                 {
-                    var clickedWaiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(5));
+                    var clickedWaiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(20));
                     clickedWaiter.IgnoreExceptionTypes(typeof(StaleElementReferenceException), typeof(ElementClickInterceptedException));
                     clickedWaiter.Until(d1 =>
                     {
@@ -895,7 +895,7 @@ namespace Blackbaud.UAT.Core.Crm.Dialogs
 
                 try
                 {
-                    var setValueWaiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(5));
+                    var setValueWaiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(20));
                     setValueWaiter.IgnoreExceptionTypes(typeof(InvalidOperationException), typeof(ElementClickInterceptedException));
                     setValueWaiter.Until(d2 =>
                     {
@@ -930,7 +930,7 @@ namespace Blackbaud.UAT.Core.Crm.Dialogs
                         // if this is a code table entry we need to (possibly) deal with the yes/no popup
                         try
                         {
-                            Dialog.WaitClick("//button[./text()='Yes']", 5);
+                            Dialog.WaitClick("//button[./text()='Yes']", 20);
                         }
                         catch {/* nothing means pop up not spawned */}
                     }

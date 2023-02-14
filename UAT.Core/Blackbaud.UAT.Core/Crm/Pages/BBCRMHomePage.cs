@@ -222,7 +222,7 @@ namespace Blackbaud.UAT.Core.Crm
                 //retry logic
                 navigateWaiter.Until(d1 =>
                 {
-                    WebDriverWait clickWaiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(10));
+                    WebDriverWait clickWaiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(20));
                     clickWaiter.IgnoreExceptionTypes(typeof(InvalidOperationException), typeof(ElementClickInterceptedException));
                     try
                     {

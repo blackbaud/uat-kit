@@ -104,7 +104,7 @@ namespace Blackbaud.UAT.Core.Crm.Dialogs
                         SetTextField(getXCriteriaInput(criter["field"]), criter["value"]);
                         break;
                     case "COMBOVALUE":
-                        SetTextField(getXCriteriaInput(criter["field"]), criter["value"]);
+                        Dialog.SetDropDown(getXCriteriaInput(criter["field"]), criter["value"]);
                         break;
                     default:
                         throw new NotImplementedException("Criteria field '" + criter["field"] + "' is not implemented yet.");

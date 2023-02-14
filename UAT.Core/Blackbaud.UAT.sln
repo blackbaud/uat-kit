@@ -1,15 +1,26 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.40629.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.705
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{6200C215-2E89-4DB9-A472-17FB3AD38E2F}"
 	ProjectSection(SolutionItems) = preProject
 		.nuget\NuGet.Config = .nuget\NuGet.Config
 		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\packages.config = .nuget\packages.config
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blackbaud.UAT.Core", "Blackbaud.UAT.Core\Blackbaud.UAT.Core.csproj", "{0002E497-81DF-4A90-AE9C-BBB52706C4B2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blackbaud.UAT.Core", "Blackbaud.UAT.Core\Blackbaud.UAT.Core.csproj", "{D99D5D24-9506-4B77-A229-8A3A43407332}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "git", "git", "{70DE09CF-1B25-46D2-AC20-B7CB76FEA69D}"
+	ProjectSection(SolutionItems) = preProject
+		git\pushDocs.cmd = git\pushDocs.cmd
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{02EB0612-0FFE-45EE-BB51-5C9552267BDD}"
+	ProjectSection(SolutionItems) = preProject
+		readme.txt = readme.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,16 +30,28 @@ Global
 		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{0002E497-81DF-4A90-AE9C-BBB52706C4B2}.Debug|Any CPU.ActiveCfg = Release|Any CPU
-		{0002E497-81DF-4A90-AE9C-BBB52706C4B2}.Debug|Any CPU.Build.0 = Release|Any CPU
-		{0002E497-81DF-4A90-AE9C-BBB52706C4B2}.Debug|x64.ActiveCfg = Release|Any CPU
-		{0002E497-81DF-4A90-AE9C-BBB52706C4B2}.Debug|x64.Build.0 = Release|Any CPU
-		{0002E497-81DF-4A90-AE9C-BBB52706C4B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0002E497-81DF-4A90-AE9C-BBB52706C4B2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0002E497-81DF-4A90-AE9C-BBB52706C4B2}.Release|x64.ActiveCfg = Release|Any CPU
-		{0002E497-81DF-4A90-AE9C-BBB52706C4B2}.Release|x64.Build.0 = Release|Any CPU
+		{D99D5D24-9506-4B77-A229-8A3A43407332}.Debug|Any CPU.ActiveCfg = Release|Any CPU
+		{D99D5D24-9506-4B77-A229-8A3A43407332}.Debug|Any CPU.Build.0 = Release|Any CPU
+		{D99D5D24-9506-4B77-A229-8A3A43407332}.Debug|x64.ActiveCfg = Release|Any CPU
+		{D99D5D24-9506-4B77-A229-8A3A43407332}.Debug|x64.Build.0 = Release|Any CPU
+		{D99D5D24-9506-4B77-A229-8A3A43407332}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D99D5D24-9506-4B77-A229-8A3A43407332}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D99D5D24-9506-4B77-A229-8A3A43407332}.Release|x64.ActiveCfg = Release|Any CPU
+		{D99D5D24-9506-4B77-A229-8A3A43407332}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A58C6104-AA7E-4F31-B812-CFC52F7E536C}
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 2
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://blackbaud.visualstudio.com/
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = Blackbaud.UAT.Core\\Blackbaud.UAT.Core.csproj
+		SccProjectName1 = Blackbaud.UAT.Core
+		SccLocalPath1 = Blackbaud.UAT.Core
 	EndGlobalSection
 EndGlobal

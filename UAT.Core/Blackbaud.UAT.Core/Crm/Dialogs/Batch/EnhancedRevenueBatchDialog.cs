@@ -38,7 +38,11 @@ namespace Blackbaud.UAT.Core.Crm.Dialogs
             {"Pledge subtype", new CrmField("PLEDGESUBTYPEID", FieldType.Dropdown)},
             {"Reference", new CrmField("REFERENCE", FieldType.TextInput)},
             {"Other method", new CrmField("OTHERPAYMENTMETHODCODEID", FieldType.Dropdown)},
-            {"GL post date",new CrmField("td-POSTDATE", FieldType.TextInput)}
+            {"GL post date",new CrmField("td-POSTDATE", FieldType.TextInput)},
+            {"Card number",new CrmField("CREDITCARDNUMBER", FieldType.TextInput)},
+            {"Card type",new CrmField("CREDITTYPECODEID", FieldType.Dropdown)},
+            {"Expires on",new CrmField("EXPIRESON", FieldType.TextInput)},
+            {"Name on card",new CrmField("CARDHOLDERNAME", FieldType.TextInput)}
         };
 
         /// <summary>

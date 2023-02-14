@@ -450,7 +450,7 @@ namespace Blackbaud.UAT.Base
 
                 fieldElement.Click();
 
-                var innerwaiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(10));
+                var innerwaiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(20));
                 innerwaiter.IgnoreExceptionTypes(typeof(InvalidOperationException), typeof(ElementClickInterceptedException));
                 try
                 {
@@ -515,7 +515,7 @@ namespace Blackbaud.UAT.Base
 
                 fieldElement.Click();
 
-                var innerwaiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(10));
+                var innerwaiter = new WebDriverWait(Driver, TimeSpan.FromSeconds(20));
                 innerwaiter.IgnoreExceptionTypes(typeof(InvalidOperationException), typeof(ElementClickInterceptedException));
 
                 fieldElement.SendKeys(Keys.Control + "a");
